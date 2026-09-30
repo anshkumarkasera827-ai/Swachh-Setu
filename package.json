@@ -1,0 +1,19 @@
+{
+  "name": "swachhsetu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SwachhSetu - Smart Waste Management Portal by Team HackHives (BCA 1st Sem, Spectrums)",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "swachhsetu",
+    "smart-city",
+    "waste-management",
+    "hackathon",
+    "kanpur"
+  ],
+  "author": "Team HackHives",
+  "license": "MIT"
+}

@@ -1,0 +1,5078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwachhSetu | Smart Waste Management Portal - Kanpur Smart City</title>
+  <meta name="description" content="Official Smart City Waste Management Portal by Team HackHives (BCA 1st Sem, Spectrums). Spot, Report, SLA Cleanup & Citizen Rewards.">
+  
+  <!-- Google Fonts: Space Grotesk + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. CSS VARIABLES & THEMES
+       ========================================================================== */
+    :root {
+      /* Shared Brand Colors */
+      --emerald: #0f9d58;
+      --emerald-dark: #0b7c45;
+      --emerald-light: #e6f6ee;
+      --saffron: #ff9f1c;
+      --saffron-light: #fff5e6;
+      --navy: #080a1f;
+      --navy-card: #0e1233;
+      --navy-card-border: rgba(34, 228, 255, 0.25);
+      --cyan-neon: #22e4ff;
+      --violet-neon: #b46bff;
+      --crimson: #ff3366;
+      --warning: #ffb703;
+      --success: #00e676;
+
+      /* Dynamic Theme Variables (Default: Light Mode for Home/Awareness) */
+      --bg-primary: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --border-color: #e2e8f0;
+      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --card-shadow-hover: 0 20px 30px -10px rgba(15, 157, 88, 0.15);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --nav-bg: rgba(255, 255, 255, 0.92);
+
+      --font-heading: 'Space Grotesk', -apple-system, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Dark Mode Theme applied to Tracking, Login, Rewards, Admin pages */
+    body.dark-view {
+      --bg-primary: #080a1f;
+      --bg-surface: #0e1233;
+      --bg-surface-elevated: #151b47;
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --border-color: rgba(34, 228, 255, 0.2);
+      --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+      --card-shadow-hover: 0 15px 35px -5px rgba(34, 228, 255, 0.25);
+      --glass-bg: rgba(14, 18, 51, 0.85);
+      --glass-border: rgba(34, 228, 255, 0.25);
+      --nav-bg: rgba(8, 10, 31, 0.94);
+    }
+
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    /* ==========================================================================
+       2. TOP BAR & NAVIGATION
+       ========================================================================== */
+    .top-announcement {
+      background: linear-gradient(90deg, #0b7c45, #0f9d58, #ff9f1c);
+      color: #fff;
+      font-size: 0.82rem;
+      padding: 6px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      z-index: 1000;
+      position: relative;
+    }
+
+    .top-announcement-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-live-pulse {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-live-pulse::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00e676;
+      box-shadow: 0 0 8px #00e676;
+      animation: pulseDot 1.4s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .demo-guide-trigger {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+    }
+    .demo-guide-trigger:hover {
+      background: #fff;
+      color: #0b7c45;
+    }
+
+    /* Main Sticky Header */
+    header.main-header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      transition: var(--transition-smooth);
+    }
+
+    .nav-container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo-emblem {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #0f9d58, #ff9f1c);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(15, 157, 88, 0.35);
+      color: white;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      position: relative;
+    }
+
+    .logo-emblem::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 14px;
+      border: 1px solid rgba(34, 228, 255, 0.4);
+    }
+
+    .brand-text h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-text .team-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--emerald);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    body.dark-view .brand-text .team-tag {
+      color: var(--cyan-neon);
+    }
+
+    /* Nav Links */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+
+    .nav-link {
+      padding: 8px 14px;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: rgba(15, 157, 88, 0.08);
+    }
+
+    body.dark-view .nav-link:hover {
+      background: rgba(34, 228, 255, 0.1);
+      color: var(--cyan-neon);
+    }
+
+    .nav-link.active {
+      color: #fff !important;
+      background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+      box-shadow: 0 4px 12px rgba(15, 157, 88, 0.25);
+    }
+
+    body.dark-view .nav-link.active {
+      background: linear-gradient(135deg, rgba(34, 228, 255, 0.25), rgba(180, 107, 255, 0.35));
+      border: 1px solid var(--cyan-neon);
+      color: var(--cyan-neon) !important;
+      box-shadow: 0 0 16px rgba(34, 228, 255, 0.3);
+    }
+
+    /* Right Action Bar */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-toggle-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+    }
+    .lang-toggle-btn:hover {
+      border-color: var(--emerald);
+    }
+
+    .sound-toggle-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: var(--transition-smooth);
+    }
+
+    .points-pill {
+      background: linear-gradient(135deg, #fff5e6, #ffe0b2);
+      border: 1px solid #ffd180;
+      padding: 6px 14px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #b25e00;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(255, 159, 28, 0.15);
+      transition: var(--transition-smooth);
+    }
+    .points-pill:hover {
+      transform: scale(1.05);
+    }
+
+    body.dark-view .points-pill {
+      background: rgba(255, 159, 28, 0.15);
+      border-color: rgba(255, 159, 28, 0.4);
+      color: #ffb74d;
+    }
+
+    .user-avatar-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--emerald), var(--cyan-neon));
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       3. GENERAL UI COMPONENTS (Buttons, Badges, Toasts, Cards)
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition-smooth);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+      color: white;
+      box-shadow: 0 4px 14px rgba(15, 157, 88, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(15, 157, 88, 0.45);
+    }
+
+    .btn-saffron {
+      background: linear-gradient(135deg, #ff9f1c, #f77f00);
+      color: white;
+      box-shadow: 0 4px 14px rgba(255, 159, 28, 0.35);
+    }
+    .btn-saffron:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 159, 28, 0.5);
+    }
+
+    .btn-neon {
+      background: linear-gradient(135deg, #22e4ff, #00b4d8);
+      color: #080a1f;
+      font-weight: 700;
+      box-shadow: 0 0 20px rgba(34, 228, 255, 0.4);
+    }
+    .btn-neon:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(34, 228, 255, 0.7);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border-color);
+      color: var(--text-primary);
+    }
+    .btn-outline:hover {
+      border-color: var(--emerald);
+      background: rgba(15, 157, 88, 0.05);
+    }
+
+    body.dark-view .btn-outline {
+      border-color: rgba(34, 228, 255, 0.3);
+      color: var(--cyan-neon);
+    }
+    body.dark-view .btn-outline:hover {
+      border-color: var(--cyan-neon);
+      background: rgba(34, 228, 255, 0.12);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: 6px;
+    }
+
+    /* Toast Container */
+    #toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .toast {
+      pointer-events: auto;
+      background: #0e1233;
+      color: white;
+      border-left: 4px solid var(--emerald);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      padding: 14px 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.88rem;
+      animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 380px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .toast.success { border-left-color: var(--emerald); }
+    .toast.warning { border-left-color: var(--warning); }
+    .toast.error { border-left-color: var(--crimson); }
+    .toast.reward { border-left-color: var(--saffron); border-color: rgba(255, 159, 28, 0.4); }
+
+    @keyframes slideInToast {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Page container & Transitions */
+    .page-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      min-height: calc(100vh - 120px);
+    }
+
+    .page-section.active-page {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       4. PAGE 1: HOME (LIGHT THEME)
+       ========================================================================== */
+    .hero-container {
+      position: relative;
+      overflow: hidden;
+      padding: 60px 24px 30px;
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .hero-grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .govt-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--emerald-light);
+      border: 1px solid rgba(15, 157, 88, 0.3);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--emerald-dark);
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #0f9d58, #ff9f1c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: #475569;
+      margin-bottom: 30px;
+      max-width: 580px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    /* Animated Garbage Truck & Skyline Scene */
+    .skyline-animation-card {
+      position: relative;
+      background: linear-gradient(180deg, #e0f2fe 0%, #dcfce7 65%, #cbd5e1 65%, #334155 100%);
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid #e2e8f0;
+      box-shadow: 0 20px 40px -15px rgba(15, 157, 88, 0.2);
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .sky-elements {
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 120px;
+      pointer-events: none;
+    }
+
+    .sun-orb {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffb703 30%, #ff9f1c 100%);
+      box-shadow: 0 0 25px rgba(255, 183, 3, 0.6);
+    }
+
+    .cloud {
+      position: absolute;
+      background: #ffffff;
+      border-radius: 30px;
+      opacity: 0.85;
+      animation: floatCloud 22s linear infinite;
+    }
+    .cloud-1 { top: 30px; width: 90px; height: 26px; left: -100px; animation-duration: 25s; }
+    .cloud-2 { top: 65px; width: 60px; height: 20px; left: -70px; animation-duration: 18s; animation-delay: 5s; }
+
+    @keyframes floatCloud {
+      from { transform: translateX(0); }
+      to { transform: translateX(550px); }
+    }
+
+    /* City Skyline SVG Silhouette */
+    .skyline-svg {
+      width: 100%;
+      height: 180px;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    /* Animated Truck running on road */
+    .road-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #1e293b;
+      border-top: 3px solid #64748b;
+      overflow: hidden;
+    }
+
+    .road-stripes {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 200%;
+      height: 4px;
+      background: repeating-linear-gradient(90deg, #f8fafc 0, #f8fafc 24px, transparent 24px, transparent 48px);
+      transform: translateY(-50%);
+      animation: moveStripes 1.2s linear infinite;
+    }
+
+    @keyframes moveStripes {
+      from { transform: translateX(0); }
+      to { transform: translateX(-48px); }
+    }
+
+    .truck-container {
+      position: absolute;
+      bottom: 12px;
+      left: 0;
+      animation: driveTruck 10s linear infinite;
+      z-index: 5;
+    }
+
+    @keyframes driveTruck {
+      0% { transform: translateX(-160px); }
+      100% { transform: translateX(580px); }
+    }
+
+    .skyline-status-pill {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #0f172a;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    /* Stats Counter Bar */
+    .stats-bar-section {
+      max-width: 1300px;
+      margin: -25px auto 40px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e2e8f0;
+    }
+
+    .stat-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 12px;
+      border-right: 1px solid #f1f5f9;
+    }
+    .stat-card:last-child { border-right: none; }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .stat-icon.green { background: #dcfce7; color: #0f9d58; }
+    .stat-icon.orange { background: #ffedd5; color: #ff9f1c; }
+    .stat-icon.blue { background: #e0f2fe; color: #0284c7; }
+    .stat-icon.purple { background: #f3e8ff; color: #9333ea; }
+
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* Section Headers */
+    .section-head {
+      text-align: center;
+      max-width: 680px;
+      margin: 60px auto 40px;
+      padding: 0 20px;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--emerald);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    .section-lead {
+      color: #64748b;
+      font-size: 0.98rem;
+    }
+
+    /* 3-Step "How It Works" Cards */
+    .steps-container {
+      max-width: 1240px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      position: relative;
+    }
+
+    .step-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition-smooth);
+    }
+    .step-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--emerald);
+    }
+
+    .step-num-pill {
+      position: absolute;
+      top: -16px;
+      left: 28px;
+      background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(15, 157, 88, 0.35);
+    }
+
+    .step-icon-wrap {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+      margin-top: 8px;
+    }
+
+    .step-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .step-card p {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.55;
+    }
+
+    .step-badge {
+      display: inline-block;
+      margin-top: 14px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+
+    /* 6 Issue-Type Cards */
+    .issues-container {
+      max-width: 1240px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .issue-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+    .issue-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--emerald);
+      box-shadow: 0 12px 24px rgba(15, 157, 88, 0.12);
+    }
+
+    .issue-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .issue-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .issue-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .issue-desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .issue-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #0f9d58;
+      font-weight: 600;
+      border-top: 1px dashed #e2e8f0;
+      padding-top: 12px;
+    }
+
+    /* Home CTA Banner */
+    .home-cta-banner {
+      max-width: 1240px;
+      margin: 0 auto 80px;
+      padding: 48px;
+      background: linear-gradient(135deg, #0b7c45, #0f9d58 60%, #ff9f1c 100%);
+      border-radius: 24px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 20px 40px rgba(15, 157, 88, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .home-cta-content h2 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .home-cta-content p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      max-width: 550px;
+    }
+
+    .home-cta-btns {
+      display: flex;
+      gap: 14px;
+    }
+
+    /* ==========================================================================
+       5. PAGE 2: LIVE TRACKING (DARK THEME - KANPUR CITY MAP & DISPATCH)
+       ========================================================================== */
+    .tracking-wrapper {
+      padding: 24px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .tracking-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+      background: rgba(14, 18, 51, 0.85);
+      padding: 16px 20px;
+      border-radius: 14px;
+      border: 1px solid var(--navy-card-border);
+      backdrop-filter: blur(12px);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filter-tab {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .filter-tab.active {
+      background: rgba(34, 228, 255, 0.2);
+      border-color: var(--cyan-neon);
+      color: var(--cyan-neon);
+    }
+
+    .tracking-stats-strip {
+      display: flex;
+      gap: 16px;
+      font-size: 0.84rem;
+    }
+    .tracking-stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #94a3b8;
+    }
+    .tracking-stat-item b {
+      color: #fff;
+    }
+
+    /* 2-Column Layout for Map + Side Inspector */
+    .map-grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* Interactive Map Frame */
+    .map-frame-card {
+      background: #060817;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
+      height: 640px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-header-overlay {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 20;
+      background: rgba(8, 10, 31, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(34, 228, 255, 0.3);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.82rem;
+    }
+
+    .map-legend {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      z-index: 20;
+      background: rgba(8, 10, 31, 0.88);
+      backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      gap: 16px;
+      font-size: 0.74rem;
+      color: #cbd5e1;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-open { background: var(--crimson); box-shadow: 0 0 8px var(--crimson); }
+    .dot-progress { background: var(--saffron); box-shadow: 0 0 8px var(--saffron); }
+    .dot-resolved { background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+    /* SVG Map Canvas */
+    .city-svg-map {
+      width: 100%;
+      height: 100%;
+      background: #070a1e;
+      cursor: grab;
+      user-select: none;
+    }
+
+    /* Hotspot markers on SVG */
+    .hotspot-node {
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hotspot-node:hover {
+      transform: scale(1.3);
+    }
+
+    .pulse-ring {
+      animation: radarRing 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+      transform-origin: center;
+    }
+
+    @keyframes radarRing {
+      0% { r: 8; opacity: 0.9; }
+      100% { r: 30; opacity: 0; }
+    }
+
+    /* Dispatched Sanitation Worker on Map */
+    .moving-crew {
+      transition: all 2.8s cubic-bezier(0.45, 0, 0.55, 1);
+      filter: drop-shadow(0 0 10px #22e4ff);
+    }
+
+    /* Side Inspector & Ticket Drawer */
+    .tracking-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ticket-inspector-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 18px;
+      padding: 20px;
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .inspector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ticket-id-tag {
+      font-size: 0.75rem;
+      color: var(--cyan-neon);
+      font-family: var(--font-heading);
+      letter-spacing: 0.5px;
+    }
+
+    .severity-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .severity-high { background: rgba(255, 51, 102, 0.2); color: #ff3366; border: 1px solid #ff3366; }
+    .severity-med { background: rgba(255, 183, 3, 0.2); color: #ffb703; border: 1px solid #ffb703; }
+    .severity-low { background: rgba(0, 230, 118, 0.2); color: #00e676; border: 1px solid #00e676; }
+
+    .sla-timer-box {
+      background: rgba(255, 51, 102, 0.1);
+      border: 1px solid rgba(255, 51, 102, 0.3);
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sla-countdown {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ff5277;
+      letter-spacing: 1px;
+    }
+
+    .photo-proof-preview {
+      width: 100%;
+      height: 140px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      position: relative;
+      background: #060817;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .photo-proof-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .photo-tag-ai {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid var(--cyan-neon);
+      color: var(--cyan-neon);
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .ticket-field {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+      color: #94a3b8;
+    }
+    .ticket-field span:last-child {
+      color: #f8fafc;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .nearest-worker-box {
+      background: rgba(34, 228, 255, 0.08);
+      border: 1px solid rgba(34, 228, 255, 0.25);
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 14px;
+      margin-bottom: 16px;
+    }
+    .nearest-worker-title {
+      font-size: 0.75rem;
+      color: var(--cyan-neon);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .nearest-worker-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .inspector-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gmaps-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* Live Worker List & Feed */
+    .workers-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 18px;
+      padding: 18px;
+      color: #fff;
+    }
+
+    .workers-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      color: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .worker-mini-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .worker-mini-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+
+    .worker-status-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .status-avail { background: rgba(0, 230, 118, 0.15); color: #00e676; }
+    .status-enroute { background: rgba(255, 183, 3, 0.15); color: #ffb703; }
+    .status-duty { background: rgba(34, 228, 255, 0.15); color: var(--cyan-neon); }
+
+    /* ==========================================================================
+       6. PAGE 3: LOGIN & ROLE DASHBOARD (DARK THEME)
+       ========================================================================== */
+    .login-container {
+      max-width: 1080px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .login-grid {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .auth-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      color: #fff;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: rgba(6, 8, 23, 0.6);
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+    }
+
+    .auth-tab {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 8px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .auth-tab.active {
+      background: rgba(34, 228, 255, 0.2);
+      color: var(--cyan-neon);
+      border: 1px solid rgba(34, 228, 255, 0.4);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      background: #060817;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+    .form-control:focus {
+      border-color: var(--cyan-neon);
+      box-shadow: 0 0 12px rgba(34, 228, 255, 0.3);
+    }
+
+    .security-notice-card {
+      background: rgba(14, 18, 51, 0.7);
+      border: 1px solid rgba(180, 107, 255, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      color: #cbd5e1;
+      font-size: 0.84rem;
+    }
+
+    .sec-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .sec-icon {
+      font-size: 1.2rem;
+      color: var(--violet-neon);
+    }
+
+    /* Role Dashboards (Shown upon login) */
+    .dashboard-panel {
+      display: none;
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 20px;
+      padding: 30px;
+      color: #fff;
+      margin-top: 20px;
+    }
+
+    .dashboard-panel.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Report Issue Form in Citizen Dashboard */
+    .report-waste-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .photo-dropzone {
+      border: 2px dashed rgba(34, 228, 255, 0.4);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      background: rgba(6, 8, 23, 0.5);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+    .photo-dropzone:hover {
+      border-color: var(--cyan-neon);
+      background: rgba(34, 228, 255, 0.05);
+    }
+
+    .sample-photos-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+    .sample-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      object-fit: cover;
+      transition: transform 0.2s;
+    }
+    .sample-thumb:hover {
+      transform: scale(1.1);
+      border-color: var(--cyan-neon);
+    }
+
+    /* ==========================================================================
+       7. PAGE 4: REWARDS & RATINGS (DARK THEME)
+       ========================================================================== */
+    .rewards-container {
+      max-width: 1280px;
+      margin: 30px auto;
+      padding: 0 24px;
+      color: #fff;
+    }
+
+    .rewards-hero-card {
+      background: linear-gradient(135deg, #111640 0%, #1a1a54 100%);
+      border: 1px solid var(--navy-card-border);
+      border-radius: 24px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      margin-bottom: 36px;
+    }
+
+    .points-display-box {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .points-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ff9f1c 20%, #f77f00 90%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 0 25px rgba(255, 159, 28, 0.5);
+      border: 3px solid rgba(255, 255, 255, 0.4);
+    }
+    .points-circle span { font-size: 1.8rem; font-family: var(--font-heading); line-height: 1; }
+    .points-circle small { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Badge Ladder */
+    .badge-ladder-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .ladder-step {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      position: relative;
+    }
+    .ladder-step.unlocked {
+      background: rgba(34, 228, 255, 0.1);
+      border-color: var(--cyan-neon);
+      box-shadow: 0 0 14px rgba(34, 228, 255, 0.2);
+    }
+    .ladder-step.current {
+      background: rgba(255, 159, 28, 0.15);
+      border-color: var(--saffron);
+      box-shadow: 0 0 16px rgba(255, 159, 28, 0.3);
+    }
+    .ladder-icon { font-size: 1.6rem; margin-bottom: 4px; }
+    .ladder-name { font-size: 0.78rem; font-weight: 700; color: #fff; }
+    .ladder-pts { font-size: 0.7rem; color: #94a3b8; }
+
+    /* Interactive 5-Star Ticket Rating Card */
+    .rate-ticket-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 36px;
+      text-align: center;
+    }
+
+    .star-rating-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 2.2rem;
+      color: #475569;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s;
+    }
+    .star-btn.active, .star-btn:hover {
+      color: #ffb703;
+      transform: scale(1.25);
+      filter: drop-shadow(0 0 10px #ffb703);
+    }
+
+    .review-tags {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .review-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .review-chip.selected {
+      background: rgba(0, 230, 118, 0.2);
+      border-color: #00e676;
+      color: #00e676;
+    }
+
+    /* Redeem Bazaar Grid */
+    .rewards-bazaar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .reward-item-card {
+      background: #0e1233;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+    }
+    .reward-item-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyan-neon);
+      box-shadow: 0 10px 25px rgba(34, 228, 255, 0.18);
+    }
+
+    .reward-cost-tag {
+      background: rgba(255, 159, 28, 0.15);
+      color: var(--saffron);
+      border: 1px solid var(--saffron);
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    /* Ward Leaderboard */
+    .leaderboard-table-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 40px;
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    .custom-table th {
+      text-align: left;
+      padding: 12px;
+      color: #94a3b8;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      letter-spacing: 0.5px;
+    }
+    .custom-table td {
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+    .custom-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* ==========================================================================
+       8. PAGE 5: ADMIN CONTROL ROOM (DARK COMMAND CENTER)
+       ========================================================================== */
+    .admin-wrapper {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 0 24px;
+      color: #fff;
+    }
+
+    .admin-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .admin-kpi-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .admin-kpi-card.escalated {
+      border-color: rgba(255, 51, 102, 0.5);
+      background: linear-gradient(135deg, #150a1a, #0e1233);
+      animation: alertBorder 1.6s infinite alternate;
+    }
+    @keyframes alertBorder {
+      from { border-color: rgba(255, 51, 102, 0.3); }
+      to { border-color: rgba(255, 51, 102, 0.9); }
+    }
+
+    .kpi-num {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .admin-sections-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .admin-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+    .admin-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Escalation Desk & Shame Board */
+    .escalation-item {
+      background: rgba(255, 51, 102, 0.08);
+      border: 1px solid rgba(255, 51, 102, 0.25);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .risk-meter-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .risk-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    /* ==========================================================================
+       9. PAGE 6: WASTE AWARENESS HUB (LIGHT ECO THEME)
+       ========================================================================== */
+    .awareness-wrapper {
+      max-width: 1280px;
+      margin: 30px auto 60px;
+      padding: 0 24px;
+    }
+
+    .pledge-hero-box {
+      background: linear-gradient(135deg, #e6f6ee 0%, #d1f2e1 100%);
+      border: 2px solid #a7f3d0;
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .pledge-badge {
+      background: #0f9d58;
+      color: white;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    /* Decomposition Bars */
+    .decomp-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 40px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .decomp-row {
+      margin-bottom: 16px;
+    }
+    .decomp-label-strip {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .decomp-bar-bg {
+      height: 14px;
+      background: #f1f5f9;
+      border-radius: 7px;
+      overflow: hidden;
+    }
+    .decomp-bar-fill {
+      height: 100%;
+      border-radius: 7px;
+      transition: width 1s ease;
+    }
+
+    /* Interactive Segregation Station */
+    .segregation-station {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 40px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .waste-items-dock {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0 28px;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 14px;
+      border: 1px dashed #cbd5e1;
+    }
+
+    .waste-item-chip {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: var(--transition-smooth);
+    }
+    .waste-item-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .bins-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .eco-bin-card {
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .eco-bin-card:hover {
+      transform: translateY(-4px);
+    }
+    .bin-wet { background: linear-gradient(135deg, #10b981, #059669); }
+    .bin-dry { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .bin-haz { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+    .bin-ewaste { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+    /* 3D Flip Cards for Myth vs Fact */
+    .flip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .flip-card {
+      background: transparent;
+      perspective: 1000px;
+      height: 200px;
+      cursor: pointer;
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .flip-card.flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-front, .flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flip-front {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+    }
+    .flip-back {
+      background: #0b7c45;
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    /* Interactive Quiz */
+    .quiz-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .quiz-options-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .quiz-opt-btn {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      padding: 14px 18px;
+      border-radius: 10px;
+      text-align: left;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .quiz-opt-btn:hover {
+      border-color: var(--emerald);
+      background: #f0fdf4;
+    }
+    .quiz-opt-btn.correct {
+      background: #dcfce7;
+      border-color: #0f9d58;
+      color: #0b7c45;
+    }
+    .quiz-opt-btn.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #991b1b;
+    }
+
+    /* ==========================================================================
+       10. JUDGE DEMO DRAWER & MODALS
+       ========================================================================== */
+    .judge-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      height: 100vh;
+      background: #090c24;
+      border-left: 2px solid var(--cyan-neon);
+      z-index: 10000;
+      padding: 24px;
+      box-shadow: -10px 0 35px rgba(0, 0, 0, 0.8);
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      overflow-y: auto;
+    }
+    .judge-drawer.open {
+      right: 0;
+    }
+
+    .drawer-close-btn {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      color: #cbd5e1;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .demo-step-button {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(34, 228, 255, 0.25);
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: #cbd5e1;
+      text-align: left;
+      font-size: 0.84rem;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .demo-step-button:hover, .demo-step-button.active {
+      background: rgba(34, 228, 255, 0.15);
+      border-color: var(--cyan-neon);
+      color: #fff;
+    }
+
+    .demo-step-num {
+      background: var(--cyan-neon);
+      color: #080a1f;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* Modal Backdrop */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #0e1233;
+      border: 1px solid var(--navy-card-border);
+      border-radius: 20px;
+      padding: 28px;
+      max-width: 520px;
+      width: 100%;
+      color: #fff;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      animation: popModal 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popModal {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10001;
+    }
+
+    /* Footer */
+    footer.app-footer {
+      background: #080a1f;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 24px;
+      font-size: 0.85rem;
+    }
+    .footer-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .map-grid-layout { grid-template-columns: 1fr; }
+      .login-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .rewards-bazaar-grid { grid-template-columns: repeat(2, 1fr); }
+      .admin-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .admin-sections-grid { grid-template-columns: 1fr; }
+      .bins-grid { grid-template-columns: repeat(2, 1fr); }
+      .flip-grid { grid-template-columns: 1fr; }
+      .steps-container { grid-template-columns: 1fr; }
+      .issues-container { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu { display: none; }
+      .mobile-menu-toggle { display: block; }
+      .hero-title { font-size: 2.3rem; }
+      .report-waste-form { grid-template-columns: 1fr; }
+      .badge-ladder-strip { grid-template-columns: repeat(2, 1fr); }
+      .quiz-options-list { grid-template-columns: 1fr; }
+      .home-cta-banner { flex-direction: column; text-align: center; gap: 20px; }
+      .pledge-hero-box { flex-direction: column; text-align: center; gap: 20px; }
+      .rewards-hero-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti Canvas for Celebrations -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement">
+    <div class="top-announcement-left">
+      <span class="badge-live-pulse" data-i18n="top_live_status">KANPUR SMART CITY LIVE</span>
+      <span style="opacity: 0.9;" data-i18n="top_banner_text">Swachh Survekshan Mission 2026 • Real-time SLA Enforced</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button class="demo-guide-trigger" onclick="toggleDemoDrawer()" id="btn-judge-guide">
+        <span>⏱️</span> <strong data-i18n="judge_guide_btn">1-Min Judge Demo Guide</strong>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="main-header" id="mainHeader">
+    <div class="nav-container">
+      <a class="brand-logo" onclick="switchPage('home')">
+        <div class="logo-emblem">SS</div>
+        <div class="brand-text">
+          <h1>SwachhSetu <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">| स्वच्छ सेतु</span></h1>
+          <div class="team-tag" data-i18n="team_badge">Team HackHives • BCA 1st Sem • Spectrums</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <ul class="nav-menu" id="navMenu">
+        <li><a class="nav-link active" onclick="switchPage('home')" id="nav-home" data-i18n="nav_home">Home</a></li>
+        <li><a class="nav-link" onclick="switchPage('tracking')" id="nav-tracking" data-i18n="nav_tracking">Live Tracking</a></li>
+        <li><a class="nav-link" onclick="switchPage('login')" id="nav-login" data-i18n="nav_login">Portal & Report</a></li>
+        <li><a class="nav-link" onclick="switchPage('rewards')" id="nav-rewards" data-i18n="nav_rewards">Rewards & Rating</a></li>
+        <li><a class="nav-link" onclick="switchPage('admin')" id="nav-admin" data-i18n="nav_admin">Admin Control</a></li>
+        <li><a class="nav-link" onclick="switchPage('awareness')" id="nav-awareness" data-i18n="nav_awareness">Awareness Hub</a></li>
+      </ul>
+
+      <!-- Action Items -->
+      <div class="header-actions">
+        <!-- Hindi/English Toggle -->
+        <button class="lang-toggle-btn" onclick="toggleLanguage()" id="langBtn" title="Switch Language">
+          <span id="langFlag">🇮🇳</span> <span id="langLabel">हिन्दी</span>
+        </button>
+
+        <!-- Synthesized Audio SFX Toggle -->
+        <button class="sound-toggle-btn" onclick="toggleSound()" id="soundBtn" title="Audio Sound Effects: Enabled">
+          🔊
+        </button>
+
+        <!-- Live Points Pill -->
+        <div class="points-pill" onclick="switchPage('rewards')" title="Your Clean Green Points Balance">
+          <span>🌱</span>
+          <span id="headerPointsVal">120</span> <small>PTS</small>
+        </div>
+
+        <button class="user-avatar-btn" onclick="switchPage('login')" title="Account Profile">
+          <span id="headerUserInitials">AK</span>
+        </button>
+
+        <button class="mobile-menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       PAGE 1: HOME (LIGHT THEME)
+       ========================================================================= -->
+  <section id="page-home" class="page-section active-page">
+    
+    <!-- Hero Section -->
+    <div class="hero-container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="govt-badge">
+            <span>🏛️</span> <span data-i18n="hero_badge">Kanpur Municipal Corporation (KMC) Portal</span>
+          </div>
+          <h1 class="hero-title">
+            <span data-i18n="hero_title_1">Every Spot Cleaned.</span><br>
+            <span class="gradient-text" data-i18n="hero_title_2">Every Citizen Rewarded.</span>
+          </h1>
+          <p class="hero-description" data-i18n="hero_desc">
+            SwachhSetu bridges Citizens, Zone Supervisors, and Municipal Sanitation Crews in a closed, SLA-guaranteed transparent loop. Spot waste with GPS, track real-time cleanup, and earn redeemable Green Points.
+          </p>
+          <div class="hero-ctas">
+            <button class="btn btn-primary" onclick="switchPage('login'); openCitizenForm();" data-i18n="btn_report_waste">
+              📸 Spot & Report Waste (+10 Pts)
+            </button>
+            <button class="btn btn-outline" onclick="switchPage('tracking')" data-i18n="btn_view_map">
+              🗺️ Explore Live Kanpur Map
+            </button>
+            <button class="btn btn-saffron btn-sm" onclick="switchPage('awareness')" data-i18n="btn_green_pledge">
+              🌿 Green Pledge (+20 Pts)
+            </button>
+          </div>
+        </div>
+
+        <!-- Animated Garbage Truck & Skyline Graphic -->
+        <div class="skyline-animation-card">
+          <div class="skyline-status-pill">
+            <span class="badge-live-pulse"></span>
+            <span>EV Crew #14 En Route • Mall Road</span>
+          </div>
+
+          <!-- Sun & Clouds -->
+          <div class="sky-elements">
+            <div class="sun-orb"></div>
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+          </div>
+
+          <!-- Stylized Kanpur Skyline Silhouette SVG -->
+          <svg class="skyline-svg" viewBox="0 0 500 180" preserveAspectRatio="none">
+            <!-- Distant City Silhouette -->
+            <path d="M0,180 L0,110 L25,110 L25,90 L40,90 L40,110 L70,110 L70,60 L90,60 L90,110 L120,110 L120,80 L140,80 L140,110 L180,110 L180,50 L200,30 L220,50 L220,110 L260,110 L260,85 L285,85 L285,110 L320,110 L320,40 L350,40 L350,110 L390,110 L390,75 L415,75 L415,110 L450,110 L450,95 L475,95 L475,110 L500,110 L500,180 Z" fill="#93c5fd" opacity="0.45" />
+            <!-- Foreground Monuments (JK Temple silhouette & Ganga barrage) -->
+            <path d="M0,180 L0,140 L30,140 L45,120 L60,140 L100,140 L115,100 L130,70 L145,100 L160,140 L210,140 L210,115 L240,115 L240,140 L290,140 L310,90 L330,140 L380,140 L380,120 L400,105 L420,120 L420,140 L500,140 L500,180 Z" fill="#0f9d58" opacity="0.65" />
+            <!-- Trees along riverbank -->
+            <circle cx="50" cy="145" r="14" fill="#0b7c45" />
+            <circle cx="180" cy="145" r="16" fill="#0b7c45" />
+            <circle cx="260" cy="148" r="12" fill="#0b7c45" />
+            <circle cx="360" cy="145" r="15" fill="#0b7c45" />
+            <circle cx="460" cy="147" r="13" fill="#0b7c45" />
+          </svg>
+
+          <!-- Road with Moving Stripes & Animated Sanitation EV Truck -->
+          <div class="road-track">
+            <div class="road-stripes"></div>
+            
+            <div class="truck-container">
+              <!-- SVG Garbage Truck -->
+              <svg width="130" height="48" viewBox="0 0 130 48" fill="none">
+                <!-- Waste Container Body -->
+                <rect x="5" y="8" width="70" height="28" rx="4" fill="#0f9d58" />
+                <rect x="8" y="11" width="64" height="6" rx="2" fill="#0b7c45" />
+                <!-- Swachh Logo on Truck -->
+                <text x="22" y="27" fill="#ffffff" font-size="9" font-family="'Space Grotesk', sans-serif" font-weight="700">SWACHH</text>
+                <!-- Cabin -->
+                <path d="M75,18 L95,18 L105,28 L105,36 L75,36 Z" fill="#ff9f1c" />
+                <!-- Window -->
+                <path d="M82,21 L93,21 L100,28 L82,28 Z" fill="#e0f2fe" />
+                <!-- Headlight -->
+                <rect x="103" y="30" width="4" height="4" rx="1" fill="#fff59d" />
+                <!-- Wheels -->
+                <circle cx="28" cy="38" r="8" fill="#1e293b" />
+                <circle cx="28" cy="38" r="3.5" fill="#94a3b8" />
+                <circle cx="88" cy="38" r="8" fill="#1e293b" />
+                <circle cx="88" cy="38" r="3.5" fill="#94a3b8" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated Count-Up Stats Bar -->
+    <div class="stats-bar-section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon green">⏱️</div>
+          <div>
+            <div class="stat-value" id="stat-sla">96.4%</div>
+            <div class="stat-label" data-i18n="stat_sla">SLA On-Time Cleanup</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">⚡</div>
+          <div>
+            <div class="stat-value" id="stat-hours">24 hrs</div>
+            <div class="stat-label" data-i18n="stat_hours">Resolution Target SLA</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">📍</div>
+          <div>
+            <div class="stat-value" id="stat-wards">10 Wards</div>
+            <div class="stat-label" data-i18n="stat_wards">Active Kanpur Zones</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">🌱</div>
+          <div>
+            <div class="stat-value" id="stat-points">+10 Pts</div>
+            <div class="stat-label" data-i18n="stat_points">Earned Per Valid Report</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-Step "How It Works" Section -->
+    <div class="section-head">
+      <div class="section-subtitle" data-i18n="how_sub">Citizen-Centric Loop</div>
+      <h2 class="section-title" data-i18n="how_title">How SwachhSetu Solves The Problem</h2>
+      <p class="section-lead" data-i18n="how_lead">Traditional complaints fall into a black hole with no tracking or deadlines. SwachhSetu enforces automated accountability with rewards.</p>
+    </div>
+
+    <div class="steps-container">
+      <div class="step-card">
+        <span class="step-num-pill">STEP 01</span>
+        <div class="step-icon-wrap">📸</div>
+        <h3 data-i18n="step1_title">Spot & Report</h3>
+        <p data-i18n="step1_desc">Take a photo, verify AI waste classification, and drop an auto-GPS pin. Ticket is auto-routed to the specific Kanpur Ward Supervisor instantly.</p>
+        <span class="step-badge">Instant +10 Green Points</span>
+      </div>
+
+      <div class="step-card">
+        <span class="step-num-pill">STEP 02</span>
+        <div class="step-icon-wrap">⏱️</div>
+        <h3 data-i18n="step2_title">SLA-Timed Cleanup</h3>
+        <p data-i18n="step2_desc">A strict 24-48 hr countdown timer begins. Nearest sanitation worker is dispatched with route navigation. Before-and-after photo proof is strictly required.</p>
+        <span class="step-badge">Overdue Auto-Escalation</span>
+      </div>
+
+      <div class="step-card">
+        <span class="step-num-pill">STEP 03</span>
+        <div class="step-icon-wrap">⭐</div>
+        <h3 data-i18n="step3_title">Review & Earn</h3>
+        <p data-i18n="step3_desc">Verify resolution photo proof. Rate cleanup 1 to 5 stars. Reopen in one click if unsatisfactory, or close and earn an extra +5 bonus reward points.</p>
+        <span class="step-badge">+5 Pts Bonus • Tax Rebates</span>
+      </div>
+    </div>
+
+    <!-- 6 Common Issue Types -->
+    <div class="section-head">
+      <div class="section-subtitle" data-i18n="issues_sub">Categorized Resolution</div>
+      <h2 class="section-title" data-i18n="issues_title">6 Municipal Waste Categories</h2>
+      <p class="section-lead" data-i18n="issues_lead">Select any category to quickly launch a report or inspect active ward incidents.</p>
+    </div>
+
+    <div class="issues-container">
+      <div class="issue-card" onclick="quickSelectCategory('Overflowing Bins')">
+        <div class="issue-header">
+          <div class="issue-icon">🗑️</div>
+          <div>
+            <div class="issue-title" data-i18n="issue_1_title">Overflowing Bins</div>
+            <span style="font-size: 0.72rem; color: #ef4444; font-weight: 600;">SLA: 12 Hours</span>
+          </div>
+        </div>
+        <p class="issue-desc" data-i18n="issue_1_desc">Commercial or residential public waste bins spilling onto sidewalks and attracting stray animals.</p>
+        <div class="issue-footer">
+          <span>Click to Report This</span>
+          <span>⚡ Fast Track</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="quickSelectCategory('Garbage on Road')">
+        <div class="issue-header">
+          <div class="issue-icon">🧹</div>
+          <div>
+            <div class="issue-title" data-i18n="issue_2_title">Garbage on Road</div>
+            <span style="font-size: 0.72rem; color: #f59e0b; font-weight: 600;">SLA: 24 Hours</span>
+          </div>
+        </div>
+        <p class="issue-desc" data-i18n="issue_2_desc">Scattered street litter, construction debris, or road sweeping waste left unattended.</p>
+        <div class="issue-footer">
+          <span>Click to Report This</span>
+          <span>🚜 Road Sweeper Crew</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="quickSelectCategory('Missed Collection')">
+        <div class="issue-header">
+          <div class="issue-icon">🚛</div>
+          <div>
+            <div class="issue-title" data-i18n="issue_3_title">Missed Collection</div>
+            <span style="font-size: 0.72rem; color: #3b82f6; font-weight: 600;">SLA: 8 Hours</span>
+          </div>
+        </div>
+        <p class="issue-desc" data-i18n="issue_3_desc">Municipal door-to-door morning collection tipper skipped your street or housing lane.</p>
+        <div class="issue-footer">
+          <span>Click to Report This</span>
+          <span>🔄 Route Reroute</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="quickSelectCategory('Illegal Dumping')">
+        <div class="issue-header">
+          <div class="issue-icon">🚫</div>
+          <div>
+            <div class="issue-title" data-i18n="issue_4_title">Illegal Dumping</div>
+            <span style="font-size: 0.72rem; color: #dc2626; font-weight: 600;">SLA: 24 Hours • Penalty Zone</span>
+          </div>
+        </div>
+        <p class="issue-desc" data-i18n="issue_4_desc">Commercial bulk dumping on vacant plots, river banks, or railway corridors.</p>
+        <div class="issue-footer">
+          <span>Click to Report This</span>
+          <span>⚖️ Blackspot Fine</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="quickSelectCategory('E-Waste / Plastic')">
+        <div class="issue-header">
+          <div class="issue-icon">💻</div>
+          <div>
+            <div class="issue-title" data-i18n="issue_5_title">E-Waste & Toxic Plastic</div>
+            <span style="font-size: 0.72rem; color: #8b5cf6; font-weight: 600;">SLA: 48 Hours</span>
+          </div>
+        </div>
+        <p class="issue-desc" data-i18n="issue_5_desc">Discarded electronics, lithium batteries, and banned single-use plastic consignments.</p>
+        <div class="issue-footer">
+          <span>Click to Report This</span>
+          <span>♻️ Authorized Recycler</span>
+        </div>
+      </div>
+
+      <div class="issue-card" onclick="quickSelectCategory('Drain Blockage')">
+        <div class="issue-header">
+          <div class="issue-icon">🌊</div>
+          <div>
+            <div class="issue-title" data-i18n="issue_6_title">Drain Blockage</div>
+            <span style="font-size: 0.72rem; color: #0284c7; font-weight: 600;">SLA: 18 Hours</span>
+          </div>
+        </div>
+        <p class="issue-desc" data-i18n="issue_6_desc">Clogged storm drains and nallahs filled with silt and polythene causing waterlogging.</p>
+        <div class="issue-footer">
+          <span>Click to Report This</span>
+          <span>🚜 Silt Suction Unit</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final CTA Banner -->
+    <div class="home-cta-banner">
+      <div class="home-cta-content">
+        <h2 data-i18n="cta_title">Transform Kanpur Into India's Cleanest City</h2>
+        <p data-i18n="cta_desc">Join 42,000+ active citizens on SwachhSetu. Spot waste in your colony, earn Green Points, and redeem property tax rebates and saplings.</p>
+      </div>
+      <div class="home-cta-btns">
+        <button class="btn btn-neon" onclick="switchPage('login')" data-i18n="cta_btn_start">Get Started Now</button>
+        <button class="btn btn-outline" style="border-color: #fff; color: #fff;" onclick="switchPage('awareness')">Learn Segregation</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =========================================================================
+       PAGE 2: LIVE TRACKING (DARK THEME - KANPUR CITY MAP & WORKER DISPATCH)
+       ========================================================================= -->
+  <section id="page-tracking" class="page-section">
+    <div class="tracking-wrapper">
+      
+      <!-- Top Map Toolbar -->
+      <div class="tracking-toolbar">
+        <div>
+          <h2 style="font-size: 1.35rem; color: #fff; margin-bottom: 4px;">Kanpur Smart City • Live Waste Telemetry</h2>
+          <span style="font-size: 0.78rem; color: #94a3b8;">Real-time GPS Hotspots across Kidwai Nagar, Govind Nagar, Kakadeo, Panki & Civil Lines</span>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+          <button class="filter-tab active" onclick="filterHotspots('all', this)">All Incidents</button>
+          <button class="filter-tab" onclick="filterHotspots('open', this)">🔴 Open</button>
+          <button class="filter-tab" onclick="filterHotspots('in_progress', this)">🟠 In Progress</button>
+          <button class="filter-tab" onclick="filterHotspots('resolved', this)">🟢 Resolved</button>
+          <button class="filter-tab" onclick="toggleHeatmap(this)">🔥 Heatmap</button>
+        </div>
+
+        <div class="tracking-stats-strip">
+          <div class="tracking-stat-item">Open: <b style="color: var(--crimson);" id="count-open">4</b></div>
+          <div class="tracking-stat-item">Active Crews: <b style="color: var(--cyan-neon);">6</b></div>
+          <div class="tracking-stat-item">SLA Passed: <b style="color: var(--success);">96.4%</b></div>
+        </div>
+      </div>
+
+      <!-- Map + Ticket Inspector 2-Column Layout -->
+      <div class="map-grid-layout">
+        
+        <!-- Interactive Realistic SVG Map of Kanpur -->
+        <div class="map-frame-card">
+          <!-- Overlays -->
+          <div class="map-header-overlay">
+            <span class="badge-live-pulse"></span>
+            <span><b>GIS Grid:</b> Kanpur Urban Zone (26.4499° N, 80.3319° E)</span>
+          </div>
+
+          <div class="map-legend">
+            <div class="legend-item"><div class="legend-dot dot-open"></div> Open Spot</div>
+            <div class="legend-item"><div class="legend-dot dot-progress"></div> Crew En Route</div>
+            <div class="legend-item"><div class="legend-dot dot-resolved"></div> Cleaned & Verified</div>
+            <div class="legend-item" style="color: var(--cyan-neon);">🚚 Sanitation EV Truck</div>
+          </div>
+
+          <!-- The Realistic SVG City Map of Kanpur -->
+          <svg class="city-svg-map" id="kanpurMapSvg" viewBox="0 0 900 600">
+            <defs>
+              <!-- River Ganga Gradient -->
+              <linearGradient id="gangaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8" />
+                <stop offset="50%" stop-color="#0369a1" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#075985" stop-opacity="0.85" />
+              </linearGradient>
+
+              <!-- Radial glow for hotspots -->
+              <radialGradient id="redGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff3366" stop-opacity="1" />
+                <stop offset="60%" stop-color="#ff3366" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="#ff3366" stop-opacity="0" />
+              </radialGradient>
+
+              <radialGradient id="orangeGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff9f1c" stop-opacity="1" />
+                <stop offset="60%" stop-color="#ff9f1c" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="#ff9f1c" stop-opacity="0" />
+              </radialGradient>
+
+              <radialGradient id="greenGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00e676" stop-opacity="1" />
+                <stop offset="60%" stop-color="#00e676" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="#00e676" stop-opacity="0" />
+              </radialGradient>
+
+              <!-- Heatmap filter layer -->
+              <filter id="heatBlur">
+                <feGaussianBlur stdDeviation="22" />
+              </filter>
+            </defs>
+
+            <!-- Background Grid Lines -->
+            <g stroke="rgba(255,255,255,0.03)" stroke-width="1">
+              <line x1="0" y1="100" x2="900" y2="100" />
+              <line x1="0" y1="200" x2="900" y2="200" />
+              <line x1="0" y1="300" x2="900" y2="300" />
+              <line x1="0" y1="400" x2="900" y2="400" />
+              <line x1="0" y1="500" x2="900" y2="500" />
+              <line x1="150" y1="0" x2="150" y2="600" />
+              <line x1="300" y1="0" x2="300" y2="600" />
+              <line x1="450" y1="0" x2="450" y2="600" />
+              <line x1="600" y1="0" x2="600" y2="600" />
+              <line x1="750" y1="0" x2="750" y2="600" />
+            </g>
+
+            <!-- Ward Boundaries (Polygons for Kanpur Zones) -->
+            <!-- Panki Industrial Area (West) -->
+            <polygon points="20,180 180,180 160,380 30,360" fill="rgba(34, 228, 255, 0.03)" stroke="rgba(34, 228, 255, 0.15)" stroke-dasharray="4" />
+            <text x="50" y="240" fill="#64748b" font-size="11" font-weight="600">WARD 1: PANKI</text>
+
+            <!-- Kakadeo Coaching & Residential (Mid-West) -->
+            <polygon points="180,180 370,180 350,330 170,330" fill="rgba(180, 107, 255, 0.03)" stroke="rgba(180, 107, 255, 0.15)" stroke-dasharray="4" />
+            <text x="210" y="220" fill="#64748b" font-size="11" font-weight="600">WARD 2: KAKADEO</text>
+
+            <!-- Swaroop Nagar & Harsh Nagar (Mid-North) -->
+            <polygon points="370,120 560,110 540,240 370,240" fill="rgba(34, 228, 255, 0.03)" stroke="rgba(34, 228, 255, 0.15)" stroke-dasharray="4" />
+            <text x="390" y="160" fill="#64748b" font-size="11" font-weight="600">WARD 3: SWAROOP NAGAR</text>
+
+            <!-- Civil Lines & Mall Road (North-East near Ganga) -->
+            <polygon points="560,90 780,80 750,220 540,230" fill="rgba(0, 230, 118, 0.03)" stroke="rgba(0, 230, 118, 0.15)" stroke-dasharray="4" />
+            <text x="600" y="130" fill="#64748b" font-size="11" font-weight="600">WARD 4: CIVIL LINES</text>
+
+            <!-- Govind Nagar (Central South) -->
+            <polygon points="200,340 460,330 440,510 190,490" fill="rgba(255, 159, 28, 0.03)" stroke="rgba(255, 159, 28, 0.15)" stroke-dasharray="4" />
+            <text x="240" y="400" fill="#64748b" font-size="11" font-weight="600">WARD 5: GOVIND NAGAR</text>
+
+            <!-- Kidwai Nagar (South-East) -->
+            <polygon points="460,330 760,310 740,530 450,520" fill="rgba(34, 228, 255, 0.03)" stroke="rgba(34, 228, 255, 0.15)" stroke-dasharray="4" />
+            <text x="530" y="400" fill="#64748b" font-size="11" font-weight="600">WARD 6: KIDWAI NAGAR</text>
+
+            <!-- Harsh Nagar (Central Core) -->
+            <text x="400" y="275" fill="#64748b" font-size="10" font-weight="600">HARSH NAGAR</text>
+
+            <!-- River Ganga Curving on the North-East -->
+            <path d="M 420,-10 C 520,30 620,30 720,20 C 800,10 860,60 920,80 L 920,0 L 420,0 Z" fill="url(#gangaGradient)" />
+            <path d="M 420,-10 C 520,30 620,30 720,20 C 800,10 860,60 920,80" fill="none" stroke="#38bdf8" stroke-width="4" stroke-opacity="0.7" />
+            <!-- Ganga River Waves/Labels -->
+            <text x="700" y="45" fill="#bae6fd" font-size="12" font-style="italic" font-weight="600">🌊 River Ganga (Ganges)</text>
+
+            <!-- Major Kanpur Arterial Roads -->
+            <!-- GT Road (Grand Trunk Road - Across the City) -->
+            <path id="routeGTRoad" d="M 10,290 L 190,290 L 370,280 L 530,260 L 760,250 L 890,240" fill="none" stroke="#334155" stroke-width="12" stroke-linecap="round" />
+            <path d="M 10,290 L 190,290 L 370,280 L 530,260 L 760,250 L 890,240" fill="none" stroke="#64748b" stroke-width="8" stroke-linecap="round" />
+            <path d="M 10,290 L 190,290 L 370,280 L 530,260 L 760,250 L 890,240" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="10 8" />
+            <text x="80" y="282" fill="#94a3b8" font-size="9" font-weight="600">GT ROAD (NH-19)</text>
+
+            <!-- Mall Road Corridor -->
+            <path id="routeMallRoad" d="M 370,190 L 500,180 L 630,170 L 770,160" fill="none" stroke="#475569" stroke-width="6" stroke-linecap="round" />
+            <text x="640" y="155" fill="#94a3b8" font-size="9" font-weight="600">MALL ROAD</text>
+
+            <!-- Canal Road (North-South artery) -->
+            <path id="routeCanalRoad" d="M 450,90 L 450,260 L 450,540" fill="none" stroke="#475569" stroke-width="6" stroke-linecap="round" />
+            <text x="456" y="470" fill="#94a3b8" font-size="9" font-weight="600">CANAL ROAD</text>
+
+            <!-- Kidwai Nagar Main Bypass -->
+            <path id="routeKidwaiRoad" d="M 450,390 L 620,400 L 750,430" fill="none" stroke="#475569" stroke-width="5" stroke-linecap="round" />
+
+            <!-- Panki Link Road -->
+            <path id="routePankiRoad" d="M 190,290 L 120,380 L 40,400" fill="none" stroke="#475569" stroke-width="5" stroke-linecap="round" />
+
+            <!-- Heatmap Density Layer (Toggled on click) -->
+            <g id="heatmapLayer" style="display: none;" opacity="0.65" filter="url(#heatBlur)">
+              <circle cx="580" cy="410" r="80" fill="#ff3366" />
+              <circle cx="260" cy="240" r="70" fill="#ff3366" />
+              <circle cx="340" cy="420" r="60" fill="#ff9f1c" />
+              <circle cx="680" cy="170" r="50" fill="#ff3366" />
+              <circle cx="100" cy="290" r="60" fill="#ffb703" />
+            </g>
+
+            <!-- Dynamic Sanitation Workers (EV Trucks) on SVG -->
+            <g id="workersGroup">
+              <!-- Crew 1 (Worker Raju Kumar) -->
+              <g id="workerCrew1" class="moving-crew" transform="translate(420, 260)">
+                <circle cx="0" cy="0" r="14" fill="#080a1f" stroke="#22e4ff" stroke-width="2" />
+                <text x="0" y="4" text-anchor="middle" font-size="11">🚚</text>
+                <text x="0" y="-16" text-anchor="middle" fill="#22e4ff" font-size="8" font-weight="700">CREW #101</text>
+              </g>
+
+              <!-- Crew 2 (Worker Amit Verma) -->
+              <g id="workerCrew2" class="moving-crew" transform="translate(230, 310)">
+                <circle cx="0" cy="0" r="14" fill="#080a1f" stroke="#22e4ff" stroke-width="2" />
+                <text x="0" y="4" text-anchor="middle" font-size="11">🚚</text>
+                <text x="0" y="-16" text-anchor="middle" fill="#22e4ff" font-size="8" font-weight="700">CREW #102</text>
+              </g>
+            </g>
+
+            <!-- Hotspot Nodes Group (Populated and updated dynamically) -->
+            <g id="hotspotsGroup">
+              <!-- Hotspots are rendered here by JavaScript -->
+            </g>
+          </svg>
+        </div>
+
+        <!-- Right Side: Ticket Inspector & Worker Dispatch Drawer -->
+        <div class="tracking-sidebar">
+          
+          <!-- Inspector Card -->
+          <div class="ticket-inspector-card" id="ticketInspector">
+            <div class="inspector-header">
+              <div>
+                <span class="ticket-id-tag" id="inspectTicketId">TKT-KN-8921</span>
+                <h3 style="font-size: 1.15rem; color: #fff; margin-top: 2px;" id="inspectTitle">Overflowing Commercial Bin</h3>
+              </div>
+              <span class="severity-badge severity-high" id="inspectSeverity">HIGH SEVERITY</span>
+            </div>
+
+            <!-- SLA Timer -->
+            <div class="sla-timer-box">
+              <div>
+                <div style="font-size: 0.72rem; color: #ff9f1c; text-transform: uppercase; font-weight: 700;">SLA Countdown</div>
+                <div style="font-size: 0.74rem; color: #94a3b8;">Auto-escalates on expiry</div>
+              </div>
+              <div class="sla-countdown" id="inspectSlaTimer">05h 42m 18s</div>
+            </div>
+
+            <!-- Photo Proof Preview -->
+            <div class="photo-proof-preview">
+              <img id="inspectPhoto" src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&auto=format&fit=crop&q=80" alt="Garbage Waste Spot">
+              <div class="photo-tag-ai" id="inspectAiTag">🤖 AI Verified: 94.2% Plastic Debris</div>
+            </div>
+
+            <!-- Details -->
+            <div class="ticket-field">
+              <span>Location / Ward:</span>
+              <span id="inspectWard">Kidwai Nagar, Ward 6 (Block C Market)</span>
+            </div>
+            <div class="ticket-field">
+              <span>GPS Coordinates:</span>
+              <span id="inspectCoords">26.4382° N, 80.3458° E</span>
+            </div>
+            <div class="ticket-field">
+              <span>Reported By:</span>
+              <span id="inspectReporter">Rohan Sharma (+10 Pts Awarded)</span>
+            </div>
+            <div class="ticket-field">
+              <span>Status:</span>
+              <span id="inspectStatus" style="color: var(--crimson);">🔴 Open (Awaiting Crew)</span>
+            </div>
+
+            <!-- Nearest Worker Box -->
+            <div class="nearest-worker-box" id="nearestWorkerBox">
+              <div class="nearest-worker-title">⚡ Nearest Available Sanitation Crew</div>
+              <div class="nearest-worker-details">
+                <div>
+                  <span id="nearestWorkerName">Raju Kumar (EV Tipper #101)</span>
+                  <div style="font-size: 0.75rem; color: #94a3b8;">Zone: Kidwai Nagar • ⭐ 4.9 Rating</div>
+                </div>
+                <div style="text-align: right; color: var(--cyan-neon); font-family: var(--font-heading); font-size: 0.95rem;">
+                  <span id="nearestWorkerDist">1.2 km</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="inspector-actions">
+              <button class="btn btn-neon" id="btnDispatchWorker" onclick="dispatchWorkerForTicket()">
+                🚀 Dispatch Crew & Start Resolution
+              </button>
+
+              <div class="gmaps-actions">
+                <a id="btnGmapsView" href="https://www.google.com/maps/search/?api=1&query=26.4382,80.3458" target="_blank" class="btn btn-outline btn-sm">
+                  📍 Google Maps
+                </a>
+                <a id="btnGmapsNav" href="https://www.google.com/maps/dir/?api=1&destination=26.4382,80.3458" target="_blank" class="btn btn-outline btn-sm">
+                  🧭 Navigate Route
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sanitation Crew Live Status Card -->
+          <div class="workers-card">
+            <h4>
+              <span>Sanitation Workers</span>
+              <span class="badge-live-pulse" style="font-size: 0.68rem;">4 AVAILABLE</span>
+            </h4>
+            <div class="worker-mini-list" id="workerListContainer">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 3: LOGIN & ROLE DASHBOARD (DARK THEME)
+       ========================================================================= -->
+  <section id="page-login" class="page-section">
+    <div class="login-container">
+      
+      <!-- Auth Switcher View -->
+      <div id="authFormsWrapper">
+        <div class="section-head" style="margin-top: 10px;">
+          <div class="section-subtitle">Secure Municipal Access</div>
+          <h2 class="section-title" style="color: #fff;">SwachhSetu Portal Login</h2>
+          <p class="section-lead">Role-based gateway for Kanpur Citizens and Zonal Sanitation Supervisors.</p>
+        </div>
+
+        <div class="login-grid">
+          <!-- Auth Box -->
+          <div class="auth-card">
+            <div class="auth-tabs">
+              <button class="auth-tab active" onclick="switchAuthTab('citizen', this)" id="tab-citizen-btn">Citizen Portal</button>
+              <button class="auth-tab" onclick="switchAuthTab('supervisor', this)" id="tab-sup-btn">Supervisor Access</button>
+            </div>
+
+            <!-- Citizen Form -->
+            <form id="citizenLoginForm" onsubmit="handleCitizenLogin(event)">
+              <div class="form-group">
+                <label>Mobile Number (Aadhaar / Smart City linked)</label>
+                <input type="tel" class="form-control" id="citizenMobile" placeholder="+91 98765 43210" value="9876543210" required>
+              </div>
+
+              <div class="form-group">
+                <label>Enter 6-Digit OTP / Password</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="password" class="form-control" id="citizenOtp" placeholder="••••••" value="123456" required>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="sendDemoOtp()">Send OTP</button>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                🔐 Login as Citizen
+              </button>
+              <div style="text-align: center; margin-top: 14px; font-size: 0.78rem; color: #94a3b8;">
+                Demo Shortcut: Click Login to authenticate as <b>Rohan Sharma (Kidwai Nagar)</b>
+              </div>
+            </form>
+
+            <!-- Supervisor Form -->
+            <form id="supervisorLoginForm" style="display: none;" onsubmit="handleSupervisorLogin(event)">
+              <div class="form-group">
+                <label>Municipal Employee ID</label>
+                <input type="text" class="form-control" id="supEmpId" placeholder="KMC-SUP-2026" value="KMC-SUP-2026" required>
+              </div>
+
+              <div class="form-group">
+                <label>Assigned Zone / Ward</label>
+                <select class="form-control" id="supZone">
+                  <option value="Zone 6 - Kidwai Nagar">Zone 6 - Kidwai Nagar</option>
+                  <option value="Zone 2 - Kakadeo">Zone 2 - Kakadeo</option>
+                  <option value="Zone 4 - Civil Lines">Zone 4 - Civil Lines</option>
+                  <option value="Zone 5 - Govind Nagar">Zone 5 - Govind Nagar</option>
+                  <option value="Zone 1 - Panki">Zone 1 - Panki</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Supervisor Security Key</label>
+                <input type="password" class="form-control" id="supPass" placeholder="••••••••" value="admin123" required>
+              </div>
+
+              <button type="submit" class="btn btn-neon" style="width: 100%; margin-top: 10px;">
+                ⚡ Access Supervisor Console
+              </button>
+            </form>
+          </div>
+
+          <!-- Security Architecture Notes Panel -->
+          <div class="security-notice-card">
+            <h3 style="color: #fff; font-size: 1.1rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+              🛡️ Enterprise Smart-City Architecture
+            </h3>
+            <p style="margin-bottom: 16px; color: #94a3b8;">
+              Designed according to Ministry of Housing and Urban Affairs (MoHUA) Smart City Security Guidelines:
+            </p>
+
+            <div class="sec-feature">
+              <span class="sec-icon">🔒</span>
+              <div>
+                <b style="color: #fff;">Werkzeug & Argon2 Password Hashing</b>
+                <p style="font-size: 0.78rem; color: #94a3b8;">All credentials salted and hashed cryptographically. No plaintext storage.</p>
+              </div>
+            </div>
+
+            <div class="sec-feature">
+              <span class="sec-icon">🛡️</span>
+              <div>
+                <b style="color: #fff;">Flask-WTF CSRF Protection & Rate Limiting</b>
+                <p style="font-size: 0.78rem; color: #94a3b8;">Anti-tamper cryptographic nonce attached to every form submission.</p>
+              </div>
+            </div>
+
+            <div class="sec-feature">
+              <span class="sec-icon">👥</span>
+              <div>
+                <b style="color: #fff;">Role-Based Access Control (RBAC)</b>
+                <p style="font-size: 0.78rem; color: #94a3b8;">Strict privilege separation between Citizen, Ward Supervisor, and Central Municipal Admin.</p>
+              </div>
+            </div>
+
+            <div class="sec-feature">
+              <span class="sec-icon">🛰️</span>
+              <div>
+                <b style="color: #fff;">Geofenced GPS Verification</b>
+                <p style="font-size: 0.78rem; color: #94a3b8;">Auto-validates image EXIF and mobile GPS inside Kanpur municipal polygon bounds.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Authenticated Citizen Dashboard -->
+      <div id="citizenDashboard" class="dashboard-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px;">
+          <div>
+            <span style="font-size: 0.8rem; color: var(--cyan-neon); font-weight: 700; text-transform: uppercase;">CITIZEN PORTAL • WARD 6 KIDWAI NAGAR</span>
+            <h2 style="font-size: 1.6rem; color: #fff;">Welcome back, <span id="dashCitizenName">Rohan Sharma</span> 👋</h2>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="points-pill" style="font-size: 1rem; padding: 8px 18px;">
+              <span>🌱</span> <b id="dashPointsVal">120</b> PTS
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="logoutUser()">Log Out</button>
+          </div>
+        </div>
+
+        <!-- Spot & Report Form Card -->
+        <div style="margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 1.2rem; color: #fff;">📸 Spot & Report Municipal Waste</h3>
+            <span style="background: rgba(0,230,118,0.15); color: #00e676; font-size: 0.76rem; padding: 4px 10px; border-radius: 6px; font-weight: 700;">
+              EARN +10 GREEN POINTS
+            </span>
+          </div>
+          <p style="font-size: 0.84rem; color: #94a3b8; margin-top: 4px;">Photo proof and GPS auto-route this ticket directly to your Zonal Sanitation Supervisor.</p>
+
+          <form id="reportWasteForm" onsubmit="handleWasteReportSubmit(event)" class="report-waste-form">
+            <!-- Left Form Col -->
+            <div>
+              <div class="form-group">
+                <label>Waste Issue Category</label>
+                <select class="form-control" id="reportIssueCategory" required>
+                  <option value="Overflowing Bins">Overflowing Public Waste Bin</option>
+                  <option value="Garbage on Road">Scattered Garbage / Construction Debris</option>
+                  <option value="Missed Collection">Missed Morning Door-to-Door Collection</option>
+                  <option value="Illegal Dumping">Illegal Open Plot Dumping</option>
+                  <option value="E-Waste / Plastic">Banned Plastic / Toxic E-Waste</option>
+                  <option value="Drain Blockage">Blocked Drain / Sewer Choke</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Kanpur Ward / Area Location</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" class="form-control" id="reportLocation" value="Kidwai Nagar, Block C Market, Kanpur" required>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="detectUserGps()" title="Auto-detect GPS">
+                    🛰️ Auto GPS
+                  </button>
+                </div>
+                <small id="gpsStatusText" style="color: var(--cyan-neon); font-size: 0.72rem; margin-top: 4px; display: block;">
+                  📍 Locked: 26.4382° N, 80.3458° E (Accurate within 4m)
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label>Brief Description (Optional details for crew)</label>
+                <textarea class="form-control" id="reportDesc" rows="3" placeholder="e.g. Large bin overflowing behind temple since yesterday morning. Stray animals scattering trash."></textarea>
+              </div>
+            </div>
+
+            <!-- Right Form Col: Photo Upload & AI Classifier -->
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; display: block;">
+                Attach Photo Proof (Required for SLA & Points)
+              </label>
+
+              <div class="photo-dropzone" onclick="document.getElementById('wastePhotoInput').click()">
+                <input type="file" id="wastePhotoInput" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+                <div id="dropzonePrompt">
+                  <div style="font-size: 2.2rem; margin-bottom: 6px;">📷</div>
+                  <b style="color: #fff; font-size: 0.9rem;">Click to Snap / Upload Photo</b>
+                  <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px;">Supports camera snap or gallery upload</p>
+                </div>
+                <!-- Image Preview Container -->
+                <div id="photoPreviewWrap" style="display: none; position: relative;">
+                  <img id="photoPreviewImg" src="" style="width: 100%; height: 130px; object-fit: cover; border-radius: 8px;">
+                  <div id="aiDetectorBadge" style="position: absolute; bottom: 6px; left: 6px; background: rgba(0,0,0,0.8); border: 1px solid var(--cyan-neon); color: var(--cyan-neon); font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;">
+                    🤖 AI Detected: Waste Bin (96.1% Confidence)
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Realistic Sample Photos (for instant hackathon demo) -->
+              <div style="margin-top: 10px;">
+                <span style="font-size: 0.72rem; color: #94a3b8;">Or select sample waste image for instant demo:</span>
+                <div class="sample-photos-row">
+                  <img class="sample-thumb" src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=150&auto=format&fit=crop&q=60" onclick="pickSamplePhoto(this.src, 'Overflowing Bins', 'Single-Use Plastic & Food Waste (94.2%)')" title="Overflowing Bin">
+                  <img class="sample-thumb" src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=150&auto=format&fit=crop&q=60" onclick="pickSamplePhoto(this.src, 'Garbage on Road', 'Scattered Road Litter (89.5%)')" title="Road Litter">
+                  <img class="sample-thumb" src="https://images.unsplash.com/photo-1595278069441-2cf29f8005a4?w=150&auto=format&fit=crop&q=60" onclick="pickSamplePhoto(this.src, 'E-Waste / Plastic', 'Toxic Plastic & Containers (92.4%)')" title="Plastic Dump">
+                  <img class="sample-thumb" src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=150&auto=format&fit=crop&q=60" onclick="pickSamplePhoto(this.src, 'Drain Blockage', 'Clogged Sludge & Polybags (95.0%)')" title="Blocked Drain">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 18px;">
+                🚀 Submit Report & Claim +10 Points
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Authenticated Supervisor Console -->
+      <div id="supervisorDashboard" class="dashboard-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px;">
+          <div>
+            <span style="font-size: 0.8rem; color: var(--saffron); font-weight: 700;">OFFICIAL CONSOLE • ZONAL SUPERVISOR</span>
+            <h2 style="font-size: 1.6rem; color: #fff;">Zone 6 Supervisor Desk (<span id="supZoneName">Kidwai Nagar</span>)</h2>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="logoutUser()">Log Out</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+          <div style="background: rgba(6,8,23,0.5); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            <h4 style="color: #fff; margin-bottom: 10px;">Pending Zone Tickets</h4>
+            <div id="supTicketList" style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div style="background: rgba(6,8,23,0.5); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            <h4 style="color: #fff; margin-bottom: 10px;">Available Sanitation Crews</h4>
+            <div id="supCrewsList" style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 4: REWARDS & RATINGS (DARK THEME)
+       ========================================================================= -->
+  <section id="page-rewards" class="page-section">
+    <div class="rewards-container">
+      
+      <!-- Top Hero Counter & Badge Ladder Card -->
+      <div class="rewards-hero-card">
+        <div>
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--saffron); text-transform: uppercase; letter-spacing: 0.5px;">
+            CITIZEN INCENTIVE PROGRAM
+          </span>
+          <h2 style="font-size: 2.2rem; color: #fff; margin: 4px 0 10px;">Your Green Points Vault</h2>
+          <p style="font-size: 0.92rem; color: #94a3b8; max-width: 520px;">
+            Earn Green Points for reporting waste, rating resolved tickets, taking green pledges, and sorting waste accurately. Redeem for civic tax benefits and green gifts.
+          </p>
+
+          <!-- 4-Stage Badge Ladder -->
+          <div class="badge-ladder-strip">
+            <div class="ladder-step unlocked" id="tier-1">
+              <div class="ladder-icon">🌱</div>
+              <div class="ladder-name">Novice Eco-Warrior</div>
+              <div class="ladder-pts">0 - 50 PTS</div>
+            </div>
+            <div class="ladder-step current" id="tier-2">
+              <div class="ladder-icon">🌿</div>
+              <div class="ladder-name">Green Citizen</div>
+              <div class="ladder-pts">50 - 150 PTS</div>
+            </div>
+            <div class="ladder-step" id="tier-3">
+              <div class="ladder-icon">🛡️</div>
+              <div class="ladder-name">Ward Champion</div>
+              <div class="ladder-pts">150 - 300 PTS</div>
+            </div>
+            <div class="ladder-step" id="tier-4">
+              <div class="ladder-icon">👑</div>
+              <div class="ladder-name">Eco Ambassador</div>
+              <div class="ladder-pts">300+ PTS</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div class="points-circle">
+            <span id="rewardsBigPoints">120</span>
+            <small>POINTS</small>
+          </div>
+          <div style="margin-top: 14px; text-align: center;">
+            <div style="font-size: 0.8rem; color: #cbd5e1;">Next Tier in <b style="color: var(--saffron);" id="ptsToNextTier">30 pts</b></div>
+            <div style="width: 160px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin: 6px auto 0; overflow: hidden;">
+              <div id="tierProgressBar" style="width: 70%; height: 100%; background: linear-gradient(90deg, #ff9f1c, #00e676); border-radius: 3px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive 5-Star Rating Widget (Resolved Ticket) -->
+      <div class="rate-ticket-card">
+        <span style="background: rgba(0,230,118,0.15); color: #00e676; font-size: 0.76rem; font-weight: 700; padding: 4px 12px; border-radius: 20px;">
+          TICKET #TKT-KN-8890 RESOLVED BY CREW
+        </span>
+        <h3 style="font-size: 1.5rem; color: #fff; margin: 8px 0 4px;">Rate Recent Cleanup: Govind Nagar Bin #42</h3>
+        <p style="font-size: 0.85rem; color: #94a3b8;">Review photo proof submitted by Sanitation Worker Amit Verma. Rate to award crew & earn +5 bonus points!</p>
+
+        <!-- Star Buttons -->
+        <div class="star-rating-group" id="starGroup">
+          <button class="star-btn active" onclick="setRating(1)">★</button>
+          <button class="star-btn active" onclick="setRating(2)">★</button>
+          <button class="star-btn active" onclick="setRating(3)">★</button>
+          <button class="star-btn active" onclick="setRating(4)">★</button>
+          <button class="star-btn active" onclick="setRating(5)">★</button>
+        </div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #ffb703; margin-bottom: 16px;" id="ratingLabel">
+          5 Stars: Spotless & Outstanding Work!
+        </div>
+
+        <!-- Feedback Chips -->
+        <div class="review-tags">
+          <span class="review-chip selected" onclick="toggleReviewChip(this)">⚡ Rapid 2-Hour Response</span>
+          <span class="review-chip selected" onclick="toggleReviewChip(this)">✨ 100% Spotless Area</span>
+          <span class="review-chip" onclick="toggleReviewChip(this)">🤝 Polite Sanitation Crew</span>
+          <span class="review-chip" onclick="toggleReviewChip(this)">📸 Clear Photo Proof</span>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 14px; margin-top: 14px;">
+          <button class="btn btn-saffron" onclick="submitTicketRating()" id="btnSubmitRating">
+            ⭐ Submit 5-Star Review & Claim +5 Pts
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="reopenTicketDemo()">
+            🔄 Reopen Ticket (Still Dirty)
+          </button>
+        </div>
+      </div>
+
+      <!-- Redeemable Swachh Bazaar Catalog -->
+      <h3 style="font-size: 1.4rem; color: #fff; margin-bottom: 8px;">🎁 Redeem Municipal Green Rewards</h3>
+      <p style="font-size: 0.86rem; color: #94a3b8; margin-bottom: 20px;">Exchange your accumulated Green Points for tangible municipal incentives:</p>
+
+      <div class="rewards-bazaar-grid">
+        <div class="reward-item-card">
+          <div>
+            <span class="reward-cost-tag">🪙 40 Green Pts</span>
+            <div style="font-size: 2.2rem; margin-bottom: 8px;">🌳</div>
+            <h4 style="color: #fff; font-size: 1.05rem;">Free Fruit Sapling</h4>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">Collect a Guava or Neem sapling from Kanpur Municipal Horticulture Nursery.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-top: 16px;" onclick="redeemRewardItem('Fruit Sapling', 40)">
+            Redeem Voucher
+          </button>
+        </div>
+
+        <div class="reward-item-card">
+          <div>
+            <span class="reward-cost-tag">🪙 60 Green Pts</span>
+            <div style="font-size: 2.2rem; margin-bottom: 8px;">🛍️</div>
+            <h4 style="color: #fff; font-size: 1.05rem;">Khadi Reusable Cloth Bag</h4>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">Durable, washable cotton shopping bag made by local self-help groups.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-top: 16px;" onclick="redeemRewardItem('Khadi Cloth Bag', 60)">
+            Redeem Voucher
+          </button>
+        </div>
+
+        <div class="reward-item-card">
+          <div>
+            <span class="reward-cost-tag">🪙 100 Green Pts</span>
+            <div style="font-size: 2.2rem; margin-bottom: 8px;">🌱</div>
+            <h4 style="color: #fff; font-size: 1.05rem;">Organic Compost (5kg)</h4>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">100% organic enriched fertilizer processed from city wet waste.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-top: 16px;" onclick="redeemRewardItem('5kg Organic Compost', 100)">
+            Redeem Voucher
+          </button>
+        </div>
+
+        <div class="reward-item-card" style="border-color: rgba(255,159,28,0.4);">
+          <div>
+            <span class="reward-cost-tag" style="background: rgba(255,159,28,0.25);">🪙 150 Green Pts</span>
+            <div style="font-size: 2.2rem; margin-bottom: 8px;">📜</div>
+            <h4 style="color: #fff; font-size: 1.05rem;">5% Property Tax Rebate</h4>
+            <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">Direct discount coupon code for Kanpur Municipal House Tax assessment.</p>
+          </div>
+          <button class="btn btn-saffron btn-sm" style="margin-top: 16px;" onclick="redeemRewardItem('5% Property Tax Rebate', 150)">
+            Redeem Tax Coupon
+          </button>
+        </div>
+      </div>
+
+      <!-- Kanpur Ward Cleanliness Leaderboard -->
+      <div class="leaderboard-table-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h3 style="font-size: 1.25rem; color: #fff;">🏆 Kanpur Clean Ward Leaderboard</h3>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Based on citizen participation, SLA compliance, and spot cleanliness</span>
+          </div>
+          <span class="badge-live-pulse" style="font-size: 0.72rem;">UPDATED HOURLY</span>
+        </div>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Ward Name</th>
+              <th>Cleanliness Score</th>
+              <th>SLA Resolution</th>
+              <th>Active Green Citizens</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b style="color: #ffd700;">🥇 #1</b></td>
+              <td><b>Swaroop Nagar (Ward 3)</b></td>
+              <td><b style="color: #00e676;">98.4 / 100</b></td>
+              <td>99.1% on-time</td>
+              <td>4,820 Citizens</td>
+              <td><span style="color: #00e676;">⭐⭐⭐⭐⭐ Cleanest</span></td>
+            </tr>
+            <tr>
+              <td><b style="color: #c0c0c0;">🥈 #2</b></td>
+              <td><b>Civil Lines (Ward 4)</b></td>
+              <td><b style="color: #00e676;">96.8 / 100</b></td>
+              <td>97.5% on-time</td>
+              <td>3,910 Citizens</td>
+              <td><span style="color: #00e676;">⭐⭐⭐⭐ High Performing</span></td>
+            </tr>
+            <tr>
+              <td><b style="color: #cd7f32;">🥉 #3</b></td>
+              <td><b>Kidwai Nagar (Ward 6)</b></td>
+              <td><b style="color: #22e4ff;">94.2 / 100</b></td>
+              <td>96.4% on-time</td>
+              <td>5,120 Citizens</td>
+              <td><span style="color: #22e4ff;">⭐⭐⭐⭐ Active Cleanup</span></td>
+            </tr>
+            <tr>
+              <td>#4</td>
+              <td><b>Govind Nagar (Ward 5)</b></td>
+              <td><b style="color: #ffb703;">88.6 / 100</b></td>
+              <td>92.0% on-time</td>
+              <td>2,740 Citizens</td>
+              <td><span style="color: #ffb703;">⭐⭐⭐ Needs Attention</span></td>
+            </tr>
+            <tr>
+              <td>#5</td>
+              <td><b>Panki (Ward 1)</b></td>
+              <td><b style="color: #ff5277;">79.1 / 100</b></td>
+              <td>84.5% on-time</td>
+              <td>1,890 Citizens</td>
+              <td><span style="color: #ff5277;">⚠️ High Blackspot Zone</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 5: ADMIN CONTROL ROOM (DARK COMMAND CENTER)
+       ========================================================================= -->
+  <section id="page-admin" class="page-section">
+    <div class="admin-wrapper">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+          <span style="font-size: 0.8rem; color: var(--crimson); font-weight: 700; letter-spacing: 0.5px;">MUNICIPAL HEADQUARTERS • COMMAND CENTER</span>
+          <h2 style="font-size: 1.8rem; color: #fff;">Kanpur Central Waste Operations Room</h2>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-outline btn-sm" onclick="exportAdminReport()">📥 Export SLA Audit Log</button>
+          <button class="btn btn-neon btn-sm" onclick="refreshAdminDashboard()">🔄 Live Sync</button>
+        </div>
+      </div>
+
+      <!-- Real-Time Top KPI Row -->
+      <div class="admin-kpi-grid">
+        <div class="admin-kpi-card">
+          <div>
+            <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Total Incidents Today</span>
+            <div class="kpi-num" style="color: #fff;" id="admin-total-incidents">184</div>
+            <span style="font-size: 0.72rem; color: #00e676;">↑ 12% citizen reporting</span>
+          </div>
+          <div style="font-size: 2.2rem;">📊</div>
+        </div>
+
+        <div class="admin-kpi-card">
+          <div>
+            <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Open Pending</span>
+            <div class="kpi-num" style="color: var(--crimson);" id="admin-open-incidents">18</div>
+            <span style="font-size: 0.72rem; color: #94a3b8;">Average wait: 3.4 hrs</span>
+          </div>
+          <div style="font-size: 2.2rem;">🔴</div>
+        </div>
+
+        <div class="admin-kpi-card">
+          <div>
+            <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Resolved Under SLA</span>
+            <div class="kpi-num" style="color: var(--success);" id="admin-resolved-incidents">162</div>
+            <span style="font-size: 0.72rem; color: #00e676;">96.4% Compliance</span>
+          </div>
+          <div style="font-size: 2.2rem;">✅</div>
+        </div>
+
+        <div class="admin-kpi-card escalated">
+          <div>
+            <span style="font-size: 0.75rem; color: #ff5277; text-transform: uppercase; font-weight: 700;">Overdue Escalations</span>
+            <div class="kpi-num" style="color: #ff3366;" id="admin-escalated-incidents">4</div>
+            <span style="font-size: 0.72rem; color: #ffb703;">Requires Admin Override</span>
+          </div>
+          <div style="font-size: 2.2rem;">🚨</div>
+        </div>
+      </div>
+
+      <!-- Main Admin 2-Col Grid -->
+      <div class="admin-sections-grid">
+        
+        <!-- Left: Public Turnaround Transparency Board & Issue Breakdown -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          
+          <!-- Transparency Board -->
+          <div class="admin-card">
+            <h3>
+              <span>🏛️ Zone Turnaround Transparency Board</span>
+              <span style="font-size: 0.74rem; color: var(--cyan-neon); font-weight: 500;">Publicly Audited</span>
+            </h3>
+            <table class="custom-table" style="font-size: 0.82rem;">
+              <thead>
+                <tr>
+                  <th>Zone / Ward</th>
+                  <th>Avg Turnaround</th>
+                  <th>Resolved</th>
+                  <th>SLA %</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Kidwai Nagar (Zone 6)</td>
+                  <td><b>4.2 hrs</b></td>
+                  <td>42 / 44</td>
+                  <td><b style="color: #00e676;">95.5%</b></td>
+                  <td><span class="badge-live-pulse" style="font-size: 0.65rem;">OPTIMAL</span></td>
+                </tr>
+                <tr>
+                  <td>Kakadeo (Zone 2)</td>
+                  <td><b>3.8 hrs</b></td>
+                  <td>38 / 39</td>
+                  <td><b style="color: #00e676;">97.4%</b></td>
+                  <td><span class="badge-live-pulse" style="font-size: 0.65rem;">OPTIMAL</span></td>
+                </tr>
+                <tr>
+                  <td>Civil Lines (Zone 4)</td>
+                  <td><b>2.6 hrs</b></td>
+                  <td>31 / 31</td>
+                  <td><b style="color: #00e676;">100%</b></td>
+                  <td><span class="badge-live-pulse" style="font-size: 0.65rem;">EXCELLENT</span></td>
+                </tr>
+                <tr>
+                  <td>Govind Nagar (Zone 5)</td>
+                  <td><b>8.5 hrs</b></td>
+                  <td>28 / 34</td>
+                  <td><b style="color: #ffb703;">82.3%</b></td>
+                  <td><span style="color: #ffb703; font-size: 0.72rem;">⚠️ Delayed</span></td>
+                </tr>
+                <tr>
+                  <td>Panki (Zone 1)</td>
+                  <td><b>11.2 hrs</b></td>
+                  <td>23 / 36</td>
+                  <td><b style="color: #ff5277;">63.8%</b></td>
+                  <td><span style="color: #ff5277; font-size: 0.72rem;">🚨 High Backlog</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- AI Hotspot Predictive Forecast -->
+          <div class="admin-card">
+            <h3>
+              <span>🤖 AI Hotspot Forecast Model (Next 48 Hours)</span>
+              <span style="font-size: 0.72rem; color: #94a3b8;">Pattern prediction via historical dumps</span>
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.84rem;">
+                  <span><b>Panki Industrial Area</b> (Commercial Scrap Spike)</span>
+                  <span style="color: #ff5277; font-weight: 700;">88% Risk (High)</span>
+                </div>
+                <div class="risk-meter-bar">
+                  <div class="risk-fill" style="width: 88%; background: #ff3366;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.84rem;">
+                  <span><b>Kakadeo Coaching Hub</b> (Single-Use Beverage Cups / Polybags)</span>
+                  <span style="color: #ff9f1c; font-weight: 700;">72% Risk (Moderate)</span>
+                </div>
+                <div class="risk-meter-bar">
+                  <div class="risk-fill" style="width: 72%; background: #ff9f1c;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.84rem;">
+                  <span><b>Kidwai Nagar Sunday Mandi</b> (Organic Vegetable Waste)</span>
+                  <span style="color: #ffb703; font-weight: 700;">65% Risk (Moderate)</span>
+                </div>
+                <div class="risk-meter-bar">
+                  <div class="risk-fill" style="width: 65%; background: #ffb703;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.84rem;">
+                  <span><b>Civil Lines VIP Corridor</b></span>
+                  <span style="color: #00e676; font-weight: 700;">14% Risk (Low)</span>
+                </div>
+                <div class="risk-meter-bar">
+                  <div class="risk-fill" style="width: 14%; background: #00e676;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Escalation Desk, Repeat Offender Shame Board & Penalty Sandbox -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          
+          <!-- Escalation Desk -->
+          <div class="admin-card" style="border-color: rgba(255,51,102,0.4);">
+            <h3 style="color: #ff5277;">
+              <span>🚨 Critical Escalations (SLA Exceeded)</span>
+              <span class="badge-live-pulse" style="background: rgba(255,51,102,0.2); font-size: 0.68rem;">4 OVERDUE</span>
+            </h3>
+
+            <div class="escalation-item">
+              <div>
+                <b style="color: #fff; font-size: 0.88rem;">Panki Link Road Blackspot</b>
+                <div style="font-size: 0.74rem; color: #ff5277;">Overdue by +6 hrs • SLA Breached</div>
+                <div style="font-size: 0.72rem; color: #94a3b8;">Assigned: Zone 1 Ti-104 (Unresponsive)</div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="triggerAdminAlert('Panki Link Road', 'District Magistrate Alert Dispatched!')">
+                ⚡ Alert DM
+              </button>
+            </div>
+
+            <div class="escalation-item">
+              <div>
+                <b style="color: #fff; font-size: 0.88rem;">Govind Nagar Ratan Lal Chauraha Drain</b>
+                <div style="font-size: 0.74rem; color: #ff5277;">Overdue by +3 hrs • Heavy Choking</div>
+                <div style="font-size: 0.72rem; color: #94a3b8;">Requires Silt Suction Truck</div>
+              </div>
+              <button class="btn btn-saffron btn-sm" onclick="triggerAdminAlert('Govind Nagar Drain', 'Suction Machine Dispatched!')">
+                🚜 Dispatch
+              </button>
+            </div>
+          </div>
+
+          <!-- Repeat-Offender Blackspot "Shame Board" -->
+          <div class="admin-card">
+            <h3>
+              <span>📋 Repeat-Offender Blackspots (Surveillance)</span>
+              <span style="font-size: 0.72rem; color: #94a3b8;">CCTV Monitored</span>
+            </h3>
+            <p style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 12px;">Chronic dumping corners identified for automated fine issuance:</p>
+
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem;">
+              <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                <span>📍 Plot #14 Behind Panki Power House</span>
+                <b style="color: #ff3366;">14 Incidents • ₹25,000 Fine</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                <span>📍 Kakadeo Gurudev Cinema Lane</span>
+                <b style="color: #ff9f1c;">8 Incidents • Notice Issued</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                <span>📍 Kidwai Nagar H-Block Footover</span>
+                <b style="color: #ff9f1c;">6 Incidents • Night Patrolling</b>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fake Complaint Penalty Sandbox -->
+          <div class="admin-card">
+            <h3>
+              <span>⚖️ Fake Complaint Penalty Sandbox</span>
+              <span style="font-size: 0.72rem; color: #ff5277;">Fraud Control</span>
+            </h3>
+            <p style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 12px;">To prevent spam reports, admins can review and deduct -5 points for fraudulent photo submissions.</p>
+
+            <div style="background: rgba(255,51,102,0.05); border: 1px dashed rgba(255,51,102,0.3); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <b style="color: #fff; font-size: 0.82rem;">Suspect Report #TKT-KN-9102</b>
+                <div style="font-size: 0.72rem; color: #94a3b8;">Re-uploaded stock photo from Google</div>
+              </div>
+              <button class="btn btn-outline btn-sm" style="border-color: #ff3366; color: #ff3366;" onclick="applyFakeReportPenalty()">
+                Deduct -5 Pts & Strike
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       PAGE 6: WASTE AWARENESS HUB (LIGHT ECO THEME)
+       ========================================================================= -->
+  <section id="page-awareness" class="page-section">
+    <div class="awareness-wrapper">
+      
+      <!-- Green Pledge Banner -->
+      <div class="pledge-hero-box">
+        <div>
+          <span class="pledge-badge">EARN +20 GREEN POINTS</span>
+          <h2 style="font-size: 2.2rem; color: #0f172a; margin-bottom: 8px;">Take The Kanpur Green Swachh Pledge</h2>
+          <p style="font-size: 0.95rem; color: #475569; max-width: 620px;">
+            Commit to 100% household segregation into Wet and Dry waste, zero single-use plastic, and keeping our sacred River Ganga pristine. Receive an official certificate of honour.
+          </p>
+        </div>
+        <div>
+          <button class="btn btn-primary" onclick="takeGreenPledge()" id="btnPledge">
+            🌿 Take Citizen Pledge (+20 Pts)
+          </button>
+        </div>
+      </div>
+
+      <!-- Animated Waste Decomposition Comparison -->
+      <div class="decomp-card">
+        <h3 style="font-size: 1.4rem; color: #0f172a; margin-bottom: 6px;">⏳ How Long Does Waste Last in Our Environment?</h3>
+        <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 24px;">Understanding decomposition times is the first step towards zero-waste living:</p>
+
+        <div class="decomp-row">
+          <div class="decomp-label-strip">
+            <span>🍌 Organic Banana Peel / Fruit Scraps</span>
+            <b style="color: #0f9d58;">2 to 4 Weeks (100% Biodegradable)</b>
+          </div>
+          <div class="decomp-bar-bg">
+            <div class="decomp-bar-fill" style="width: 5%; background: #0f9d58;"></div>
+          </div>
+        </div>
+
+        <div class="decomp-row">
+          <div class="decomp-label-strip">
+            <span>📦 Cardboard Box & Paper Bags</span>
+            <b style="color: #0f9d58;">2 Months</b>
+          </div>
+          <div class="decomp-bar-bg">
+            <div class="decomp-bar-fill" style="width: 12%; background: #10b981;"></div>
+          </div>
+        </div>
+
+        <div class="decomp-row">
+          <div class="decomp-label-strip">
+            <span>🥫 Aluminum Beverage Can</span>
+            <b style="color: #f59e0b;">80 to 200 Years</b>
+          </div>
+          <div class="decomp-bar-bg">
+            <div class="decomp-bar-fill" style="width: 55%; background: #f59e0b;"></div>
+          </div>
+        </div>
+
+        <div class="decomp-row">
+          <div class="decomp-label-strip">
+            <span>🧴 Single-Use Plastic Water Bottle</span>
+            <b style="color: #ef4444;">450 Years (Breaks into Toxic Microplastics)</b>
+          </div>
+          <div class="decomp-bar-bg">
+            <div class="decomp-bar-fill" style="width: 85%; background: #ef4444;"></div>
+          </div>
+        </div>
+
+        <div class="decomp-row">
+          <div class="decomp-label-strip">
+            <span>🍾 Glass Bottle</span>
+            <b style="color: #9333ea;">1,000,000+ Years (Endlessly Recyclable)</b>
+          </div>
+          <div class="decomp-bar-bg">
+            <div class="decomp-bar-fill" style="width: 98%; background: #9333ea;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive 4-Bin Waste Segregation Station -->
+      <div class="segregation-station">
+        <h3 style="font-size: 1.4rem; color: #0f172a; margin-bottom: 6px;">♻️ Interactive Segregation Simulator</h3>
+        <p style="font-size: 0.88rem; color: #64748b;">Click an item from the dock, then click the correct colored bin to sort it:</p>
+
+        <!-- Selected Item Indicator -->
+        <div style="margin: 12px 0 6px; font-size: 0.84rem; font-weight: 600; color: #0f172a;" id="segregationPrompt">
+          Selected item: <span id="currentSelectedWaste" style="color: var(--emerald); font-weight: 700;">None (Click an item below)</span>
+        </div>
+
+        <!-- Draggable / Clickable Waste Chips -->
+        <div class="waste-items-dock" id="wasteDock">
+          <div class="waste-item-chip" onclick="selectWasteItem('Apple Core / Sabzi Scraps', 'wet', this)">🍎 Apple Core / Sabzi Scraps</div>
+          <div class="waste-item-chip" onclick="selectWasteItem('Plastic Milk Pouch', 'dry', this)">🥛 Plastic Milk Pouch</div>
+          <div class="waste-item-chip" onclick="selectWasteItem('Used AA Battery', 'haz', this)">🔋 Used AA Battery</div>
+          <div class="waste-item-chip" onclick="selectWasteItem('Broken Smartphone', 'ewaste', this)">📱 Broken Smartphone</div>
+          <div class="waste-item-chip" onclick="selectWasteItem('Cardboard Amazon Box', 'dry', this)">📦 Cardboard Box</div>
+          <div class="waste-item-chip" onclick="selectWasteItem('Expired Antibiotic Strips', 'haz', this)">💊 Expired Medicine Strips</div>
+        </div>
+
+        <!-- 4 Bins -->
+        <div class="bins-grid">
+          <div class="eco-bin-card bin-wet" onclick="dropIntoBin('wet')">
+            <div>
+              <div style="font-size: 2rem;">🟢</div>
+              <h4 style="font-size: 1.1rem; margin-top: 4px;">Green Bin</h4>
+              <span style="font-size: 0.78rem; opacity: 0.9;">Wet / Organic Waste</span>
+            </div>
+            <p style="font-size: 0.74rem; opacity: 0.85; margin-top: 10px;">Kitchen scraps, vegetable peels, tea leaves, garden cuttings. Converted to municipal compost.</p>
+          </div>
+
+          <div class="eco-bin-card bin-dry" onclick="dropIntoBin('dry')">
+            <div>
+              <div style="font-size: 2rem;">🔵</div>
+              <h4 style="font-size: 1.1rem; margin-top: 4px;">Blue Bin</h4>
+              <span style="font-size: 0.78rem; opacity: 0.9;">Dry / Recyclables</span>
+            </div>
+            <p style="font-size: 0.74rem; opacity: 0.85; margin-top: 10px;">Clean paper, cardboard, PET bottles, tins, clean milk pouches. Sent to baling plants.</p>
+          </div>
+
+          <div class="eco-bin-card bin-haz" onclick="dropIntoBin('haz')">
+            <div>
+              <div style="font-size: 2rem;">🔴</div>
+              <h4 style="font-size: 1.1rem; margin-top: 4px;">Red Bin</h4>
+              <span style="font-size: 0.78rem; opacity: 0.9;">Domestic Hazardous</span>
+            </div>
+            <p style="font-size: 0.74rem; opacity: 0.85; margin-top: 10px;">Medicines, sanitary waste, paints, insecticide sprays, CFL bulbs. Incinerated safely.</p>
+          </div>
+
+          <div class="eco-bin-card bin-ewaste" onclick="dropIntoBin('ewaste')">
+            <div>
+              <div style="font-size: 2rem;">🟡</div>
+              <h4 style="font-size: 1.1rem; margin-top: 4px;">Yellow Bin</h4>
+              <span style="font-size: 0.78rem; opacity: 0.9;">E-Waste</span>
+            </div>
+            <p style="font-size: 0.74rem; opacity: 0.85; margin-top: 10px;">Wires, chargers, old phones, motherboards, batteries. Sent to authorized recyclers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3R Action Cards & Do / Don't Guide -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
+        <!-- Do's -->
+        <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 18px; padding: 24px;">
+          <h4 style="color: #166534; font-size: 1.15rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            ✅ The Kanpur Citizen "DO's"
+          </h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: #14532d;">
+            <li>✓ Rinse milk bags and food plastic containers before dry disposal.</li>
+            <li>✓ Keep separate green and blue dustbins at your home entrance.</li>
+            <li>✓ Hand over hazardous sanitary waste wrapped in paper marked with a red dot.</li>
+            <li>✓ Carry your own cloth bag whenever visiting Kidwai Nagar or Naveen Market.</li>
+          </ul>
+        </div>
+
+        <!-- Don'ts -->
+        <div style="background: #fef2f2; border: 1.5px solid #fca5a5; border-radius: 18px; padding: 24px;">
+          <h4 style="color: #991b1b; font-size: 1.15rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            ❌ The Kanpur Citizen "DON'Ts"
+          </h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: #7f1d1d;">
+            <li>✗ Never mix wet food scraps with dry paper or plastic recyclables.</li>
+            <li>✗ Never throw waste into open roadside drains or the holy River Ganga.</li>
+            <li>✗ Never burn dry leaves or plastic waste in the winter (Severe Air Quality Hazard).</li>
+            <li>✗ Never dump construction malba on roadside public walking paths.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Myth vs Fact 3D Flip Cards -->
+      <h3 style="font-size: 1.4rem; color: #0f172a; margin-bottom: 6px;">🧠 Waste Myths vs Facts (Click Card to Flip)</h3>
+      <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 20px;">Busting common municipal waste misconceptions:</p>
+
+      <div class="flip-grid">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <span style="font-size: 0.75rem; color: #ef4444; font-weight: 700;">MYTH #1</span>
+              <p style="font-weight: 700; margin-top: 10px; font-size: 1rem;">"The municipal collection truck mixes all waste together anyway."</p>
+              <small style="color: #64748b; margin-top: 12px;">Click to reveal truth 🔄</small>
+            </div>
+            <div class="flip-back">
+              <span style="font-size: 0.75rem; color: #a7f3d0; font-weight: 700;">FACT</span>
+              <p style="font-size: 0.88rem; margin-top: 8px;">All 240+ KMC tippers have partitioned twin chambers. Segregated waste goes straight to the Panki Composting Plant!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <span style="font-size: 0.75rem; color: #ef4444; font-weight: 700;">MYTH #2</span>
+              <p style="font-weight: 700; margin-top: 10px; font-size: 1rem;">"Paper cups and beverage cartons are 100% eco-friendly paper."</p>
+              <small style="color: #64748b; margin-top: 12px;">Click to reveal truth 🔄</small>
+            </div>
+            <div class="flip-back">
+              <span style="font-size: 0.75rem; color: #a7f3d0; font-weight: 700;">FACT</span>
+              <p style="font-size: 0.88rem; margin-top: 8px;">They are lined with an invisible 5% polyethylene plastic membrane and require specialized hydro-pulping to recycle.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <span style="font-size: 0.75rem; color: #ef4444; font-weight: 700;">MYTH #3</span>
+              <p style="font-weight: 700; margin-top: 10px; font-size: 1rem;">"Citizen waste reports on portals are never tracked by real officers."</p>
+              <small style="color: #64748b; margin-top: 12px;">Click to reveal truth 🔄</small>
+            </div>
+            <div class="flip-back">
+              <span style="font-size: 0.75rem; color: #a7f3d0; font-weight: 700;">FACT</span>
+              <p style="font-size: 0.88rem; margin-top: 8px;">On SwachhSetu, all tickets have a live 24-hr countdown timer. Overdue tickets auto-escalate directly to the Municipal Commissioner!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eco-Warrior Quiz -->
+      <div class="quiz-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span style="font-size: 0.76rem; font-weight: 700; color: #0f9d58; text-transform: uppercase;">KNOWLEDGE CHECK</span>
+            <h3 style="font-size: 1.35rem; color: #0f172a; margin-top: 2px;">Smart City Eco-Quiz</h3>
+          </div>
+          <span style="background: #e6f6ee; color: #0f9d58; font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 20px;">
+            EARN +5 PTS PER CORRECT ANSWER
+          </span>
+        </div>
+
+        <p style="font-size: 0.95rem; font-weight: 600; color: #334155; margin-top: 16px;" id="quizQuestion">
+          Q1: Which colored bin should you use to dispose of an expired blister pack of tablets?
+        </p>
+
+        <div class="quiz-options-list" id="quizOptionsList">
+          <button class="quiz-opt-btn" onclick="checkQuizAnswer(0, this)">A) Green Bin (Wet Organic Waste)</button>
+          <button class="quiz-opt-btn" onclick="checkQuizAnswer(1, this)">B) Blue Bin (Dry Recyclables)</button>
+          <button class="quiz-opt-btn" onclick="checkQuizAnswer(2, this)">C) Red Bin (Domestic Hazardous Waste)</button>
+          <button class="quiz-opt-btn" onclick="checkQuizAnswer(3, this)">D) Black Dustbin</button>
+        </div>
+
+        <div id="quizFeedback" style="display: none; padding: 12px; border-radius: 8px; font-size: 0.88rem; margin-top: 10px;"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       FLOATING 1-MINUTE HACKATHON JUDGE DEMO GUIDE DRAWER
+       ========================================================================= -->
+  <div class="judge-drawer" id="judgeDrawer">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+      <div>
+        <span style="font-size: 0.72rem; color: var(--cyan-neon); font-weight: 700;">HACKATHON WINNING PRESENTATION</span>
+        <h3 style="font-size: 1.15rem; color: #fff;">1-Minute Pitch Script</h3>
+      </div>
+      <button class="drawer-close-btn" onclick="toggleDemoDrawer()">✕</button>
+    </div>
+
+    <p style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 18px;">
+      Follow these 6 rapid steps to demonstrate the end-to-end SwachhSetu citizen-to-administration loop to the judges in 60 seconds:
+    </p>
+
+    <!-- Step 1 -->
+    <div class="demo-step-button active" onclick="executeDemoStep(1)">
+      <div class="demo-step-num">1</div>
+      <div>
+        <b style="color: #fff;">Home & Problem Statement (0:00 - 0:10)</b>
+        <p style="font-size: 0.74rem; color: #94a3b8; margin-top: 2px;">
+          <i>Say:</i> "Traditional complaints have no deadlines or tracking. SwachhSetu introduces SLA-enforced 24-hr resolution with civic rewards."
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="demo-step-button" onclick="executeDemoStep(2)">
+      <div class="demo-step-num">2</div>
+      <div>
+        <b style="color: #fff;">Awareness Hub & Citizen Pledge (0:10 - 0:20)</b>
+        <p style="font-size: 0.74rem; color: #94a3b8; margin-top: 2px;">
+          <i>Say:</i> "Citizens take the Green Pledge for +20 pts, learn 4-bin segregation, and take gamified eco-quizzes."
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="demo-step-button" onclick="executeDemoStep(3)">
+      <div class="demo-step-num">3</div>
+      <div>
+        <b style="color: #fff;">Live GIS Map & Worker Dispatch (0:20 - 0:35)</b>
+        <p style="font-size: 0.74rem; color: #fff; margin-top: 2px;">
+          <i>Say:</i> "Watch Kanpur GIS map: Red pulsating hotspot in Kidwai Nagar. Click 'Dispatch'—the EV truck navigates to the spot, turns orange, then green!"
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="demo-step-button" onclick="executeDemoStep(4)">
+      <div class="demo-step-num">4</div>
+      <div>
+        <b style="color: #fff;">Citizen Login & AI Photo Spotting (0:35 - 0:45)</b>
+        <p style="font-size: 0.74rem; color: #94a3b8; margin-top: 2px;">
+          <i>Say:</i> "Citizen logs in with OTP, snaps photo proof with auto-GPS coordinates. Instant +10 Green Points awarded!"
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="demo-step-button" onclick="executeDemoStep(5)">
+      <div class="demo-step-num">5</div>
+      <div>
+        <b style="color: #fff;">Review & Redeem Bazaar (0:45 - 0:52)</b>
+        <p style="font-size: 0.74rem; color: #94a3b8; margin-top: 2px;">
+          <i>Say:</i> "Citizen reviews resolved ticket with 5 stars (+5 pts), and redeems points for Kanpur Municipal Property Tax rebates."
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="demo-step-button" onclick="executeDemoStep(6)">
+      <div class="demo-step-num">6</div>
+      <div>
+        <b style="color: #fff;">Admin Command & AI Hotspot Forecast (0:52 - 1:00)</b>
+        <p style="font-size: 0.74rem; color: #94a3b8; margin-top: 2px;">
+          <i>Say:</i> "Real-time KPIs, zone turnaround transparency board, predictive AI forecast, and 1-click District Magistrate escalation."
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top: auto; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.74rem; color: #64748b; text-align: center;">
+      Built by <b>Team HackHives</b> • BCA 1st Sem • Spectrums
+    </div>
+  </div>
+
+  <!-- Digital Reward Coupon / Certificate Modal -->
+  <div class="modal-overlay" id="commonModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="color: #fff; font-size: 1.25rem;" id="modalTitle">Municipal Voucher</h3>
+        <button style="background: none; border: none; color: #94a3b8; font-size: 1.4rem; cursor: pointer;" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalBody" style="font-size: 0.88rem; color: #cbd5e1;"></div>
+      <div style="margin-top: 20px; text-align: right;">
+        <button class="btn btn-neon btn-sm" onclick="closeModal()">Done / Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- =========================================================================
+       APP FOOTER
+       ========================================================================= -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+          <div class="logo-emblem" style="width: 32px; height: 32px; font-size: 1rem;">SS</div>
+          <b style="color: #fff; font-size: 1.1rem;">SwachhSetu (स्वच्छ सेतु)</b>
+        </div>
+        <p style="font-size: 0.8rem; max-width: 480px; color: #94a3b8;">
+          Smart Waste Management Portal developed for Kanpur Municipal Corporation by <b>Team HackHives</b> (BCA 1st Semester, Spectrums).
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 24px; font-size: 0.8rem;">
+        <div>
+          <b style="color: #fff; display: block; margin-bottom: 6px;">Technical Stack</b>
+          <div>Flask • SQLite • Argon2 • Leaflet.js</div>
+          <div>Vanilla JS • SVG Telemetry • Space Grotesk</div>
+        </div>
+        <div>
+          <b style="color: #fff; display: block; margin-bottom: 6px;">Civic Metrics</b>
+          <div>96.4% SLA Compliance</div>
+          <div>10 Active Kanpur Municipal Wards</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       JAVASCRIPT LOGIC (SINGLE-PAGE APPLICATION ENGINE)
+       ========================================================================= -->
+  <script>
+    /* ==========================================================================
+       1. DATA STATE & CONFIGURATION
+       ========================================================================== */
+    const APP_STATE = {
+      currentPage: 'home',
+      currentLang: 'en',
+      soundEnabled: true,
+      user: {
+        isLoggedIn: true,
+        role: 'citizen', // 'citizen', 'supervisor', 'admin'
+        name: 'Rohan Sharma',
+        ward: 'Kidwai Nagar (Ward 6)',
+        points: 120,
+        mobile: '+91 98765 43210'
+      },
+      // Kanpur GIS Map Hotspots
+      hotspots: [
+        {
+          id: 'TKT-KN-8921',
+          title: 'Overflowing Commercial Waste Bin',
+          category: 'Overflowing Bins',
+          ward: 'Kidwai Nagar (Ward 6)',
+          x: 580,
+          y: 410,
+          lat: 26.4382,
+          lng: 80.3458,
+          severity: 'high',
+          status: 'open', // 'open', 'in_progress', 'resolved'
+          slaRemaining: 19800, // seconds (~5h 30m)
+          photo: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&auto=format&fit=crop&q=80',
+          aiTag: '🤖 AI Verified: 94.2% Plastic Debris',
+          reporter: 'Rohan Sharma (+10 Pts Awarded)',
+          assignedWorker: 'Raju Kumar (EV Tipper #101)',
+          workerDist: '1.2 km away'
+        },
+        {
+          id: 'TKT-KN-8922',
+          title: 'Construction Malba & Road Litter',
+          category: 'Garbage on Road',
+          ward: 'Govind Nagar (Ward 5)',
+          x: 340,
+          y: 420,
+          lat: 26.4410,
+          lng: 80.3150,
+          severity: 'med',
+          status: 'open',
+          slaRemaining: 34200, // ~9h 30m
+          photo: 'https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=600&auto=format&fit=crop&q=80',
+          aiTag: '🤖 AI Verified: 89.5% Debris & Silt',
+          reporter: 'Vikas Gupta (+10 Pts Awarded)',
+          assignedWorker: 'Amit Verma (Sweeper Crew #102)',
+          workerDist: '2.1 km away'
+        },
+        {
+          id: 'TKT-KN-8923',
+          title: 'Discarded Polybags & E-Waste Dumping',
+          category: 'E-Waste / Plastic',
+          ward: 'Kakadeo (Ward 2)',
+          x: 260,
+          y: 240,
+          lat: 26.4720,
+          lng: 80.2980,
+          severity: 'high',
+          status: 'open',
+          slaRemaining: 48600, // ~13h 30m
+          photo: 'https://images.unsplash.com/photo-1595278069441-2cf29f8005a4?w=600&auto=format&fit=crop&q=80',
+          aiTag: '🤖 AI Verified: 92.4% Polyethylene & Lithium',
+          reporter: 'Pooja Tiwari (+10 Pts Awarded)',
+          assignedWorker: 'Sunita Devi (EV Van #103)',
+          workerDist: '0.8 km away'
+        },
+        {
+          id: 'TKT-KN-8924',
+          title: 'Choked Storm Drain Sludge',
+          category: 'Drain Blockage',
+          ward: 'Civil Lines (Ward 4)',
+          x: 680,
+          y: 170,
+          lat: 26.4750,
+          lng: 80.3540,
+          severity: 'high',
+          status: 'open',
+          slaRemaining: 15400, // ~4h 16m
+          photo: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&auto=format&fit=crop&q=80',
+          aiTag: '🤖 AI Verified: 95.0% Sludge & Plastic Choke',
+          reporter: 'Anand Bajpai (+10 Pts Awarded)',
+          assignedWorker: 'Vikram Singh (Suction Truck #104)',
+          workerDist: '1.9 km away'
+        },
+        {
+          id: 'TKT-KN-8919',
+          title: 'Panki Industrial Bypass Waste Spot',
+          category: 'Illegal Dumping',
+          ward: 'Panki (Ward 1)',
+          x: 100,
+          y: 290,
+          lat: 26.4520,
+          lng: 80.2450,
+          severity: 'high',
+          status: 'in_progress',
+          slaRemaining: 8200,
+          photo: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&auto=format&fit=crop&q=80',
+          aiTag: '🤖 AI Verified: Heavy Industrial Dump',
+          reporter: 'Mohan Lal (+10 Pts Awarded)',
+          assignedWorker: 'Rajesh Rawat (Crew #105)',
+          workerDist: '0.4 km away'
+        }
+      ],
+      // Sanitation Crew database
+      workers: [
+        { id: 101, name: 'Raju Kumar', vehicle: 'EV Tipper #101', zone: 'Kidwai Nagar', status: 'Available', rating: '4.9' },
+        { id: 102, name: 'Amit Verma', vehicle: 'Road Sweeper #102', zone: 'Govind Nagar', status: 'En route', rating: '4.8' },
+        { id: 103, name: 'Sunita Devi', vehicle: 'Mini EV Van #103', zone: 'Kakadeo', status: 'Available', rating: '5.0' },
+        { id: 104, name: 'Vikram Singh', vehicle: 'Suction Unit #104', zone: 'Civil Lines', status: 'Available', rating: '4.7' },
+        { id: 105, name: 'Rajesh Rawat', vehicle: 'Compactor #105', zone: 'Panki', status: 'On duty', rating: '4.6' }
+      ],
+      activeInspectedTicket: null
+    };
+
+    /* ==========================================================================
+       2. TRANSLATION DICTIONARY (ENGLISH & HINDI)
+       ========================================================================== */
+    const TRANSLATIONS = {
+      en: {
+        top_live_status: "KANPUR SMART CITY LIVE",
+        top_banner_text: "Swachh Survekshan Mission 2026 • Real-time SLA Enforced",
+        judge_guide_btn: "1-Min Judge Demo Guide",
+        team_badge: "Team HackHives • BCA 1st Sem • Spectrums",
+        nav_home: "Home",
+        nav_tracking: "Live Tracking",
+        nav_login: "Portal & Report",
+        nav_rewards: "Rewards & Rating",
+        nav_admin: "Admin Control",
+        nav_awareness: "Awareness Hub",
+        hero_badge: "Kanpur Municipal Corporation (KMC) Portal",
+        hero_title_1: "Every Spot Cleaned.",
+        hero_title_2: "Every Citizen Rewarded.",
+        hero_desc: "SwachhSetu bridges Citizens, Zone Supervisors, and Municipal Sanitation Crews in a closed, SLA-guaranteed transparent loop. Spot waste with GPS, track real-time cleanup, and earn redeemable Green Points.",
+        btn_report_waste: "📸 Spot & Report Waste (+10 Pts)",
+        btn_view_map: "🗺️ Explore Live Kanpur Map",
+        btn_green_pledge: "🌿 Green Pledge (+20 Pts)",
+        stat_sla: "SLA On-Time Cleanup",
+        stat_hours: "Resolution Target SLA",
+        stat_wards: "Active Kanpur Zones",
+        stat_points: "Earned Per Valid Report",
+        how_sub: "Citizen-Centric Loop",
+        how_title: "How SwachhSetu Solves The Problem",
+        how_lead: "Traditional complaints fall into a black hole with no tracking or deadlines. SwachhSetu enforces automated accountability with rewards.",
+        step1_title: "Spot & Report",
+        step1_desc: "Take a photo, verify AI waste classification, and drop an auto-GPS pin. Ticket is auto-routed to the specific Kanpur Ward Supervisor instantly.",
+        step2_title: "SLA-Timed Cleanup",
+        step2_desc: "A strict 24-48 hr countdown timer begins. Nearest sanitation worker is dispatched with route navigation. Before-and-after photo proof is strictly required.",
+        step3_title: "Review & Earn",
+        step3_desc: "Verify resolution photo proof. Rate cleanup 1 to 5 stars. Reopen in one click if unsatisfactory, or close and earn an extra +5 bonus reward points.",
+        issues_sub: "Categorized Resolution",
+        issues_title: "6 Municipal Waste Categories",
+        issues_lead: "Select any category to quickly launch a report or inspect active ward incidents.",
+        issue_1_title: "Overflowing Bins",
+        issue_1_desc: "Commercial or residential public waste bins spilling onto sidewalks and attracting stray animals.",
+        issue_2_title: "Garbage on Road",
+        issue_2_desc: "Scattered street litter, construction debris, or road sweeping waste left unattended.",
+        issue_3_title: "Missed Collection",
+        issue_3_desc: "Municipal door-to-door morning collection tipper skipped your street or housing lane.",
+        issue_4_title: "Illegal Dumping",
+        issue_4_desc: "Commercial bulk dumping on vacant plots, river banks, or railway corridors.",
+        issue_5_title: "E-Waste & Toxic Plastic",
+        issue_5_desc: "Discarded electronics, lithium batteries, and banned single-use plastic consignments.",
+        issue_6_title: "Drain Blockage",
+        issue_6_desc: "Clogged storm drains and nallahs filled with silt and polythene causing waterlogging.",
+        cta_title: "Transform Kanpur Into India's Cleanest City",
+        cta_desc: "Join 42,000+ active citizens on SwachhSetu. Spot waste in your colony, earn Green Points, and redeem property tax rebates and saplings.",
+        cta_btn_start: "Get Started Now"
+      },
+      hi: {
+        top_live_status: "कानपुर स्मार्ट सिटी लाइव",
+        top_banner_text: "स्वच्छ सर्वेक्षण मिशन 2026 • रियल-टाइम समय सीमा लागू",
+        judge_guide_btn: "1-मिनट जज डेमो गाइड",
+        team_badge: "टीम हैकहाइव्स • बीसीए प्रथम सत्र • स्पेक्ट्रम्स",
+        nav_home: "होम",
+        nav_tracking: "लाइव ट्रैकिंग",
+        nav_login: "पोर्टल और रिपोर्ट",
+        nav_rewards: "इनाम और रेटिंग",
+        nav_admin: "प्रशासन नियंत्रण",
+        nav_awareness: "जागरूकता केंद्र",
+        hero_badge: "कानपुर नगर निगम (KMC) अधिकृत पोर्टल",
+        hero_title_1: "हर कचरा साफ।",
+        hero_title_2: "हर नागरिक पुरस्कृत।",
+        hero_desc: "स्वच्छ सेतु नागरिकों, जोनल सुपरवाइजरों और सफाई कर्मचारियों को एक पारदर्शी, समयबद्ध प्रणाली में जोड़ता है। जीपीएस से कचरा रिपोर्ट करें, सफाई ट्रैक करें और ग्रीन पॉइंट्स जीतें।",
+        btn_report_waste: "📸 कचरा रिपोर्ट करें (+10 अंक)",
+        btn_view_map: "🗺️ कानपुर लाइव मैप देखें",
+        btn_green_pledge: "🌿 हरित संकल्प लें (+20 अंक)",
+        stat_sla: "समय पर सफाई दर",
+        stat_hours: "निवारण समय सीमा",
+        stat_wards: "सक्रिय कानपुर वार्ड",
+        stat_points: "प्रति रिपोर्ट रिवॉर्ड",
+        how_sub: "नागरिक केंद्रित प्रणाली",
+        how_title: "स्वच्छ सेतु समस्या का समाधान कैसे करता है",
+        how_lead: "पारंपरिक शिकायतों पर कोई समय सीमा या ट्रैकिंग नहीं होती। स्वच्छ सेतु गारंटीड समय सीमा और नागरिक पुरस्कारों के साथ पारदर्शिता लाता है।",
+        step1_title: "फोटो खींचें और रिपोर्ट करें",
+        step1_desc: "कचरे की फोटो खींचें, एआई से वर्गीकरण देखें और जीपीएस लोकेशन भेजें। शिकायत तुरंत आपके वार्ड सुपरवाइजर तक पहुँचती है।",
+        step2_title: "समयबद्ध 24 घंटे सफाई",
+        step2_desc: "24-घंटे का उल्टी गिनती टाइमर शुरू होता है। नजदीकी सफाई कर्मचारी जीपीएस रूट से रवाना होता है। सफाई के बाद फोटो प्रूफ अनिवार्य है।",
+        step3_title: "समीक्षा करें और अंक पाएं",
+        step3_desc: "सफाई की फोटो जांचें। 1 से 5 स्टार रेटिंग दें। असंतोषजनक होने पर एक क्लिक में दोबारा खोलें, या बंद करके +5 बोनस अंक पाएं।",
+        issues_sub: "श्रेणीबद्ध निवारण",
+        issues_title: "6 मुख्य नगर निगम कचरा श्रेणियां",
+        issues_lead: "तुरंत रिपोर्ट करने या सक्रिय घटनाओं को देखने के लिए किसी भी श्रेणी पर क्लिक करें।",
+        issue_1_title: "ओवरफ्लो कूड़ेदान",
+        issue_1_desc: "सार्वजनिक कूड़ेदान जो भरकर सड़क पर गिर रहे हैं और आवारा पशुओं को आकर्षित कर रहे हैं।",
+        issue_2_title: "सड़क पर कचरा / मलबा",
+        issue_2_desc: "गलियों या मुख्य सड़कों पर बिखरा कचरा या निर्माण सामग्री।",
+        issue_3_title: "कूड़ा गाड़ी छूटना",
+        issue_3_desc: "सुबह घर-घर आने वाली नगर निगम की कचरा गाड़ी आपके मोहल्ले में नहीं आई।",
+        issue_4_title: "अवैध डंपिंग",
+        issue_4_desc: "खाली प्लॉटों या गंगा किनारे भारी मात्रा में अवैध रूप से कचरा फेंकना।",
+        issue_5_title: "ई-कचरा व प्रतिबंधित प्लास्टिक",
+        issue_5_desc: "पुराने इलेक्ट्रॉनिक उपकरण, बैटरियां और प्रतिबंधित सिंगल-यूज प्लास्टिक।",
+        issue_6_title: "नाली जाम / जलभराव",
+        issue_6_desc: "पॉलिथीन और गाद से भरी बंद नालियां जिनसे गंदा पानी भर रहा है।",
+        cta_title: "कानपुर को भारत का सबसे स्वच्छ शहर बनाएं",
+        cta_desc: "स्वच्छ सेतु पर 42,000+ नागरिकों से जुड़ें। कचरा रिपोर्ट करें, ग्रीन पॉइंट्स कमाएं और हाउस टैक्स में छूट पाएं।",
+        cta_btn_start: "अभी शुरू करें"
+      }
+    };
+
+    /* ==========================================================================
+       3. SYNTHESIZED WEB AUDIO SFX (No External Files Required)
+       ========================================================================== */
+    let audioCtx = null;
+
+    function playSound(type) {
+      if (!APP_STATE.soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const now = audioCtx.currentTime;
+
+        if (type === 'click') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.06);
+        } else if (type === 'points') {
+          // Playful ascending chime
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.07);
+            gain.gain.setValueAtTime(0.12, now + i * 0.07);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.25);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + i * 0.07);
+            osc.stop(now + i * 0.07 + 0.26);
+          });
+        } else if (type === 'dispatch') {
+          // Siren whistle
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(400, now);
+          osc.frequency.linearRampToValueAtTime(850, now + 0.2);
+          osc.frequency.linearRampToValueAtTime(500, now + 0.4);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.45);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.45);
+        } else if (type === 'success') {
+          // Rich chord
+          [440, 554.37, 659.25].forEach(freq => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+            gain.gain.setValueAtTime(0.1, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.5);
+          });
+        }
+      } catch (e) {
+        console.warn('Audio not allowed or supported', e);
+      }
+    }
+
+    function toggleSound() {
+      APP_STATE.soundEnabled = !APP_STATE.soundEnabled;
+      const btn = document.getElementById('soundBtn');
+      if (APP_STATE.soundEnabled) {
+        btn.innerHTML = '🔊';
+        btn.title = 'Audio Sound Effects: Enabled';
+        showToast('Sound effects enabled', 'success');
+        playSound('click');
+      } else {
+        btn.innerHTML = '🔇';
+        btn.title = 'Audio Sound Effects: Muted';
+        showToast('Sound effects muted', 'warning');
+      }
+    }
+
+    /* ==========================================================================
+       4. PAGE NAVIGATION & DYNAMIC THEMES
+       ========================================================================== */
+    function switchPage(pageId) {
+      playSound('click');
+      APP_STATE.currentPage = pageId;
+
+      // Update active nav tab
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      const activeNav = document.getElementById('nav-' + pageId);
+      if (activeNav) activeNav.classList.add('active');
+
+      // Update visible page section
+      document.querySelectorAll('.page-section').forEach(sec => {
+        sec.classList.remove('active-page');
+      });
+      const targetPage = document.getElementById('page-' + pageId);
+      if (targetPage) {
+        targetPage.classList.add('active-page');
+      }
+
+      // Theme logic: Home & Awareness are Light; Tracking, Login, Rewards, Admin are Dark
+      if (pageId === 'home' || pageId === 'awareness') {
+        document.body.classList.remove('dark-view');
+      } else {
+        document.body.classList.add('dark-view');
+      }
+
+      // Page-specific initialization
+      if (pageId === 'tracking') {
+        renderMapHotspots();
+        renderWorkerList();
+      } else if (pageId === 'rewards') {
+        updateRewardsView();
+      } else if (pageId === 'admin') {
+        updateAdminKPIs();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ==========================================================================
+       5. LANGUAGE TOGGLE (ENGLISH / HINDI)
+       ========================================================================== */
+    function toggleLanguage() {
+      playSound('click');
+      APP_STATE.currentLang = (APP_STATE.currentLang === 'en') ? 'hi' : 'en';
+      const isHi = APP_STATE.currentLang === 'hi';
+      
+      document.getElementById('langFlag').innerText = isHi ? '🇬🇧' : '🇮🇳';
+      document.getElementById('langLabel').innerText = isHi ? 'English' : 'हिन्दी';
+
+      // Update elements with data-i18n
+      const dict = TRANSLATIONS[APP_STATE.currentLang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.innerText = dict[key];
+        }
+      });
+
+      showToast(isHi ? 'भाषा बदलकर हिन्दी कर दी गई' : 'Language switched to English', 'success');
+    }
+
+    /* ==========================================================================
+       6. LIVE TRACKING & KANPUR SVG MAP LOGIC
+       ========================================================================== */
+    function renderMapHotspots(filter = 'all') {
+      const group = document.getElementById('hotspotsGroup');
+      if (!group) return;
+      group.innerHTML = '';
+
+      let openCount = 0;
+
+      APP_STATE.hotspots.forEach(spot => {
+        if (filter !== 'all' && spot.status !== filter) return;
+        if (spot.status === 'open') openCount++;
+
+        const node = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        node.setAttribute('class', 'hotspot-node');
+        node.setAttribute('id', 'node-' + spot.id);
+        node.setAttribute('transform', `translate(${spot.x}, ${spot.y})`);
+        node.onclick = () => inspectTicket(spot.id);
+
+        let color = '#ff3366';
+        let glowUrl = 'url(#redGlow)';
+        if (spot.status === 'in_progress') {
+          color = '#ff9f1c';
+          glowUrl = 'url(#orangeGlow)';
+        } else if (spot.status === 'resolved') {
+          color = '#00e676';
+          glowUrl = 'url(#greenGlow)';
+        }
+
+        const size = spot.severity === 'high' ? 14 : 10;
+
+        node.innerHTML = `
+          <!-- Pulsing Radar Ring -->
+          <circle class="pulse-ring" cx="0" cy="0" r="10" fill="none" stroke="${color}" stroke-width="2" />
+          <!-- Glow halo -->
+          <circle cx="0" cy="0" r="${size + 8}" fill="${glowUrl}" />
+          <!-- Core spot dot -->
+          <circle cx="0" cy="0" r="${size}" fill="${color}" stroke="#ffffff" stroke-width="2" />
+          <!-- Label -->
+          <text x="0" y="${size + 14}" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="700" style="text-shadow: 0 1px 4px #000;">
+            ${spot.ward.split('(')[0]}
+          </text>
+        `;
+
+        group.appendChild(node);
+      });
+
+      const countEl = document.getElementById('count-open');
+      if (countEl) countEl.innerText = openCount;
+
+      // Ensure first ticket is inspected if none active
+      if (!APP_STATE.activeInspectedTicket) {
+        inspectTicket(APP_STATE.hotspots[0].id);
+      }
+    }
+
+    function inspectTicket(ticketId) {
+      playSound('click');
+      const spot = APP_STATE.hotspots.find(s => s.id === ticketId);
+      if (!spot) return;
+
+      APP_STATE.activeInspectedTicket = spot;
+
+      document.getElementById('inspectTicketId').innerText = spot.id;
+      document.getElementById('inspectTitle').innerText = spot.title;
+      document.getElementById('inspectWard').innerText = spot.ward;
+      document.getElementById('inspectCoords').innerText = `${spot.lat}° N, ${spot.lng}° E`;
+      document.getElementById('inspectReporter').innerText = spot.reporter;
+      document.getElementById('inspectPhoto').src = spot.photo;
+      document.getElementById('inspectAiTag').innerText = spot.aiTag;
+      document.getElementById('nearestWorkerName').innerText = spot.assignedWorker;
+      document.getElementById('nearestWorkerDist').innerText = spot.workerDist;
+
+      // Status Styling
+      const statusEl = document.getElementById('inspectStatus');
+      const dispatchBtn = document.getElementById('btnDispatchWorker');
+
+      if (spot.status === 'open') {
+        statusEl.innerHTML = '<span style="color: var(--crimson);">🔴 Open (Awaiting Dispatch)</span>';
+        dispatchBtn.innerHTML = '🚀 Dispatch Crew & Start Resolution';
+        dispatchBtn.disabled = false;
+        dispatchBtn.style.opacity = '1';
+      } else if (spot.status === 'in_progress') {
+        statusEl.innerHTML = '<span style="color: var(--saffron);">🟠 Crew En Route (In Progress)</span>';
+        dispatchBtn.innerHTML = '⚡ Crew Working On Site...';
+        dispatchBtn.disabled = true;
+        dispatchBtn.style.opacity = '0.7';
+      } else if (spot.status === 'resolved') {
+        statusEl.innerHTML = '<span style="color: var(--success);">🟢 Resolved & Cleaned (+10 Pts)</span>';
+        dispatchBtn.innerHTML = '✅ Issue Cleaned & Verified';
+        dispatchBtn.disabled = true;
+        dispatchBtn.style.opacity = '0.7';
+      }
+
+      // Severity badge
+      const sevEl = document.getElementById('inspectSeverity');
+      sevEl.className = 'severity-badge ' + (spot.severity === 'high' ? 'severity-high' : 'severity-med');
+      sevEl.innerText = spot.severity.toUpperCase() + ' SEVERITY';
+
+      // Update external Google Maps links
+      const gmapsView = document.getElementById('btnGmapsView');
+      const gmapsNav = document.getElementById('btnGmapsNav');
+      gmapsView.href = `https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lng}`;
+      gmapsNav.href = `https://www.google.com/maps/dir/?api=1&destination=${spot.lat},${spot.lng}`;
+    }
+
+    /* Live Dispatch Worker Animation Function */
+    function dispatchWorkerForTicket() {
+      const ticket = APP_STATE.activeInspectedTicket;
+      if (!ticket) return;
+
+      playSound('dispatch');
+
+      // 1. Move crew #101 on map smoothly towards hotspot coordinates
+      const crewSvg = document.getElementById('workerCrew1');
+      if (crewSvg) {
+        crewSvg.setAttribute('transform', `translate(${ticket.x}, ${ticket.y})`);
+      }
+
+      // 2. Change ticket status to 'in_progress' (Orange)
+      ticket.status = 'in_progress';
+      inspectTicket(ticket.id);
+      renderMapHotspots();
+
+      showToast(`Sanitation Crew Dispatched to ${ticket.ward}!`, 'warning');
+
+      // 3. Simulate arrival and completion over 3.2 seconds
+      setTimeout(() => {
+        ticket.status = 'resolved';
+        awardPoints(10, 'Cleanup completed & verified');
+        playSound('success');
+        showConfetti();
+        inspectTicket(ticket.id);
+        renderMapHotspots();
+        showToast(`✅ ${ticket.id} Resolved! +10 Green Points Credited!`, 'reward');
+        updateAdminKPIs();
+      }, 3400);
+    }
+
+    function filterHotspots(type, btn) {
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMapHotspots(type);
+    }
+
+    function toggleHeatmap(btn) {
+      const layer = document.getElementById('heatmapLayer');
+      if (!layer) return;
+      const isVisible = layer.style.display !== 'none';
+      if (isVisible) {
+        layer.style.display = 'none';
+        btn.classList.remove('active');
+      } else {
+        layer.style.display = 'block';
+        btn.classList.add('active');
+        showToast('GIS Heatmap Density Layer Enabled', 'success');
+      }
+    }
+
+    function renderWorkerList() {
+      const container = document.getElementById('workerListContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      APP_STATE.workers.forEach(w => {
+        let statusClass = 'status-avail';
+        if (w.status === 'En route') statusClass = 'status-enroute';
+        if (w.status === 'On duty') statusClass = 'status-duty';
+
+        const row = document.createElement('div');
+        row.className = 'worker-mini-row';
+        row.innerHTML = `
+          <div>
+            <b>${w.name}</b>
+            <div style="font-size: 0.72rem; color: #94a3b8;">${w.vehicle} • ${w.zone}</div>
+          </div>
+          <span class="worker-status-badge ${statusClass}">${w.status.toUpperCase()}</span>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    /* Real-Time SLA Countdown Ticker */
+    setInterval(() => {
+      APP_STATE.hotspots.forEach(spot => {
+        if (spot.status !== 'resolved' && spot.slaRemaining > 0) {
+          spot.slaRemaining--;
+        }
+      });
+
+      if (APP_STATE.activeInspectedTicket) {
+        const timerEl = document.getElementById('inspectSlaTimer');
+        if (timerEl) {
+          const s = APP_STATE.activeInspectedTicket.slaRemaining;
+          const hrs = Math.floor(s / 3600);
+          const mins = Math.floor((s % 3600) / 60);
+          const secs = s % 60;
+          timerEl.innerText = `${String(hrs).padStart(2, '0')}h ${String(mins).padStart(2, '0')}m ${String(secs).padStart(2, '0')}s`;
+        }
+      }
+    }, 1000);
+
+    /* ==========================================================================
+       7. CITIZEN & SUPERVISOR PORTAL & REPORT FORM
+       ========================================================================== */
+    function switchAuthTab(tab, btn) {
+      playSound('click');
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      const citizenForm = document.getElementById('citizenLoginForm');
+      const supervisorForm = document.getElementById('supervisorLoginForm');
+
+      if (tab === 'citizen') {
+        citizenForm.style.display = 'block';
+        supervisorForm.style.display = 'none';
+      } else {
+        citizenForm.style.display = 'none';
+        supervisorForm.style.display = 'block';
+      }
+    }
+
+    function sendDemoOtp() {
+      playSound('click');
+      showToast('Demo OTP: 123456 sent to mobile', 'success');
+    }
+
+    function handleCitizenLogin(e) {
+      e.preventDefault();
+      playSound('success');
+      APP_STATE.user.isLoggedIn = true;
+      APP_STATE.user.role = 'citizen';
+      APP_STATE.user.name = 'Rohan Sharma';
+
+      document.getElementById('authFormsWrapper').style.display = 'none';
+      document.getElementById('citizenDashboard').classList.add('active');
+      document.getElementById('supervisorDashboard').classList.remove('active');
+
+      showToast('Welcome, Citizen Rohan Sharma!', 'success');
+    }
+
+    function handleSupervisorLogin(e) {
+      e.preventDefault();
+      playSound('success');
+      APP_STATE.user.isLoggedIn = true;
+      APP_STATE.user.role = 'supervisor';
+      const zone = document.getElementById('supZone').value;
+
+      document.getElementById('authFormsWrapper').style.display = 'none';
+      document.getElementById('supervisorDashboard').classList.add('active');
+      document.getElementById('citizenDashboard').classList.remove('active');
+      document.getElementById('supZoneName').innerText = zone;
+
+      renderSupervisorQueue();
+      showToast(`Supervisor Access Granted: ${zone}`, 'success');
+    }
+
+    function logoutUser() {
+      playSound('click');
+      APP_STATE.user.isLoggedIn = false;
+      document.getElementById('authFormsWrapper').style.display = 'block';
+      document.getElementById('citizenDashboard').classList.remove('active');
+      document.getElementById('supervisorDashboard').classList.remove('active');
+      showToast('Logged out securely', 'warning');
+    }
+
+    function openCitizenForm() {
+      // Ensure citizen dashboard is open
+      document.getElementById('authFormsWrapper').style.display = 'none';
+      document.getElementById('citizenDashboard').classList.add('active');
+    }
+
+    function quickSelectCategory(catName) {
+      switchPage('login');
+      openCitizenForm();
+      const select = document.getElementById('reportIssueCategory');
+      if (select) select.value = catName;
+    }
+
+    function detectUserGps() {
+      playSound('click');
+      const text = document.getElementById('gpsStatusText');
+      text.innerText = '🛰️ Satellite lock in progress...';
+      setTimeout(() => {
+        text.innerText = '📍 Locked: 26.4382° N, 80.3458° E (Accurate within 3m)';
+        showToast('GPS Satellite Coordinates Locked!', 'success');
+      }, 700);
+    }
+
+    function pickSamplePhoto(url, category, aiLabel) {
+      playSound('click');
+      document.getElementById('dropzonePrompt').style.display = 'none';
+      const wrap = document.getElementById('photoPreviewWrap');
+      wrap.style.display = 'block';
+      document.getElementById('photoPreviewImg').src = url;
+      document.getElementById('aiDetectorBadge').innerText = '🤖 AI Detected: ' + aiLabel;
+      document.getElementById('reportIssueCategory').value = category;
+      showToast('Sample Photo Loaded & AI Classified', 'success');
+    }
+
+    function handlePhotoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        document.getElementById('dropzonePrompt').style.display = 'none';
+        const wrap = document.getElementById('photoPreviewWrap');
+        wrap.style.display = 'block';
+        document.getElementById('photoPreviewImg').src = event.target.result;
+        document.getElementById('aiDetectorBadge').innerText = '🤖 AI Detected: High Plastic Debris (96.4%)';
+        showToast('Photo uploaded & AI classified successfully', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleWasteReportSubmit(e) {
+      e.preventDefault();
+      playSound('success');
+
+      const category = document.getElementById('reportIssueCategory').value;
+      const location = document.getElementById('reportLocation').value;
+      const photoSrc = document.getElementById('photoPreviewImg').src || 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=600&auto=format&fit=crop&q=80';
+
+      const newId = 'TKT-KN-' + Math.floor(1000 + Math.random() * 9000);
+
+      // Create new ticket object
+      const newTicket = {
+        id: newId,
+        title: category + ' Reported by Rohan',
+        category: category,
+        ward: 'Kidwai Nagar (Ward 6)',
+        x: 520 + Math.floor(Math.random() * 60),
+        y: 380 + Math.floor(Math.random() * 50),
+        lat: 26.4385,
+        lng: 80.3460,
+        severity: 'high',
+        status: 'open',
+        slaRemaining: 86400, // 24 hours
+        photo: photoSrc,
+        aiTag: '🤖 AI Verified: 94.2% Waste Material',
+        reporter: 'Rohan Sharma (+10 Pts Awarded)',
+        assignedWorker: 'Raju Kumar (EV Tipper #101)',
+        workerDist: '1.4 km away'
+      };
+
+      APP_STATE.hotspots.unshift(newTicket);
+      awardPoints(10, 'Valid waste report submitted');
+      showConfetti();
+
+      showModal('Report Dispatched to Ward Supervisor!', `
+        <div style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
+          <h4 style="color: var(--cyan-neon); font-size: 1.15rem; margin-bottom: 6px;">Ticket ID: ${newId}</h4>
+          <p style="color: #cbd5e1; margin-bottom: 14px;">Your report has been auto-routed to Kidwai Nagar Sanitation Supervisor.</p>
+          <div style="background: rgba(0,230,118,0.15); border: 1px solid #00e676; padding: 12px; border-radius: 10px; color: #00e676; font-weight: 700; font-size: 1.1rem;">
+            +10 Green Points Credited!
+          </div>
+          <p style="font-size: 0.78rem; color: #94a3b8; margin-top: 10px;">SLA 24-hr resolution timer is now active.</p>
+        </div>
+      `);
+
+      // Switch to tracking map and inspect newly created ticket
+      switchPage('tracking');
+      inspectTicket(newId);
+    }
+
+    function renderSupervisorQueue() {
+      const ticketList = document.getElementById('supTicketList');
+      const crewsList = document.getElementById('supCrewsList');
+      if (!ticketList || !crewsList) return;
+
+      ticketList.innerHTML = '';
+      crewsList.innerHTML = '';
+
+      APP_STATE.hotspots.filter(h => h.ward.includes('Kidwai Nagar')).forEach(t => {
+        const item = document.createElement('div');
+        item.style.cssText = 'background: rgba(255,255,255,0.04); padding: 10px; border-radius: 8px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;';
+        item.innerHTML = `
+          <div>
+            <b>${t.id}: ${t.category}</b>
+            <div style="color: #94a3b8; font-size: 0.72rem;">${t.ward} • Status: ${t.status}</div>
+          </div>
+          <button class="btn btn-neon btn-sm" onclick="inspectTicket('${t.id}'); switchPage('tracking');">
+            Inspect on Map
+          </button>
+        `;
+        ticketList.appendChild(item);
+      });
+
+      APP_STATE.workers.forEach(w => {
+        const item = document.createElement('div');
+        item.style.cssText = 'background: rgba(255,255,255,0.04); padding: 10px; border-radius: 8px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;';
+        item.innerHTML = `
+          <div>
+            <b>${w.name} (${w.vehicle})</b>
+            <div style="color: #94a3b8; font-size: 0.72rem;">Zone: ${w.zone} • Rating: ⭐ ${w.rating}</div>
+          </div>
+          <span style="color: #00e676; font-size: 0.75rem; font-weight: 700;">${w.status}</span>
+        `;
+        crewsList.appendChild(item);
+      });
+    }
+
+    /* ==========================================================================
+       8. REWARDS & 5-STAR RATING SYSTEM
+       ========================================================================== */
+    let currentRatingStars = 5;
+
+    function setRating(num) {
+      playSound('click');
+      currentRatingStars = num;
+      const stars = document.querySelectorAll('.star-btn');
+      stars.forEach((s, idx) => {
+        if (idx < num) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      const label = document.getElementById('ratingLabel');
+      const msgs = [
+        '1 Star: Poor / Incomplete Cleanup',
+        '2 Stars: Below Municipal Standards',
+        '3 Stars: Average Cleanup',
+        '4 Stars: Good & Timely Response',
+        '5 Stars: Spotless & Outstanding Work!'
+      ];
+      label.innerText = `${num} Star${num > 1 ? 's' : ''}: ${msgs[num - 1]}`;
+    }
+
+    function toggleReviewChip(chip) {
+      playSound('click');
+      chip.classList.toggle('selected');
+    }
+
+    function submitTicketRating() {
+      playSound('points');
+      awardPoints(5, 'Rated resolved ticket 5 stars');
+      showConfetti();
+      showToast('Thank you! +5 Bonus Green Points Credited!', 'reward');
+
+      const btn = document.getElementById('btnSubmitRating');
+      btn.innerText = '✅ Review Submitted (+5 Pts)';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+    }
+
+    function reopenTicketDemo() {
+      playSound('click');
+      showToast('Ticket marked for re-inspection by Zonal Supervisor', 'warning');
+    }
+
+    function awardPoints(pts, reason) {
+      APP_STATE.user.points += pts;
+      const headerPts = document.getElementById('headerPointsVal');
+      const dashPts = document.getElementById('dashPointsVal');
+      const rewardsBig = document.getElementById('rewardsBigPoints');
+
+      if (headerPts) headerPts.innerText = APP_STATE.user.points;
+      if (dashPts) dashPts.innerText = APP_STATE.user.points;
+      if (rewardsBig) rewardsBig.innerText = APP_STATE.user.points;
+
+      updateRewardsView();
+    }
+
+    function updateRewardsView() {
+      const pts = APP_STATE.user.points;
+      const big = document.getElementById('rewardsBigPoints');
+      if (big) big.innerText = pts;
+
+      const t1 = document.getElementById('tier-1');
+      const t2 = document.getElementById('tier-2');
+      const t3 = document.getElementById('tier-3');
+      const t4 = document.getElementById('tier-4');
+
+      [t1, t2, t3, t4].forEach(t => {
+        if (t) {
+          t.classList.remove('unlocked', 'current');
+        }
+      });
+
+      if (pts < 50) {
+        if (t1) t1.classList.add('current');
+      } else if (pts < 150) {
+        if (t1) t1.classList.add('unlocked');
+        if (t2) t2.classList.add('current');
+        const toNext = 150 - pts;
+        const nextEl = document.getElementById('ptsToNextTier');
+        if (nextEl) nextEl.innerText = `${toNext} pts`;
+      } else if (pts < 300) {
+        if (t1) t1.classList.add('unlocked');
+        if (t2) t2.classList.add('unlocked');
+        if (t3) t3.classList.add('current');
+      } else {
+        if (t1) t1.classList.add('unlocked');
+        if (t2) t2.classList.add('unlocked');
+        if (t3) t3.classList.add('unlocked');
+        if (t4) t4.classList.add('current');
+      }
+    }
+
+    function redeemRewardItem(itemName, cost) {
+      playSound('click');
+      if (APP_STATE.user.points < cost) {
+        showToast(`Insufficient Green Points! Need ${cost} pts.`, 'error');
+        return;
+      }
+
+      APP_STATE.user.points -= cost;
+      updateRewardsView();
+      playSound('success');
+
+      const couponCode = 'KMC-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+      showModal(`Municipal Reward Claimed: ${itemName}`, `
+        <div style="text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 8px;">🎁</div>
+          <h4 style="color: #00e676; font-size: 1.15rem; margin-bottom: 6px;">Voucher Issued Successfully!</h4>
+          <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 14px;">Present this digital barcode at Kanpur Municipal Counter or portal:</p>
+          <div style="background: rgba(255,255,255,0.06); border: 2px dashed var(--cyan-neon); padding: 14px; border-radius: 12px; font-family: var(--font-heading); font-size: 1.3rem; letter-spacing: 2px; color: var(--cyan-neon); margin-bottom: 14px;">
+            ${couponCode}
+          </div>
+          <div style="font-size: 0.74rem; color: #94a3b8;">
+            Redeemed by: Rohan Sharma • Deducted: ${cost} Green Points
+          </div>
+        </div>
+      `);
+    }
+
+    /* ==========================================================================
+       9. ADMIN COMMAND CENTER ACTIONS
+       ========================================================================== */
+    function updateAdminKPIs() {
+      let openC = 0, inprogC = 0, resC = 0;
+      APP_STATE.hotspots.forEach(h => {
+        if (h.status === 'open') openC++;
+        else if (h.status === 'in_progress') inprogC++;
+        else if (h.status === 'resolved') resC++;
+      });
+
+      const openEl = document.getElementById('admin-open-incidents');
+      const resEl = document.getElementById('admin-resolved-incidents');
+      if (openEl) openEl.innerText = openC;
+      if (resEl) resEl.innerText = 162 + resC;
+    }
+
+    function triggerAdminAlert(area, actionMsg) {
+      playSound('dispatch');
+      showToast(`🚨 High Priority Alert: ${area} -> ${actionMsg}`, 'reward');
+    }
+
+    function applyFakeReportPenalty() {
+      playSound('click');
+      if (confirm("Confirm deducting -5 Green Points penalty for fraudulent waste submission?")) {
+        awardPoints(-5, 'Penalty for fake complaint');
+        showToast('Penalty Applied: -5 Green Points deducted and user warned', 'error');
+      }
+    }
+
+    function exportAdminReport() {
+      playSound('click');
+      showToast('Exporting Kanpur Municipal SLA Audit CSV report...', 'success');
+    }
+
+    function refreshAdminDashboard() {
+      playSound('click');
+      updateAdminKPIs();
+      showToast('Admin telemetry synced in real-time', 'success');
+    }
+
+    /* ==========================================================================
+       10. WASTE AWARENESS HUB (PLEDGE, SEGREGATION, QUIZ)
+       ========================================================================== */
+    function takeGreenPledge() {
+      playSound('points');
+      awardPoints(20, 'Signed Green Swachh Pledge');
+      showConfetti();
+
+      showModal('Kanpur Swachh Citizen Certificate', `
+        <div style="text-align: center;">
+          <div style="font-size: 3.5rem; margin-bottom: 6px;">📜</div>
+          <h3 style="color: #00e676; font-size: 1.3rem; margin-bottom: 4px;">Certificate of Green Honour</h3>
+          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">This certifies that</p>
+          <div style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 12px; font-family: var(--font-heading);">
+            ROHAN SHARMA (Citizen, Ward 6)
+          </div>
+          <p style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin-bottom: 16px;">
+            Has officially taken the SwachhSetu Green Pledge to maintain 100% household waste segregation and protect Kanpur's urban environment.
+          </p>
+          <div style="background: rgba(0,230,118,0.15); border: 1px solid #00e676; padding: 10px; border-radius: 8px; color: #00e676; font-weight: 700;">
+            +20 Green Points Added to Vault!
+          </div>
+        </div>
+      `);
+
+      const btn = document.getElementById('btnPledge');
+      btn.innerText = '✅ Pledge Taken (+20 Pts Awarded)';
+      btn.disabled = true;
+    }
+
+    // Segregation Game
+    let currentSelectedWasteItem = null;
+    let currentCorrectBin = null;
+
+    function selectWasteItem(itemName, binType, chip) {
+      playSound('click');
+      currentSelectedWasteItem = itemName;
+      currentCorrectBin = binType;
+
+      document.querySelectorAll('.waste-item-chip').forEach(c => c.style.borderColor = '#cbd5e1');
+      chip.style.borderColor = 'var(--emerald)';
+      chip.style.backgroundColor = '#e6f6ee';
+
+      const prompt = document.getElementById('currentSelectedWaste');
+      prompt.innerText = itemName;
+      showToast(`Selected "${itemName}". Now click the correct bin!`, 'success');
+    }
+
+    function dropIntoBin(binType) {
+      if (!currentSelectedWasteItem) {
+        showToast('Please select a waste item from above first!', 'warning');
+        return;
+      }
+
+      if (binType === currentCorrectBin) {
+        playSound('success');
+        showToast(`Correct! "${currentSelectedWasteItem}" sorted into the right bin! +5 Pts`, 'reward');
+        awardPoints(5, 'Correct waste segregation');
+        currentSelectedWasteItem = null;
+        currentCorrectBin = null;
+        document.getElementById('currentSelectedWaste').innerText = 'None (Great job!)';
+      } else {
+        playSound('click');
+        showToast(`Incorrect bin! Remember: Kitchen = Green, Dry/Plastic = Blue, Medicine/Chemical = Red, Tech = Yellow.`, 'error');
+      }
+    }
+
+    // Eco Quiz
+    const QUIZ_DATA = [
+      {
+        q: "Q1: Which colored bin should you use to dispose of an expired blister pack of medicines?",
+        options: [
+          "A) Green Bin (Wet Organic Waste)",
+          "B) Blue Bin (Dry Recyclables)",
+          "C) Red Bin (Domestic Hazardous Waste)",
+          "D) Black Dustbin"
+        ],
+        correct: 2,
+        explanation: "Expired medicines contain active chemical agents that leach into groundwater if not incinerated as Domestic Hazardous Waste (Red Bin)."
+      },
+      {
+        q: "Q2: How many years does a single-use plastic water bottle take to decompose in nature?",
+        options: [
+          "A) 2 to 5 Years",
+          "B) 50 Years",
+          "C) 450 Years",
+          "D) 10 Years"
+        ],
+        correct: 2,
+        explanation: "Plastic bottles take approximately 450 years to break down, degrading into toxic microplastics that enter the human food chain."
+      }
+    ];
+
+    let currentQuizIndex = 0;
+
+    function checkQuizAnswer(selectedIdx, btn) {
+      const q = QUIZ_DATA[currentQuizIndex];
+      const feedback = document.getElementById('quizFeedback');
+      feedback.style.display = 'block';
+
+      if (selectedIdx === q.correct) {
+        playSound('points');
+        btn.classList.add('correct');
+        feedback.style.background = '#dcfce7';
+        feedback.style.color = '#14532d';
+        feedback.innerHTML = `<b>✅ Correct Answer! (+5 Points Awarded)</b><br>${q.explanation}`;
+        awardPoints(5, 'Correct eco quiz answer');
+        showConfetti();
+      } else {
+        playSound('click');
+        btn.classList.add('wrong');
+        feedback.style.background = '#fee2e2';
+        feedback.style.color = '#7f1d1d';
+        feedback.innerHTML = `<b>❌ Incorrect.</b><br>${q.explanation}`;
+      }
+
+      // Disable other buttons
+      document.querySelectorAll('.quiz-opt-btn').forEach(b => b.disabled = true);
+    }
+
+    /* ==========================================================================
+       11. 1-MINUTE HACKATHON JUDGE DEMO FLOW
+       ========================================================================== */
+    function toggleDemoDrawer() {
+      playSound('click');
+      const drawer = document.getElementById('judgeDrawer');
+      drawer.classList.toggle('open');
+    }
+
+    function executeDemoStep(stepNum) {
+      playSound('click');
+      document.querySelectorAll('.demo-step-button').forEach((b, i) => {
+        if (i === stepNum - 1) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+
+      if (stepNum === 1) {
+        switchPage('home');
+      } else if (stepNum === 2) {
+        switchPage('awareness');
+      } else if (stepNum === 3) {
+        switchPage('tracking');
+        // Dispatch worker automatically on step 3
+        setTimeout(() => {
+          dispatchWorkerForTicket();
+        }, 800);
+      } else if (stepNum === 4) {
+        switchPage('login');
+        openCitizenForm();
+      } else if (stepNum === 5) {
+        switchPage('rewards');
+      } else if (stepNum === 6) {
+        switchPage('admin');
+      }
+    }
+
+    /* ==========================================================================
+       12. CONFETTI CELEBRATION ENGINE
+       ========================================================================== */
+    function showConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#0f9d58', '#ff9f1c', '#22e4ff', '#b46bff', '#ffb703', '#00e676'];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.7) * 16,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 10,
+          opacity: 1
+        });
+      }
+
+      let animationFrame;
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = 0;
+
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35; // gravity
+          p.rotation += p.vRot;
+          p.opacity -= 0.015;
+
+          if (p.opacity > 0) {
+            active++;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.opacity);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.restore();
+          }
+        });
+
+        if (active > 0) {
+          animationFrame = requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          cancelAnimationFrame(animationFrame);
+        }
+      }
+
+      render();
+    }
+
+    /* ==========================================================================
+       13. MODAL & TOAST HELPERS
+       ========================================================================== */
+    function showModal(title, htmlContent) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalBody').innerHTML = htmlContent;
+      document.getElementById('commonModal').classList.add('open');
+    }
+
+    function closeModal() {
+      playSound('click');
+      document.getElementById('commonModal').classList.remove('open');
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      let icon = 'ℹ️';
+      if (type === 'success') icon = '✅';
+      if (type === 'warning') icon = '⚠️';
+      if (type === 'error') icon = '❌';
+      if (type === 'reward') icon = '🌱';
+
+      toast.innerHTML = `<span>${icon}</span> <div>${message}</div>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 4200);
+    }
+
+    function toggleMobileNav() {
+      const menu = document.getElementById('navMenu');
+      if (menu.style.display === 'flex') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'flex';
+        menu.style.flexDirection = 'column';
+        menu.style.position = 'absolute';
+        menu.style.top = '70px';
+        menu.style.left = '0';
+        menu.style.right = '0';
+        menu.style.background = 'var(--bg-surface-elevated)';
+        menu.style.padding = '20px';
+        menu.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
+      }
+    }
+
+    // Window Load Bootstrap
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMapHotspots();
+      renderWorkerList();
+      updateRewardsView();
+      updateAdminKPIs();
+    });
+  </script>
+</body>
+</html>
