@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
 
   <style>
     /* ==========================================================================
@@ -2121,6 +2122,1465 @@
       .pledge-hero-box { flex-direction: column; text-align: center; gap: 20px; }
       .rewards-hero-card { grid-template-columns: 1fr; }
     }
+
+    /* ==========================================================================
+       LEADERBOARD DESIGN SYSTEM (DIRECT INLINE)
+       ========================================================================== */
+/* ==========================================================================
+   SWACHHSETU LEADERBOARD DESIGN SYSTEM (leaderboard.css)
+   Kanpur Smart City Mission • Team HackHives
+   Aesthetic: Deep Space Navy, Neon Cyan / Violet / Saffron Accents, Glassmorphism
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. HOME PAGE "TOP PERFORMERS" SECTION
+   -------------------------------------------------------------------------- */
+.top-performers-section {
+  max-width: 1300px;
+  margin: -10px auto 40px auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.top-performers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.top-performers-header .section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 157, 88, 0.12);
+  color: var(--emerald);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(15, 157, 88, 0.25);
+}
+
+body.dark-view .top-performers-header .section-tag {
+  background: rgba(34, 228, 255, 0.12);
+  color: var(--cyan-neon);
+  border-color: rgba(34, 228, 255, 0.3);
+}
+
+.top-performers-header h2 {
+  font-size: 1.85rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-performers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.top-performer-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.top-performer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: rgba(34, 228, 255, 0.4);
+}
+
+/* Header inside card */
+.performer-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  margin-bottom: 16px;
+}
+
+body.dark-view .performer-card-head {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.performer-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.performer-card-title .icon-orb {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.icon-orb.citizen-orb {
+  background: linear-gradient(135deg, rgba(15, 157, 88, 0.2), rgba(34, 228, 255, 0.25));
+  border: 1px solid rgba(34, 228, 255, 0.4);
+}
+
+.icon-orb.worker-orb {
+  background: linear-gradient(135deg, rgba(255, 159, 28, 0.2), rgba(180, 107, 255, 0.25));
+  border: 1px solid rgba(255, 159, 28, 0.4);
+}
+
+.performer-card-title h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.performer-card-title p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.live-pulse-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(0, 230, 118, 0.12);
+  color: #00b050;
+  border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+body.dark-view .live-pulse-badge {
+  color: #00e676;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: currentColor;
+  border-radius: 50%;
+  animation: pulseAnimation 1.6s infinite ease-in-out;
+}
+
+@keyframes pulseAnimation {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+/* Performer Top 5 list items */
+.performer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.performer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: var(--transition-smooth);
+}
+
+body.dark-view .performer-item {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.performer-item:hover {
+  background: rgba(34, 228, 255, 0.06);
+  border-color: rgba(34, 228, 255, 0.25);
+  transform: translateX(4px);
+}
+
+.performer-item.rank-1 {
+  background: linear-gradient(90deg, rgba(255, 183, 3, 0.12), rgba(255, 159, 28, 0.04));
+  border: 1px solid rgba(255, 183, 3, 0.35);
+}
+
+.performer-item.rank-2 {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.14), rgba(203, 213, 225, 0.04));
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.performer-item.rank-3 {
+  background: linear-gradient(90deg, rgba(217, 119, 6, 0.12), rgba(180, 83, 9, 0.04));
+  border: 1px solid rgba(217, 119, 6, 0.35);
+}
+
+.performer-item.is-current-user {
+  background: linear-gradient(90deg, rgba(34, 228, 255, 0.16), rgba(180, 107, 255, 0.1));
+  border: 1px solid var(--cyan-neon) !important;
+  box-shadow: 0 0 14px rgba(34, 228, 255, 0.25);
+}
+
+.performer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.rank-badge-home {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+}
+
+body.dark-view .rank-badge-home {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.rank-badge-home.gold {
+  background: linear-gradient(135deg, #ffd700, #ff9f1c);
+  color: #000;
+  box-shadow: 0 2px 8px rgba(255, 183, 3, 0.4);
+}
+
+.rank-badge-home.silver {
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+  color: #000;
+  box-shadow: 0 2px 8px rgba(148, 163, 184, 0.35);
+}
+
+.rank-badge-home.bronze {
+  background: linear-gradient(135deg, #f59e0b, #b45309);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35);
+}
+
+.performer-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.performer-info {
+  min-width: 0;
+}
+
+.performer-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.performer-sub {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.performer-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.performer-score-main {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.performer-score-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Rank Movement Arrows */
+.rank-delta-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  gap: 2px;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.rank-delta-tag.up {
+  color: #00e676;
+  background: rgba(0, 230, 118, 0.1);
+}
+
+.rank-delta-tag.down {
+  color: #ff3366;
+  background: rgba(255, 51, 102, 0.1);
+}
+
+.rank-delta-tag.same {
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+}
+
+/* View Full Leaderboard Button */
+.btn-view-leaderboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-primary);
+  transition: var(--transition-smooth);
+  width: 100%;
+}
+
+body.dark-view .btn-view-leaderboard {
+  border-color: rgba(34, 228, 255, 0.3);
+  color: var(--cyan-neon);
+  background: rgba(34, 228, 255, 0.05);
+}
+
+.btn-view-leaderboard:hover {
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(15, 157, 88, 0.25);
+  transform: translateY(-2px);
+}
+
+body.dark-view .btn-view-leaderboard:hover {
+  background: linear-gradient(135deg, rgba(34, 228, 255, 0.25), rgba(180, 107, 255, 0.35));
+  border-color: var(--cyan-neon);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(34, 228, 255, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   2. FULL LEADERBOARD PAGE (#page-leaderboard)
+   -------------------------------------------------------------------------- */
+.leaderboard-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 40px 24px 80px 24px;
+}
+
+/* Hero Header & Tabs Switcher */
+.leaderboard-hero-banner {
+  background: linear-gradient(135deg, rgba(14, 18, 51, 0.95), rgba(21, 27, 71, 0.95));
+  border: 1px solid rgba(34, 228, 255, 0.25);
+  border-radius: 24px;
+  padding: 32px 36px;
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.leaderboard-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(34, 228, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.leaderboard-hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.leaderboard-title-group h1 {
+  font-size: 2.3rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.leaderboard-title-group p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  max-width: 600px;
+  margin-top: 6px;
+}
+
+/* Dual Board Main Switcher */
+.board-switcher-tabs {
+  display: flex;
+  background: rgba(8, 10, 31, 0.85);
+  border: 1px solid rgba(34, 228, 255, 0.25);
+  border-radius: 16px;
+  padding: 6px;
+  gap: 8px;
+}
+
+.board-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.board-tab-btn:hover {
+  color: #fff;
+}
+
+.board-tab-btn.active {
+  background: linear-gradient(135deg, rgba(34, 228, 255, 0.3), rgba(180, 107, 255, 0.35));
+  color: var(--cyan-neon);
+  border: 1px solid var(--cyan-neon);
+  box-shadow: 0 0 16px rgba(34, 228, 255, 0.35);
+}
+
+/* Quick Civic Impact Stats Strip */
+.leaderboard-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lb-stat-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lb-stat-icon {
+  font-size: 1.6rem;
+}
+
+.lb-stat-val {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.lb-stat-lbl {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --------------------------------------------------------------------------
+   3. PODIUM STYLING (TOP 3 HIGHLIGHT)
+   -------------------------------------------------------------------------- */
+.podium-section {
+  margin: 30px 0 40px 0;
+}
+
+.podium-title {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.podium-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: var(--transition-smooth);
+}
+
+.podium-col:hover {
+  transform: translateY(-6px);
+}
+
+.podium-col.rank-1 { order: 2; flex: 1.15; }
+.podium-col.rank-2 { order: 1; }
+.podium-col.rank-3 { order: 3; }
+
+.podium-crown {
+  font-size: 2.2rem;
+  margin-bottom: -10px;
+  z-index: 2;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+  animation: floatBounce 2.5s infinite ease-in-out;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.podium-avatar-ring {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.podium-col.rank-1 .podium-avatar-ring {
+  width: 92px;
+  height: 92px;
+  font-size: 1.8rem;
+  border: 4px solid #ffd700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+}
+
+.podium-col.rank-2 .podium-avatar-ring {
+  border: 3px solid #cbd5e1;
+  box-shadow: 0 0 20px rgba(203, 213, 225, 0.4);
+}
+
+.podium-col.rank-3 .podium-avatar-ring {
+  border: 3px solid #d97706;
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.4);
+}
+
+.podium-badge-icon {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #080a1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.podium-user-info {
+  text-align: center;
+  margin: 12px 0;
+}
+
+.podium-user-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.podium-col.rank-1 .podium-user-name {
+  font-size: 1.2rem;
+  color: #ffe066;
+}
+
+.podium-user-ward {
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+
+.podium-user-score {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cyan-neon);
+  margin-top: 4px;
+}
+
+/* Pillar blocks below */
+.podium-pillar {
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: none;
+  position: relative;
+}
+
+.podium-col.rank-1 .podium-pillar {
+  height: 180px;
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.25) 0%, rgba(14, 18, 51, 0.8) 100%);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.podium-col.rank-2 .podium-pillar {
+  height: 140px;
+  background: linear-gradient(180deg, rgba(203, 213, 225, 0.2) 0%, rgba(14, 18, 51, 0.8) 100%);
+  border-color: rgba(203, 213, 225, 0.3);
+}
+
+.podium-col.rank-3 .podium-pillar {
+  height: 110px;
+  background: linear-gradient(180deg, rgba(217, 119, 6, 0.2) 0%, rgba(14, 18, 51, 0.8) 100%);
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+.podium-pillar-rank {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.podium-pillar-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.podium-col.rank-1 .podium-pillar-label { color: #ffd700; }
+.podium-col.rank-2 .podium-pillar-label { color: #cbd5e1; }
+.podium-col.rank-3 .podium-pillar-label { color: #f59e0b; }
+
+/* --------------------------------------------------------------------------
+   4. FILTERS & SEARCH CONTROLS BAR
+   -------------------------------------------------------------------------- */
+.lb-controls-bar {
+  background: var(--navy-card);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.lb-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Time tabs: This Week | This Month | All Time */
+.time-filter-pills {
+  display: flex;
+  background: rgba(8, 10, 31, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.time-pill-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.time-pill-btn.active {
+  background: var(--cyan-neon);
+  color: #080a1f;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(34, 228, 255, 0.4);
+}
+
+/* Zone Filter Select */
+.zone-select-dropdown {
+  background: rgba(8, 10, 31, 0.8);
+  border: 1px solid rgba(34, 228, 255, 0.3);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.zone-select-dropdown option {
+  background: #0e1233;
+  color: #fff;
+}
+
+/* Anonymous Privacy Toggle */
+.privacy-toggle-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  user-select: none;
+}
+
+.privacy-toggle-box input[type="checkbox"] {
+  cursor: pointer;
+  accent-color: var(--cyan-neon);
+  width: 16px;
+  height: 16px;
+}
+
+.lb-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Search input */
+.lb-search-input {
+  background: rgba(8, 10, 31, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  width: 200px;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.lb-search-input:focus {
+  border-color: var(--cyan-neon);
+  box-shadow: 0 0 12px rgba(34, 228, 255, 0.25);
+  width: 240px;
+}
+
+/* --------------------------------------------------------------------------
+   5. STICKY USER RANK ROW ("Your Rank: #12")
+   -------------------------------------------------------------------------- */
+.sticky-user-rank-banner {
+  background: linear-gradient(90deg, rgba(34, 228, 255, 0.18), rgba(180, 107, 255, 0.15));
+  border: 2px solid var(--cyan-neon);
+  box-shadow: 0 0 20px rgba(34, 228, 255, 0.25);
+  border-radius: 16px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 75px;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.sticky-user-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.your-rank-badge {
+  background: var(--cyan-neon);
+  color: #080a1f;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 6px 14px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 12px rgba(34, 228, 255, 0.5);
+}
+
+.sticky-user-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.you-tag {
+  background: rgba(34, 228, 255, 0.2);
+  color: var(--cyan-neon);
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.sticky-user-meta {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.sticky-user-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: right;
+}
+
+.sticky-user-pts-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.sticky-pts-val {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #00e676;
+}
+
+/* --------------------------------------------------------------------------
+   6. LEADERBOARD TABLE STYLING
+   -------------------------------------------------------------------------- */
+.lb-table-container {
+  background: var(--navy-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  margin-bottom: 40px;
+}
+
+.lb-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.lb-table th {
+  background: rgba(8, 10, 31, 0.95);
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+
+.lb-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  vertical-align: middle;
+}
+
+.lb-table tr:last-child td {
+  border-bottom: none;
+}
+
+.lb-table tbody tr {
+  transition: var(--transition-smooth);
+}
+
+.lb-table tbody tr:hover {
+  background: rgba(34, 228, 255, 0.04);
+}
+
+.lb-table tr.highlight-user {
+  background: rgba(34, 228, 255, 0.12) !important;
+  border-left: 4px solid var(--cyan-neon);
+}
+
+.lb-table tr.highlight-user td {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Rank column */
+.lb-rank-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.rank-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.rank-circle.rank-1 { background: linear-gradient(135deg, #ffd700, #ff9f1c); color: #000; box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+.rank-circle.rank-2 { background: linear-gradient(135deg, #e2e8f0, #94a3b8); color: #000; }
+.rank-circle.rank-3 { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
+
+/* Citizen & Worker Badges */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-champion {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 159, 28, 0.25));
+  color: #ffd700;
+  border: 1px solid #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.badge-platinum {
+  background: linear-gradient(135deg, rgba(180, 107, 255, 0.2), rgba(34, 228, 255, 0.2));
+  color: #22e4ff;
+  border: 1px solid rgba(34, 228, 255, 0.5);
+}
+
+.badge-gold {
+  background: rgba(255, 183, 3, 0.15);
+  color: #ffb703;
+  border: 1px solid rgba(255, 183, 3, 0.4);
+}
+
+.badge-silver {
+  background: rgba(203, 213, 225, 0.15);
+  color: #cbd5e1;
+  border: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.badge-bronze {
+  background: rgba(217, 119, 6, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+/* Worker Status Tags */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-active {
+  background: rgba(0, 230, 118, 0.12);
+  color: #00e676;
+  border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.status-duty {
+  background: rgba(34, 228, 255, 0.12);
+  color: var(--cyan-neon);
+  border: 1px solid rgba(34, 228, 255, 0.3);
+}
+
+.status-unresponsive {
+  background: rgba(255, 51, 102, 0.18);
+  color: #ff5277;
+  border: 1px solid rgba(255, 51, 102, 0.5);
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+  animation: dangerPulse 1.8s infinite;
+}
+
+@keyframes dangerPulse {
+  0%, 100% { border-color: rgba(255, 51, 102, 0.5); }
+  50% { border-color: rgba(255, 51, 102, 1); box-shadow: 0 0 16px rgba(255, 51, 102, 0.6); }
+}
+
+/* Composite Score & Tooltip */
+.score-pill-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.composite-score-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(34, 228, 255, 0.2), rgba(180, 107, 255, 0.2));
+  border: 1px solid var(--cyan-neon);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: help;
+}
+
+.score-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 280px;
+  background: #080a1f;
+  color: #cbd5e1;
+  text-align: left;
+  border-radius: 12px;
+  padding: 12px 14px;
+  position: absolute;
+  z-index: 100;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid var(--cyan-neon);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+  font-size: 0.74rem;
+  line-height: 1.4;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.score-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--cyan-neon) transparent transparent transparent;
+}
+
+.score-pill-wrap:hover .score-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   7. EMPLOYEE OF THE MONTH & ZONE BEST MINI CARDS
+   -------------------------------------------------------------------------- */
+.safai-heroes-showcase {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.eom-card {
+  background: linear-gradient(135deg, rgba(255, 183, 3, 0.15), rgba(14, 18, 51, 0.95));
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
+  border-radius: 20px;
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.eom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.eom-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffd700;
+  color: #080a1f;
+  font-weight: 800;
+  font-size: 0.76rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.eom-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.eom-avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd700, #ff9f1c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.eom-details h3 {
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.eom-perks {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 215, 0, 0.4);
+}
+
+/* Zone Best Mini Cards Grid */
+.zone-best-section {
+  background: var(--navy-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.zone-best-title {
+  font-size: 1.15rem;
+  color: #fff;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zone-best-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.zone-mini-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition-smooth);
+}
+
+.zone-mini-card:hover {
+  border-color: var(--cyan-neon);
+  background: rgba(34, 228, 255, 0.05);
+}
+
+.zone-mini-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.zone-mini-ward {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.zone-mini-score {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #00e676;
+}
+
+/* --------------------------------------------------------------------------
+   8. REWARDS PAGE DIRECT LINK BANNER
+   -------------------------------------------------------------------------- */
+.rewards-leaderboard-banner {
+  background: linear-gradient(135deg, rgba(34, 228, 255, 0.15), rgba(180, 107, 255, 0.2));
+  border: 1px solid var(--cyan-neon);
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.rewards-leaderboard-banner h4 {
+  font-size: 1.18rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.rewards-leaderboard-banner p {
+  font-size: 0.84rem;
+  color: #cbd5e1;
+}
+
+/* --------------------------------------------------------------------------
+   9. ADMIN CONTROL INTEGRATION
+   -------------------------------------------------------------------------- */
+.admin-action-btn-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Manual worker bonus modal inputs */
+.admin-form-group {
+  margin-bottom: 14px;
+}
+
+.admin-form-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.admin-form-group select,
+.admin-form-group input,
+.admin-form-group textarea {
+  width: 100%;
+  background: rgba(8, 10, 31, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.admin-form-group select:focus,
+.admin-form-group input:focus,
+.admin-form-group textarea:focus {
+  border-color: var(--cyan-neon);
+  box-shadow: 0 0 10px rgba(34, 228, 255, 0.3);
+}
+
+/* Digital Certificate / Voucher Modal Preview */
+.voucher-certificate-preview {
+  background: #ffffff;
+  color: #080a1f;
+  border: 4px double #ff9f1c;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-top: 14px;
+}
+
+.voucher-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-20deg);
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(15, 157, 88, 0.08);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   10. RESPONSIVE MEDIA QUERIES
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .top-performers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .leaderboard-stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .safai-heroes-showcase {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .leaderboard-hero-banner {
+    padding: 24px 20px;
+  }
+
+  .leaderboard-title-group h1 {
+    font-size: 1.7rem;
+  }
+
+  .board-switcher-tabs {
+    width: 100%;
+  }
+
+  .board-tab-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+
+  .podium-container {
+    gap: 10px;
+  }
+
+  .podium-avatar-ring {
+    width: 58px;
+    height: 58px;
+    font-size: 1.1rem;
+  }
+
+  .podium-col.rank-1 .podium-avatar-ring {
+    width: 72px;
+    height: 72px;
+    font-size: 1.4rem;
+  }
+
+  .podium-pillar {
+    padding-top: 10px;
+  }
+
+  .podium-col.rank-1 .podium-pillar { height: 130px; }
+  .podium-col.rank-2 .podium-pillar { height: 100px; }
+  .podium-col.rank-3 .podium-pillar { height: 80px; }
+
+  .podium-pillar-rank {
+    font-size: 1.6rem;
+  }
+
+  .lb-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lb-controls-left, .lb-controls-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lb-search-input {
+    width: 100%;
+  }
+
+  .sticky-user-rank-banner {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .sticky-user-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Responsive table scroll */
+  .lb-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lb-table {
+    min-width: 720px;
+  }
+
+  .zone-best-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -2158,6 +3618,7 @@
         <li><a class="nav-link" onclick="switchPage('tracking')" id="nav-tracking" data-i18n="nav_tracking">Live Tracking</a></li>
         <li><a class="nav-link" onclick="switchPage('login')" id="nav-login" data-i18n="nav_login">Portal & Report</a></li>
         <li><a class="nav-link" onclick="switchPage('rewards')" id="nav-rewards" data-i18n="nav_rewards">Rewards & Rating</a></li>
+        <li><a class="nav-link" onclick="switchPage('leaderboard')" id="nav-leaderboard" data-i18n="nav_leaderboard">Leaderboard</a></li>
         <li><a class="nav-link" onclick="switchPage('admin')" id="nav-admin" data-i18n="nav_admin">Admin Control</a></li>
         <li><a class="nav-link" onclick="switchPage('awareness')" id="nav-awareness" data-i18n="nav_awareness">Awareness Hub</a></li>
       </ul>
@@ -2314,6 +3775,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Home Page: Top Performers Highlight Section (Swachh Warriors & Safai Heroes) -->
+    <div id="homeTopPerformersTarget"></div>
 
     <!-- 3-Step "How It Works" Section -->
     <div class="section-head">
@@ -2901,13 +4365,13 @@
               <div class="form-group">
                 <label>Kanpur Ward / Area Location</label>
                 <div style="display: flex; gap: 8px;">
-                  <input type="text" class="form-control" id="reportLocation" value="Kidwai Nagar, Block C Market, Kanpur" required>
+                  <input type="text" class="form-control" id="reportLocation" placeholder="Enter landmark or click Auto GPS" value="Kidwai Nagar, Block C Market, Kanpur" required>
                   <button type="button" class="btn btn-outline btn-sm" onclick="detectUserGps()" title="Auto-detect GPS">
                     🛰️ Auto GPS
                   </button>
                 </div>
-                <small id="gpsStatusText" style="color: var(--cyan-neon); font-size: 0.72rem; margin-top: 4px; display: block;">
-                  📍 Locked: 26.4382° N, 80.3458° E (Accurate within 4m)
+                <small id="gpsStatusText" style="color: var(--text-muted); font-size: 0.72rem; margin-top: 4px; display: block;">
+                  📍 Click &quot;Auto GPS&quot; to lock current device coordinates
                 </small>
               </div>
 
@@ -3043,6 +4507,20 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Direct Link to Civic Leaderboard -->
+      <div class="rewards-leaderboard-banner">
+        <div>
+          <span style="font-size: 0.76rem; font-weight: 700; color: var(--cyan-neon); text-transform: uppercase;">
+            🏆 Kanpur Civic Rankings
+          </span>
+          <h4 style="color: #fff; font-size: 1.2rem; margin: 4px 0;">Swachh Warriors & Safai Heroes Leaderboards</h4>
+          <p style="font-size: 0.85rem; color: #cbd5e1;">See where you stand among Kanpur citizens and explore top sanitation crew performance rankings.</p>
+        </div>
+        <button class="btn btn-neon btn-sm" onclick="switchPage('leaderboard')">
+          View Full Leaderboard →
+        </button>
       </div>
 
       <!-- Interactive 5-Star Rating Widget (Resolved Ticket) -->
@@ -3207,6 +4685,129 @@
   </section>
 
   <!-- =========================================================================
+       PAGE 4.5: LEADERBOARDS (CITIZEN WARRIORS & SAFAI HEROES)
+       ========================================================================= -->
+  <section id="page-leaderboard" class="page-section">
+    <div class="leaderboard-wrapper">
+      
+      <!-- Top Hero Banner with Board Switcher -->
+      <div class="leaderboard-hero-banner">
+        <div class="leaderboard-hero-top">
+          <div class="leaderboard-title-group">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--cyan-neon); letter-spacing: 0.8px; text-transform: uppercase;">
+              🏛️ KANPUR SMART CITY MISSION • SWACHH SURVEKSHAN 2026
+            </span>
+            <h1 id="leaderboardMainHeading">
+              <span>🏆</span> <span data-i18n="lb_main_title">Kanpur Civic Honors Leaderboard</span>
+            </h1>
+            <p data-i18n="lb_main_subtitle">
+              Live municipal rankings recognizing proactive citizens ("Swachh Warriors") reporting civic waste and sanitation frontline staff ("Safai Heroes") resolving complaints under strict SLAs.
+            </p>
+          </div>
+
+          <!-- Dual Main Switcher Tabs -->
+          <div class="board-switcher-tabs">
+            <button class="board-tab-btn active" id="tabBoardCitizens" onclick="LeaderboardUI.setActiveBoard('citizens')">
+              <span>🌱</span> <span data-i18n="lb_tab_citizens">Swachh Warriors (Citizens)</span>
+            </button>
+            <button class="board-tab-btn" id="tabBoardWorkers" onclick="LeaderboardUI.setActiveBoard('workers')">
+              <span>🧹</span> <span data-i18n="lb_tab_workers">Safai Heroes (Staff)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Civic Impact Stats Strip -->
+        <div class="leaderboard-stats-strip">
+          <div class="lb-stat-box">
+            <div class="lb-stat-icon">🌱</div>
+            <div>
+              <div class="lb-stat-val">18 Active</div>
+              <div class="lb-stat-lbl" data-i18n="lb_stat_citizens">Top Citizens Ranked</div>
+            </div>
+          </div>
+          <div class="lb-stat-box">
+            <div class="lb-stat-icon">⚡</div>
+            <div>
+              <div class="lb-stat-val">16 Crews</div>
+              <div class="lb-stat-lbl" data-i18n="lb_stat_crews">Sanitation Units</div>
+            </div>
+          </div>
+          <div class="lb-stat-box">
+            <div class="lb-stat-icon">⏱️</div>
+            <div>
+              <div class="lb-stat-val">2.3 hrs</div>
+              <div class="lb-stat-lbl" data-i18n="lb_stat_turnaround">City Avg Turnaround</div>
+            </div>
+          </div>
+          <div class="lb-stat-box">
+            <div class="lb-stat-icon">🏅</div>
+            <div>
+              <div class="lb-stat-val">96.8%</div>
+              <div class="lb-stat-lbl" data-i18n="lb_stat_sla_compliance">SLA Compliance</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top 3 Podium Section Target -->
+      <div id="lbPodiumTarget"></div>
+
+      <!-- Filters, Time Tabs, Search, Anonymous Privacy & Live Simulation Controls Bar -->
+      <div class="lb-controls-bar">
+        <div class="lb-controls-left">
+          <!-- Time Filter (Citizens) -->
+          <div class="time-filter-pills" id="lbTimeFilterWrapper">
+            <button class="time-pill-btn" data-time="week" onclick="LeaderboardUI.setTimeFilter('week')" data-i18n="lb_filter_week">This Week</button>
+            <button class="time-pill-btn" data-time="month" onclick="LeaderboardUI.setTimeFilter('month')" data-i18n="lb_filter_month">This Month</button>
+            <button class="time-pill-btn active" data-time="all" onclick="LeaderboardUI.setTimeFilter('all')" data-i18n="lb_filter_all">All Time</button>
+          </div>
+
+          <!-- Kanpur Ward/Zone Filter Dropdown -->
+          <select class="zone-select-dropdown" id="lbZoneFilter" onchange="LeaderboardUI.setZoneFilter(this.value)">
+            <option value="all" data-i18n="lb_all_zones">📍 All Kanpur Zones (10 Wards)</option>
+            <option value="Kidwai Nagar">Kidwai Nagar (Ward 6)</option>
+            <option value="Kakadeo">Kakadeo (Ward 2)</option>
+            <option value="Civil Lines">Civil Lines (Ward 4)</option>
+            <option value="Govind Nagar">Govind Nagar (Ward 5)</option>
+            <option value="Panki">Panki (Ward 8)</option>
+            <option value="Swaroop Nagar">Swaroop Nagar (Ward 1)</option>
+            <option value="Kalyanpur">Kalyanpur (Ward 3)</option>
+            <option value="Arya Nagar">Arya Nagar (Ward 7)</option>
+            <option value="Barra">Barra (Ward 9)</option>
+            <option value="Cantt">Cantt (Ward 10)</option>
+          </select>
+
+          <!-- Privacy Toggle: Show name as Anonymous -->
+          <label class="privacy-toggle-box" id="lbAnonToggleWrapper">
+            <input type="checkbox" id="anonModeCheckbox" onchange="LeaderboardUI.toggleAnonymousMode(this)" />
+            <span data-i18n="lb_anon_label">🎭 Show as Anonymous / गुमनाम</span>
+          </label>
+        </div>
+
+        <div class="lb-controls-right">
+          <!-- Search input -->
+          <input type="text" class="lb-search-input" placeholder="🔍 Search name or ward..." oninput="LeaderboardUI.setSearchQuery(this.value)" id="lbSearchInput" />
+
+          <!-- Live Telemetry Simulation Button -->
+          <button class="btn btn-outline btn-sm" onclick="LeaderboardUI.simulateRankShift()" title="Simulate real-time ranking adjustments">
+            ⚡ <span data-i18n="lb_btn_sim">Simulate Live Update</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sticky Row: Current Logged In User ("Your Rank: #12") -->
+      <div id="lbStickyUserContainer" class="sticky-user-rank-banner"></div>
+
+      <!-- Main Leaderboard Table Container -->
+      <div class="lb-table-container" id="lbTableTarget"></div>
+
+      <!-- Worker Showcase (Employee of the Month & Zone-Wise Best Performers) -->
+      <div id="lbWorkersShowcaseTarget" class="safai-heroes-showcase" style="display: none;"></div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
        PAGE 5: ADMIN CONTROL ROOM (DARK COMMAND CENTER)
        ========================================================================= -->
   <section id="page-admin" class="page-section">
@@ -3217,7 +4818,10 @@
           <span style="font-size: 0.8rem; color: var(--crimson); font-weight: 700; letter-spacing: 0.5px;">MUNICIPAL HEADQUARTERS • COMMAND CENTER</span>
           <h2 style="font-size: 1.8rem; color: #fff;">Kanpur Central Waste Operations Room</h2>
         </div>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-outline btn-sm" onclick="window.LeaderboardService.exportCSV('citizens')" title="Download full Citizen Leaderboard in CSV format">📊 Export Citizens CSV</button>
+          <button class="btn btn-outline btn-sm" onclick="window.LeaderboardService.exportCSV('workers')" title="Download Sanitation Staff Leaderboard in CSV format">🧹 Export Staff CSV</button>
+          <button class="btn btn-saffron btn-sm" onclick="window.LeaderboardUI.issueTopCitizenVouchers()" title="Issue Municipal Digital Certificates to Top 3 Citizens">🎖️ Issue Top 3 Vouchers</button>
           <button class="btn btn-outline btn-sm" onclick="exportAdminReport()">📥 Export SLA Audit Log</button>
           <button class="btn btn-neon btn-sm" onclick="refreshAdminDashboard()">🔄 Live Sync</button>
         </div>
@@ -3448,6 +5052,44 @@
               <button class="btn btn-outline btn-sm" style="border-color: #ff3366; color: #ff3366;" onclick="applyFakeReportPenalty()">
                 Deduct -5 Pts & Strike
               </button>
+            </div>
+          </div>
+
+          <!-- Sanitation Worker Merit Bonus & Penalty Control Desk -->
+          <div class="admin-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3>
+                <span>⚡ Worker Merit & Penalty Desk</span>
+                <span class="badge-live-pulse" style="background: rgba(34,228,255,0.15); color: var(--cyan-neon); font-size: 0.7rem;">SLA REWARDS</span>
+              </h3>
+              <button class="btn btn-neon btn-sm" onclick="window.LeaderboardUI.openWorkerBonusModal()">
+                ➕ Adjust Worker Points
+              </button>
+            </div>
+            <p style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 12px;">
+              Reward outstanding sanitation workers with merit bonus points or issue penalties for delayed drain/road sweeping response.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px;">
+                <div>
+                  <b style="color: #00e676;">🌟 Raju Kumar (Kidwai Nagar)</b>
+                  <div style="font-size: 0.72rem; color: #cbd5e1;">Flawless morning clearance • Current: 98.6 pts</div>
+                </div>
+                <button class="btn btn-outline btn-sm" style="border-color: #00e676; color: #00e676; padding: 4px 10px; font-size: 0.74rem;" onclick="window.LeaderboardService.adjustWorkerScore('wrk-101', 5, 'Quick spot cleanup'); window.LeaderboardUI.refreshAll(); showToast('Awarded +5 points to Raju Kumar!', 'success');">
+                  +5 Bonus
+                </button>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,51,102,0.05); border: 1px solid rgba(255,51,102,0.2); border-radius: 8px;">
+                <div>
+                  <b style="color: #ff5277;">⚠️ Manoj Paswan (Panki)</b>
+                  <div style="font-size: 0.72rem; color: #cbd5e1;">Delayed drain clearing • Status: Unresponsive</div>
+                </div>
+                <button class="btn btn-outline btn-sm" style="border-color: #ff3366; color: #ff3366; padding: 4px 10px; font-size: 0.74rem;" onclick="window.LeaderboardService.adjustWorkerScore('wrk-115', -10, 'Unresponsive SLA delay'); window.LeaderboardUI.refreshAll(); showToast('Issued -10 penalty to Manoj Paswan!', 'warning');">
+                  -10 Penalty
+                </button>
+              </div>
             </div>
           </div>
 
@@ -3839,7 +5481,1852 @@
   <!-- =========================================================================
        JAVASCRIPT LOGIC (SINGLE-PAGE APPLICATION ENGINE)
        ========================================================================= -->
+
   <script>
+    /* ==========================================================================
+       LEADERBOARD DATA SERVICE & REUSABLE COMPONENTS (DIRECT INLINE)
+       ========================================================================== */
+/**
+ * ==============================================================================
+ * SWACHHSETU LEADERBOARD DATA SERVICE (leaderboard-data.js)
+ * Kanpur Smart City Mission • Swachh Survekshan 2026
+ * 
+ * Handles data, scoring logic, Kanpur municipal wards, and persistence
+ * for Citizen Warriors and Safai Heroes.
+ * ==============================================================================
+ */
+
+(function (window) {
+  'use strict';
+
+  // 1. KANPUR MUNICIPAL WARDS LIST
+  const KANPUR_WARDS = [
+    'Kidwai Nagar (Ward 6)',
+    'Kakadeo (Ward 2)',
+    'Civil Lines (Ward 4)',
+    'Govind Nagar (Ward 5)',
+    'Panki (Ward 8)',
+    'Swaroop Nagar (Ward 1)',
+    'Kalyanpur (Ward 3)',
+    'Arya Nagar (Ward 7)',
+    'Barra (Ward 9)',
+    'Cantt (Ward 10)'
+  ];
+
+  // 2. BADGE TIER LOGIC FOR CITIZENS
+  // Bronze (0-100), Silver (101-300), Gold (301-600), Platinum (600+), "Swachh Champion" (Rank #1 or Special)
+  function getCitizenBadge(points, rank) {
+    if (rank === 1) {
+      return {
+        id: 'champion',
+        nameEn: 'Swachh Champion',
+        nameHi: 'स्वच्छ चैंपियन',
+        icon: '👑',
+        class: 'badge-champion',
+        tier: 'Champion'
+      };
+    }
+    if (points >= 600) {
+      return {
+        id: 'platinum',
+        nameEn: 'Platinum Crusader',
+        nameHi: 'प्लैटिनम योद्धा',
+        icon: '💎',
+        class: 'badge-platinum',
+        tier: 'Platinum (600+)'
+      };
+    }
+    if (points >= 301) {
+      return {
+        id: 'gold',
+        nameEn: 'Gold Sentinel',
+        nameHi: 'स्वर्ण प्रहरी',
+        icon: '🥇',
+        class: 'badge-gold',
+        tier: 'Gold (301-600)'
+      };
+    }
+    if (points >= 101) {
+      return {
+        id: 'silver',
+        nameEn: 'Silver Guardian',
+        nameHi: 'रजत संरक्षक',
+        icon: '🥈',
+        class: 'badge-silver',
+        tier: 'Silver (101-300)'
+      };
+    }
+    return {
+      id: 'bronze',
+      nameEn: 'Bronze Scout',
+      nameHi: 'कांस्य स्काउट',
+      icon: '🥉',
+      class: 'badge-bronze',
+      tier: 'Bronze (0-100)'
+    };
+  }
+
+  // 3. COMPOSITE SCORE CALCULATION FOR SAFAI HEROES (SANITATION WORKERS)
+  // Formula: (SLA% × 0.4) + (Rating × 20 × 0.3) + (Resolved ratio × 0.2) + (Speed score × 0.1)
+  function calculateWorkerCompositeScore(worker) {
+    const slaPercent = Math.min(100, Math.max(0, parseFloat(worker.slaPercent) || 0));
+    const rating = Math.min(5, Math.max(0, parseFloat(worker.rating) || 0));
+    const assigned = parseInt(worker.assigned, 10) || 1;
+    const resolved = parseInt(worker.resolved, 10) || 0;
+    const resolvedRatio = Math.min(100, (resolved / assigned) * 100);
+
+    // Speed score: Turnaround hours inverse curve (1.0h = 100 pts, 2.0h = 85 pts, 4h = 55 pts, 8h+ = 15 pts)
+    const avgHours = parseFloat(worker.avgTurnaroundHours) || 3.0;
+    let speedScore = 100 - (avgHours * 10);
+    if (speedScore < 10) speedScore = 10;
+    if (speedScore > 100) speedScore = 100;
+
+    const partSla = slaPercent * 0.4;
+    const partRating = (rating * 20) * 0.3;
+    const partResolved = resolvedRatio * 0.2;
+    const partSpeed = speedScore * 0.1;
+
+    // Bonus points added/deducted by municipal admin
+    const adminDelta = parseFloat(worker.adminDeltaScore) || 0;
+
+    const total = Math.round((partSla + partRating + partResolved + partSpeed + adminDelta) * 10) / 10;
+    
+    return {
+      total: Math.min(100, Math.max(0, total)),
+      breakdown: {
+        partSla: Math.round(partSla * 10) / 10,
+        partRating: Math.round(partRating * 10) / 10,
+        partResolved: Math.round(partResolved * 10) / 10,
+        partSpeed: Math.round(partSpeed * 10) / 10,
+        speedScore: Math.round(speedScore),
+        resolvedRatio: Math.round(resolvedRatio * 10) / 10,
+        adminDelta: Math.round(adminDelta * 10) / 10
+      }
+    };
+  }
+
+  // 4. MOCK DATA: 18 KANPUR CITIZENS ("Swachh Warriors")
+  // Realistic Kanpur residents with authentic names, wards, complaint counts and points
+  const INITIAL_CITIZENS = [
+    {
+      id: 'cit-01',
+      name: 'Priya Verma',
+      ward: 'Civil Lines (Ward 4)',
+      avatar: 'PV',
+      color: '#b46bff',
+      pointsAllTime: 840,
+      pointsThisMonth: 260,
+      pointsThisWeek: 75,
+      totalComplaints: 48,
+      resolvedComplaints: 46,
+      photoProofs: 44,
+      fakeReports: 0,
+      prevRank: 1,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-02',
+      name: 'Amit Awasthi',
+      ward: 'Kakadeo (Ward 2)',
+      avatar: 'AA',
+      color: '#22e4ff',
+      pointsAllTime: 790,
+      pointsThisMonth: 245,
+      pointsThisWeek: 65,
+      totalComplaints: 44,
+      resolvedComplaints: 42,
+      photoProofs: 41,
+      fakeReports: 0,
+      prevRank: 2,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-03',
+      name: 'Sunita Pandey',
+      ward: 'Govind Nagar (Ward 5)',
+      avatar: 'SP',
+      color: '#00e676',
+      pointsAllTime: 720,
+      pointsThisMonth: 210,
+      pointsThisWeek: 60,
+      totalComplaints: 41,
+      resolvedComplaints: 39,
+      photoProofs: 38,
+      fakeReports: 0,
+      prevRank: 4,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-04',
+      name: 'Rajesh Shukla',
+      ward: 'Swaroop Nagar (Ward 1)',
+      avatar: 'RS',
+      color: '#ff9f1c',
+      pointsAllTime: 580,
+      pointsThisMonth: 180,
+      pointsThisWeek: 45,
+      totalComplaints: 33,
+      resolvedComplaints: 31,
+      photoProofs: 30,
+      fakeReports: 0,
+      prevRank: 3,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-05',
+      name: 'Ananya Mishra',
+      ward: 'Arya Nagar (Ward 7)',
+      avatar: 'AM',
+      color: '#ff3366',
+      pointsAllTime: 540,
+      pointsThisMonth: 165,
+      pointsThisWeek: 50,
+      totalComplaints: 31,
+      resolvedComplaints: 29,
+      photoProofs: 28,
+      fakeReports: 0,
+      prevRank: 6,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-06',
+      name: 'Vikram Singh',
+      ward: 'Cantt (Ward 10)',
+      avatar: 'VS',
+      color: '#38bdf8',
+      pointsAllTime: 490,
+      pointsThisMonth: 150,
+      pointsThisWeek: 40,
+      totalComplaints: 28,
+      resolvedComplaints: 26,
+      photoProofs: 25,
+      fakeReports: 0,
+      prevRank: 5,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-07',
+      name: 'Neha Gupta',
+      ward: 'Kidwai Nagar (Ward 6)',
+      avatar: 'NG',
+      color: '#a855f7',
+      pointsAllTime: 430,
+      pointsThisMonth: 135,
+      pointsThisWeek: 35,
+      totalComplaints: 25,
+      resolvedComplaints: 24,
+      photoProofs: 23,
+      fakeReports: 0,
+      prevRank: 7,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-08',
+      name: 'Deepak Tiwari',
+      ward: 'Barra (Ward 9)',
+      avatar: 'DT',
+      color: '#eab308',
+      pointsAllTime: 380,
+      pointsThisMonth: 120,
+      pointsThisWeek: 30,
+      totalComplaints: 22,
+      resolvedComplaints: 21,
+      photoProofs: 20,
+      fakeReports: 0,
+      prevRank: 9,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-09',
+      name: 'Pooja Bajpai',
+      ward: 'Kalyanpur (Ward 3)',
+      avatar: 'PB',
+      color: '#10b981',
+      pointsAllTime: 320,
+      pointsThisMonth: 105,
+      pointsThisWeek: 25,
+      totalComplaints: 19,
+      resolvedComplaints: 18,
+      photoProofs: 17,
+      fakeReports: 0,
+      prevRank: 8,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-10',
+      name: 'Alok Saxena',
+      ward: 'Panki (Ward 8)',
+      avatar: 'AS',
+      color: '#6366f1',
+      pointsAllTime: 280,
+      pointsThisMonth: 90,
+      pointsThisWeek: 20,
+      totalComplaints: 16,
+      resolvedComplaints: 15,
+      photoProofs: 15,
+      fakeReports: 0,
+      prevRank: 10,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-11',
+      name: 'Ritu Agarwal',
+      ward: 'Civil Lines (Ward 4)',
+      avatar: 'RA',
+      color: '#ec4899',
+      pointsAllTime: 240,
+      pointsThisMonth: 75,
+      pointsThisWeek: 20,
+      totalComplaints: 14,
+      resolvedComplaints: 13,
+      photoProofs: 13,
+      fakeReports: 0,
+      prevRank: 11,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-current', // Logged in user: Rohan Sharma! Connected with navbar 120 PTS
+      name: 'Rohan Sharma',
+      ward: 'Kidwai Nagar (Ward 6)',
+      avatar: 'RS',
+      color: '#22e4ff',
+      pointsAllTime: 120, // Synchronized with APP_STATE.user.points
+      pointsThisMonth: 55,
+      pointsThisWeek: 25,
+      totalComplaints: 9,
+      resolvedComplaints: 8,
+      photoProofs: 8,
+      fakeReports: 0,
+      prevRank: 13,
+      isCurrentUser: true
+    },
+    {
+      id: 'cit-12',
+      name: 'Saurabh Tripathi',
+      ward: 'Kakadeo (Ward 2)',
+      avatar: 'ST',
+      color: '#14b8a6',
+      pointsAllTime: 190,
+      pointsThisMonth: 60,
+      pointsThisWeek: 15,
+      totalComplaints: 11,
+      resolvedComplaints: 10,
+      photoProofs: 10,
+      fakeReports: 0,
+      prevRank: 12,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-13',
+      name: 'Divya Srivastava',
+      ward: 'Govind Nagar (Ward 5)',
+      avatar: 'DS',
+      color: '#f97316',
+      pointsAllTime: 150,
+      pointsThisMonth: 45,
+      pointsThisWeek: 15,
+      totalComplaints: 9,
+      resolvedComplaints: 8,
+      photoProofs: 8,
+      fakeReports: 0,
+      prevRank: 14,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-14',
+      name: 'Rahul Chaurasia',
+      ward: 'Barra (Ward 9)',
+      avatar: 'RC',
+      color: '#84cc16',
+      pointsAllTime: 90,
+      pointsThisMonth: 30,
+      pointsThisWeek: 10,
+      totalComplaints: 6,
+      resolvedComplaints: 5,
+      photoProofs: 5,
+      fakeReports: 0,
+      prevRank: 15,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-15',
+      name: 'Sneha Yadav',
+      ward: 'Panki (Ward 8)',
+      avatar: 'SY',
+      color: '#06b6d4',
+      pointsAllTime: 70,
+      pointsThisMonth: 25,
+      pointsThisWeek: 10,
+      totalComplaints: 5,
+      resolvedComplaints: 4,
+      photoProofs: 4,
+      fakeReports: 0,
+      prevRank: 16,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-16',
+      name: 'Manoj Tiwari',
+      ward: 'Arya Nagar (Ward 7)',
+      avatar: 'MT',
+      color: '#8b5cf6',
+      pointsAllTime: 50,
+      pointsThisMonth: 20,
+      pointsThisWeek: 0,
+      totalComplaints: 4,
+      resolvedComplaints: 3,
+      photoProofs: 3,
+      fakeReports: 0,
+      prevRank: 17,
+      isCurrentUser: false
+    },
+    {
+      id: 'cit-17',
+      name: 'Kavita Dixit',
+      ward: 'Swaroop Nagar (Ward 1)',
+      avatar: 'KD',
+      color: '#d946ef',
+      pointsAllTime: 30,
+      pointsThisMonth: 10,
+      pointsThisWeek: 0,
+      totalComplaints: 2,
+      resolvedComplaints: 2,
+      photoProofs: 2,
+      fakeReports: 0,
+      prevRank: 18,
+      isCurrentUser: false
+    }
+  ];
+
+  // 5. MOCK DATA: 16 KANPUR SANITATION HEROES ("Safai Heroes")
+  // Realistic municipal sanitation crew profiles with vehicle, zone, SLAs, ratings, and stats
+  const INITIAL_WORKERS = [
+    {
+      id: 'wrk-101',
+      name: 'Raju Kumar',
+      vehicle: 'EV Tipper #101',
+      zone: 'Kidwai Nagar (Ward 6)',
+      assigned: 146,
+      resolved: 143,
+      avgTurnaroundHours: 1.8,
+      slaPercent: 98.6,
+      rating: 4.9,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: true,
+      perk: '₹2,500 Cash Award + Smart Watch + Honor Certificate',
+      prevRank: 1
+    },
+    {
+      id: 'wrk-102',
+      name: 'Sunita Devi',
+      vehicle: 'Mini EV Van #103',
+      zone: 'Kakadeo (Ward 2)',
+      assigned: 138,
+      resolved: 136,
+      avgTurnaroundHours: 2.0,
+      slaPercent: 98.2,
+      rating: 5.0,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      perk: '₹1,500 Cash Voucher + Certificate',
+      prevRank: 2
+    },
+    {
+      id: 'wrk-103',
+      name: 'Amit Verma',
+      vehicle: 'Road Sweeper #102',
+      zone: 'Govind Nagar (Ward 5)',
+      assigned: 130,
+      resolved: 126,
+      avgTurnaroundHours: 2.2,
+      slaPercent: 97.4,
+      rating: 4.8,
+      status: 'On Duty',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      perk: '₹1,000 Cash Voucher + Certificate',
+      prevRank: 3
+    },
+    {
+      id: 'wrk-104',
+      name: 'Rajesh Rawat',
+      vehicle: 'Compactor #105',
+      zone: 'Civil Lines (Ward 4)',
+      assigned: 124,
+      resolved: 120,
+      avgTurnaroundHours: 2.4,
+      slaPercent: 96.8,
+      rating: 4.7,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 4
+    },
+    {
+      id: 'wrk-105',
+      name: 'Mohan Lal',
+      vehicle: 'Suction Unit #104',
+      zone: 'Swaroop Nagar (Ward 1)',
+      assigned: 118,
+      resolved: 113,
+      avgTurnaroundHours: 2.6,
+      slaPercent: 96.0,
+      rating: 4.8,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 6
+    },
+    {
+      id: 'wrk-106',
+      name: 'Ram Singh',
+      vehicle: 'Tipper EV #106',
+      zone: 'Cantt (Ward 10)',
+      assigned: 112,
+      resolved: 106,
+      avgTurnaroundHours: 2.8,
+      slaPercent: 95.1,
+      rating: 4.7,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 5
+    },
+    {
+      id: 'wrk-107',
+      name: 'Suresh Yadav',
+      vehicle: 'Mini Dumper #107',
+      zone: 'Kalyanpur (Ward 3)',
+      assigned: 105,
+      resolved: 99,
+      avgTurnaroundHours: 3.1,
+      slaPercent: 94.5,
+      rating: 4.6,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 7
+    },
+    {
+      id: 'wrk-108',
+      name: 'Bablu Prajapati',
+      vehicle: 'Road Sweeper #108',
+      zone: 'Barra (Ward 9)',
+      assigned: 99,
+      resolved: 92,
+      avgTurnaroundHours: 3.4,
+      slaPercent: 93.8,
+      rating: 4.5,
+      status: 'On Duty',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 9
+    },
+    {
+      id: 'wrk-109',
+      name: 'Dinesh Kumar',
+      vehicle: 'Tipper EV #109',
+      zone: 'Arya Nagar (Ward 7)',
+      assigned: 95,
+      resolved: 88,
+      avgTurnaroundHours: 3.6,
+      slaPercent: 92.5,
+      rating: 4.6,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 8
+    },
+    {
+      id: 'wrk-110',
+      name: 'Geeta Rani',
+      vehicle: 'Sanitation Auto #110',
+      zone: 'Kidwai Nagar (Ward 6)',
+      assigned: 90,
+      resolved: 83,
+      avgTurnaroundHours: 3.8,
+      slaPercent: 93.0,
+      rating: 4.5,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 10
+    },
+    {
+      id: 'wrk-111',
+      name: 'Santosh Pal',
+      vehicle: 'Silt Suction #111',
+      zone: 'Kakadeo (Ward 2)',
+      assigned: 86,
+      resolved: 78,
+      avgTurnaroundHours: 4.1,
+      slaPercent: 90.6,
+      rating: 4.4,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 11
+    },
+    {
+      id: 'wrk-112',
+      name: 'Rakesh Balmiki',
+      vehicle: 'Hydraulic Compactor #112',
+      zone: 'Panki (Ward 8)',
+      assigned: 92,
+      resolved: 78,
+      avgTurnaroundHours: 4.6,
+      slaPercent: 88.0,
+      rating: 4.3,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 12
+    },
+    {
+      id: 'wrk-113',
+      name: 'Rameshwar Dayal',
+      vehicle: 'Road Sweeper #113',
+      zone: 'Govind Nagar (Ward 5)',
+      assigned: 82,
+      resolved: 69,
+      avgTurnaroundHours: 5.2,
+      slaPercent: 85.0,
+      rating: 4.1,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 13
+    },
+    {
+      id: 'wrk-114',
+      name: 'Anita Devi',
+      vehicle: 'Waste Loader #114',
+      zone: 'Civil Lines (Ward 4)',
+      assigned: 76,
+      resolved: 63,
+      avgTurnaroundHours: 5.8,
+      slaPercent: 82.7,
+      rating: 4.0,
+      status: 'Active',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 14
+    },
+    {
+      id: 'wrk-115',
+      name: 'Manoj Paswan',
+      vehicle: 'Zone 1 Ti-104',
+      zone: 'Panki (Ward 8)',
+      assigned: 72,
+      resolved: 49,
+      avgTurnaroundHours: 8.4,
+      slaPercent: 68.6,
+      rating: 3.2,
+      status: 'Unresponsive / SLA Breached', // Match admin escalation
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 15
+    },
+    {
+      id: 'wrk-116',
+      name: 'Jagdish Prasad',
+      vehicle: 'Tipper Manual #116',
+      zone: 'Barra (Ward 9)',
+      assigned: 65,
+      resolved: 42,
+      avgTurnaroundHours: 9.2,
+      slaPercent: 64.6,
+      rating: 3.1,
+      status: 'Unresponsive / SLA Breached',
+      adminDeltaScore: 0,
+      isEmployeeOfMonth: false,
+      prevRank: 16
+    }
+  ];
+
+  // 6. STATE STORAGE & PERSISTENCE SERVICE
+  class LeaderboardServiceClass {
+    constructor() {
+      this.isAnonymousUser = false;
+      this.loadState();
+    }
+
+    loadState() {
+      try {
+        const storedAnon = localStorage.getItem('swachhsetu_user_anonymous');
+        this.isAnonymousUser = storedAnon === 'true';
+
+        const storedCitizens = localStorage.getItem('swachhsetu_citizens_data');
+        if (storedCitizens) {
+          this.citizens = JSON.parse(storedCitizens);
+        } else {
+          this.citizens = JSON.parse(JSON.stringify(INITIAL_CITIZENS));
+        }
+
+        const storedWorkers = localStorage.getItem('swachhsetu_workers_data');
+        if (storedWorkers) {
+          this.workers = JSON.parse(storedWorkers);
+        } else {
+          this.workers = JSON.parse(JSON.stringify(INITIAL_WORKERS));
+        }
+
+        // Audit log of admin actions
+        const storedAudit = localStorage.getItem('swachhsetu_admin_audit_log');
+        if (storedAudit) {
+          this.adminAuditLog = JSON.parse(storedAudit);
+        } else {
+          this.adminAuditLog = [
+            {
+              id: 'AUD-01',
+              timestamp: '2026-10-01 08:30',
+              target: 'Raju Kumar (Kidwai Nagar)',
+              action: '+5 Bonus Points',
+              reason: 'Flawless morning market clearance before 7 AM',
+              admin: 'Zone Officer KMC'
+            },
+            {
+              id: 'AUD-02',
+              timestamp: '2026-09-30 18:15',
+              target: 'Manoj Paswan (Panki)',
+              action: '-10 Penalty Points',
+              reason: 'Repeatedly unattended ticket #TKT-KN-9102',
+              admin: 'Superintendent KMC'
+            }
+          ];
+        }
+      } catch (e) {
+        console.warn('LocalStorage error in LeaderboardService, using defaults', e);
+        this.citizens = JSON.parse(JSON.stringify(INITIAL_CITIZENS));
+        this.workers = JSON.parse(JSON.stringify(INITIAL_WORKERS));
+        this.adminAuditLog = [];
+      }
+    }
+
+    saveState() {
+      try {
+        localStorage.setItem('swachhsetu_user_anonymous', this.isAnonymousUser ? 'true' : 'false');
+        localStorage.setItem('swachhsetu_citizens_data', JSON.stringify(this.citizens));
+        localStorage.setItem('swachhsetu_workers_data', JSON.stringify(this.workers));
+        localStorage.setItem('swachhsetu_admin_audit_log', JSON.stringify(this.adminAuditLog));
+      } catch (e) {
+        console.warn('Could not save to localStorage', e);
+      }
+    }
+
+    // Connects with APP_STATE.user.points (Navbar 120 PTS)
+    syncCurrentUserPoints(pts) {
+      const user = this.citizens.find(c => c.isCurrentUser);
+      if (user) {
+        const delta = pts - user.pointsAllTime;
+        user.pointsAllTime = pts;
+        user.pointsThisMonth = Math.max(0, user.pointsThisMonth + delta);
+        user.pointsThisWeek = Math.max(0, user.pointsThisWeek + delta);
+        this.saveState();
+      }
+    }
+
+    // Toggle anonymous name privacy
+    toggleAnonymous(val) {
+      this.isAnonymousUser = (val !== undefined) ? !!val : !this.isAnonymousUser;
+      this.saveState();
+      return this.isAnonymousUser;
+    }
+
+    isAnonymous() {
+      return this.isAnonymousUser;
+    }
+
+    // Return citizens list with sorted ranks and badges for given time filter and zone filter
+    getCitizens(timeFilter = 'all', zoneFilter = 'all') {
+      let list = this.citizens.map(c => Object.assign({}, c));
+
+      // Filter by zone if selected
+      if (zoneFilter && zoneFilter !== 'all') {
+        list = list.filter(c => c.ward.toLowerCase().includes(zoneFilter.toLowerCase()));
+      }
+
+      // Sort according to selected time frame
+      list.sort((a, b) => {
+        let ptsA = a.pointsAllTime;
+        let ptsB = b.pointsAllTime;
+        if (timeFilter === 'week') {
+          ptsA = a.pointsThisWeek;
+          ptsB = b.pointsThisWeek;
+        } else if (timeFilter === 'month') {
+          ptsA = a.pointsThisMonth;
+          ptsB = b.pointsThisMonth;
+        }
+        return ptsB - ptsA;
+      });
+
+      // Calculate ranks & badges
+      return list.map((c, idx) => {
+        const rank = idx + 1;
+        let points = c.pointsAllTime;
+        if (timeFilter === 'week') points = c.pointsThisWeek;
+        if (timeFilter === 'month') points = c.pointsThisMonth;
+
+        const badge = getCitizenBadge(c.pointsAllTime, rank);
+        const rankDiff = c.prevRank ? (c.prevRank - rank) : 0; // Positive = climbed up
+
+        // If anonymous is on and this is current user, mask display name
+        const displayName = (c.isCurrentUser && this.isAnonymousUser) 
+          ? 'Anonymous Citizen #892' 
+          : c.name;
+
+        const displayAvatar = (c.isCurrentUser && this.isAnonymousUser) 
+          ? '🎭' 
+          : c.avatar;
+
+        return {
+          ...c,
+          rank,
+          points,
+          badge,
+          displayName,
+          displayAvatar,
+          rankDiff
+        };
+      });
+    }
+
+    // Get current user's entry and rank in the citizen leaderboard
+    getCurrentUserRank(timeFilter = 'all', zoneFilter = 'all') {
+      const fullList = this.getCitizens(timeFilter, zoneFilter);
+      return fullList.find(c => c.isCurrentUser) || null;
+    }
+
+    // Return workers sorted by composite score
+    getWorkers(zoneFilter = 'all') {
+      let list = this.workers.map(w => {
+        const scoreData = calculateWorkerCompositeScore(w);
+        return {
+          ...w,
+          compositeScore: scoreData.total,
+          breakdown: scoreData.breakdown
+        };
+      });
+
+      if (zoneFilter && zoneFilter !== 'all') {
+        list = list.filter(w => w.zone.toLowerCase().includes(zoneFilter.toLowerCase()));
+      }
+
+      // Sort descending by composite score, then resolved tasks
+      list.sort((a, b) => {
+        if (b.compositeScore !== a.compositeScore) {
+          return b.compositeScore - a.compositeScore;
+        }
+        return b.resolved - a.resolved;
+      });
+
+      return list.map((w, idx) => {
+        const rank = idx + 1;
+        const rankDiff = w.prevRank ? (w.prevRank - rank) : 0;
+        return {
+          ...w,
+          rank,
+          rankDiff
+        };
+      });
+    }
+
+    // Get zone-wise best performer for each major Kanpur ward
+    getZoneBestWorkers() {
+      const allWorkers = this.getWorkers('all');
+      const zoneMap = {};
+
+      allWorkers.forEach(w => {
+        // Extract basic ward name, e.g. "Kidwai Nagar"
+        const cleanZone = w.zone.split('(')[0].trim();
+        if (!zoneMap[cleanZone]) {
+          zoneMap[cleanZone] = w;
+        }
+      });
+
+      return Object.keys(zoneMap).map(zone => ({
+        zone,
+        worker: zoneMap[zone]
+      }));
+    }
+
+    // Admin Action: Give manual bonus points or penalty to worker
+    adjustWorkerScore(workerId, deltaPoints, reason, adminName = 'Municipal HQ Command') {
+      const worker = this.workers.find(w => w.id === workerId || String(w.id) === String(workerId));
+      if (!worker) return null;
+
+      worker.adminDeltaScore = (worker.adminDeltaScore || 0) + deltaPoints;
+      
+      const sign = deltaPoints >= 0 ? `+${deltaPoints}` : `${deltaPoints}`;
+      const actionType = deltaPoints >= 0 ? 'Bonus Awarded' : 'Penalty Issued';
+      
+      // Update status if severe penalty
+      if (deltaPoints < -10 && worker.status !== 'Unresponsive / SLA Breached') {
+        worker.status = 'Review Pending';
+      } else if (deltaPoints > 0 && worker.status === 'Review Pending') {
+        worker.status = 'Active';
+      }
+
+      const now = new Date();
+      const dateStr = now.toISOString().slice(0, 16).replace('T', ' ');
+
+      const auditEntry = {
+        id: 'AUD-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+        timestamp: dateStr,
+        target: `${worker.name} (${worker.zone.split('(')[0].trim()})`,
+        action: `${sign} Points (${actionType})`,
+        reason: reason || 'Administrative performance review',
+        admin: adminName
+      };
+
+      this.adminAuditLog.unshift(auditEntry);
+      if (this.adminAuditLog.length > 50) this.adminAuditLog.pop();
+
+      this.saveState();
+      return { worker, auditEntry };
+    }
+
+    // Record citizen complaint rewards logic:
+    // valid complaint = +10, complaint resolved = +5, photo proof = +5 bonus, fake complaint = -5
+    recordCitizenActivity(activityType) {
+      const user = this.citizens.find(c => c.isCurrentUser);
+      if (!user) return 0;
+
+      let pts = 0;
+      if (activityType === 'valid_report') {
+        pts = 10;
+        user.totalComplaints++;
+      } else if (activityType === 'photo_bonus') {
+        pts = 5;
+        user.photoProofs++;
+      } else if (activityType === 'resolved_review') {
+        pts = 5;
+        user.resolvedComplaints++;
+      } else if (activityType === 'fake_penalty') {
+        pts = -5;
+        user.fakeReports++;
+      }
+
+      user.pointsAllTime = Math.max(0, user.pointsAllTime + pts);
+      user.pointsThisMonth = Math.max(0, user.pointsThisMonth + pts);
+      user.pointsThisWeek = Math.max(0, user.pointsThisWeek + pts);
+
+      this.saveState();
+      return { pts, user };
+    }
+
+    // CSV Exporter for Admin Control
+    exportCSV(type = 'citizens') {
+      let csv = '';
+      const now = new Date().toISOString().slice(0, 10);
+
+      if (type === 'citizens') {
+        const data = this.getCitizens('all', 'all');
+        csv = 'Rank,Citizen ID,Name,Ward,Total Complaints,Resolved Complaints,Photo Proofs,Points,Badge Tier,Status\r\n';
+        data.forEach(c => {
+          csv += `"${c.rank}","${c.id}","${c.name}","${c.ward}","${c.totalComplaints}","${c.resolvedComplaints}","${c.photoProofs}","${c.pointsAllTime}","${c.badge.nameEn}","${c.isCurrentUser ? 'Logged In User' : 'Citizen'}"\r\n`;
+        });
+      } else {
+        const data = this.getWorkers('all');
+        csv = 'Rank,Worker ID,Name,Vehicle,Zone,Assigned Tasks,Resolved Tasks,Avg Turnaround (Hrs),SLA %,Citizen Rating,Composite Score,Status\r\n';
+        data.forEach(w => {
+          csv += `"${w.rank}","${w.id}","${w.name}","${w.vehicle}","${w.zone}","${w.assigned}","${w.resolved}","${w.avgTurnaroundHours}","${w.slaPercent}%","${w.rating}","${w.compositeScore}","${w.status}"\r\n`;
+        });
+      }
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `SwachhSetu_${type.toUpperCase()}_Leaderboard_${now}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // Live Simulation Tick: Moves a couple of ranks up/down slightly so judges can see dynamic animations!
+    simulateLiveTick() {
+      // Pick random citizen (not current user) and add 5 points
+      const candidates = this.citizens.filter(c => !c.isCurrentUser);
+      if (candidates.length > 0) {
+        const lucky = candidates[Math.floor(Math.random() * candidates.length)];
+        lucky.prevRank = lucky.prevRank || 1;
+        lucky.pointsAllTime += 10;
+        lucky.resolvedComplaints += 1;
+      }
+
+      // Pick random worker and slightly update resolved count
+      if (this.workers.length > 0) {
+        const luckyW = this.workers[Math.floor(Math.random() * 5)];
+        luckyW.resolved += 1;
+        luckyW.assigned += 1;
+      }
+
+      this.saveState();
+    }
+  }
+
+  // Expose global singleton
+  window.LeaderboardService = new LeaderboardServiceClass();
+  window.KANPUR_WARDS = KANPUR_WARDS;
+
+})(window);
+
+
+/**
+ * ==============================================================================
+ * SWACHHSETU LEADERBOARD UI COMPONENTS & CONTROLLER (leaderboard-components.js)
+ * Kanpur Smart City Mission • Swachh Survekshan 2026
+ * 
+ * Reusable Components: LeaderboardTable, PodiumCard, RankBadge,
+ * EmployeeOfMonthCard, ZoneBestGrid, HomeTopPerformers
+ * ==============================================================================
+ */
+
+(function (window) {
+  'use strict';
+
+  // Internal component state
+  const UI_STATE = {
+    activeBoard: 'citizens', // 'citizens' or 'workers'
+    timeFilter: 'all',       // 'week', 'month', 'all'
+    zoneFilter: 'all',       // 'all' or ward substring
+    searchQuery: '',
+    isHi: false
+  };
+
+  function isHindi() {
+    return window.APP_STATE && window.APP_STATE.currentLang === 'hi';
+  }
+
+  // --------------------------------------------------------------------------
+  // 1. REUSABLE COMPONENT: RANK DELTA ARROW
+  // --------------------------------------------------------------------------
+  function createRankDeltaHtml(diff) {
+    if (diff > 0) {
+      return `<span class="rank-delta-tag up" title="Climbed +${diff} rank">▲ +${diff}</span>`;
+    } else if (diff < 0) {
+      return `<span class="rank-delta-tag down" title="Dropped ${diff} rank">▼ ${Math.abs(diff)}</span>`;
+    }
+    return `<span class="rank-delta-tag same" title="No rank change">• 0</span>`;
+  }
+
+  // --------------------------------------------------------------------------
+  // 2. REUSABLE COMPONENT: RANK BADGE
+  // --------------------------------------------------------------------------
+  function createRankBadgeHtml(badge) {
+    const isHi = isHindi();
+    const name = isHi ? badge.nameHi : badge.nameEn;
+    return `
+      <span class="tier-badge ${badge.class}">
+        <span>${badge.icon}</span>
+        <span>${name}</span>
+      </span>
+    `;
+  }
+
+  // --------------------------------------------------------------------------
+  // 3. REUSABLE COMPONENT: PODIUM CARD (TOP 3)
+  // --------------------------------------------------------------------------
+  function createPodiumCardHtml(item, rank, type) {
+    const isHi = isHindi();
+    const isRank1 = rank === 1;
+    const isCitizen = type === 'citizens';
+
+    let crownHtml = '';
+    let medalIcon = '🥉';
+    let rankLabel = isHi ? 'तीसरा स्थान' : '3rd Place';
+
+    if (rank === 1) {
+      crownHtml = `<div class="podium-crown">👑</div>`;
+      medalIcon = '🥇';
+      rankLabel = isHi ? 'प्रथम स्थान' : '1st Champion';
+    } else if (rank === 2) {
+      medalIcon = '🥈';
+      rankLabel = isHi ? 'द्वितीय स्थान' : '2nd Runner-Up';
+    }
+
+    const displayName = isCitizen ? item.displayName : item.name;
+    const avatar = isCitizen ? item.displayAvatar : (item.name ? item.name.split(' ').map(n=>n[0]).join('').substring(0, 2) : 'SH');
+    const avatarBg = item.color || (isRank1 ? '#ffd700' : (rank === 2 ? '#94a3b8' : '#d97706'));
+    const ward = isCitizen ? item.ward : `${item.zone} • ${item.vehicle}`;
+
+    let scoreHtml = '';
+    if (isCitizen) {
+      scoreHtml = `
+        <div class="podium-user-score">
+          🌱 ${item.points} <span style="font-size: 0.75rem; color: #94a3b8;">PTS</span>
+        </div>
+      `;
+    } else {
+      scoreHtml = `
+        <div class="podium-user-score" style="color: #00e676;">
+          ⚡ ${item.compositeScore} <span style="font-size: 0.75rem; color: #94a3b8;">/ 100</span>
+        </div>
+        <div style="font-size: 0.76rem; color: #ffb703; font-weight: 700;">★ ${item.rating} Rating</div>
+      `;
+    }
+
+    return `
+      <div class="podium-col rank-${rank}">
+        ${crownHtml}
+        <div class="podium-avatar-ring" style="background: ${avatarBg};">
+          ${avatar}
+          <div class="podium-badge-icon">${medalIcon}</div>
+        </div>
+        <div class="podium-user-info">
+          <div class="podium-user-name">${displayName}</div>
+          <div class="podium-user-ward">${ward}</div>
+          ${scoreHtml}
+        </div>
+        <div class="podium-pillar">
+          <div class="podium-pillar-rank">#${rank}</div>
+          <div class="podium-pillar-label">${rankLabel}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // --------------------------------------------------------------------------
+  // 4. REUSABLE COMPONENT: LEADERBOARD TABLE
+  // --------------------------------------------------------------------------
+  function createLeaderboardTableHtml(type, items) {
+    const isHi = isHindi();
+    const isCitizen = type === 'citizens';
+
+    if (!items || items.length === 0) {
+      return `
+        <div style="text-align: center; padding: 40px; color: #94a3b8;">
+          <div style="font-size: 2.4rem; margin-bottom: 10px;">🔍</div>
+          <h4>${isHi ? 'कोई रिकॉर्ड नहीं मिला' : 'No Leaderboard Records Found'}</h4>
+          <p style="font-size: 0.85rem;">${isHi ? 'कृपया फ़िल्टर या खोज शब्द बदलें।' : 'Try changing your ward filter or search keywords.'}</p>
+        </div>
+      `;
+    }
+
+    if (isCitizen) {
+      // Citizen Table Columns: Rank, Avatar/Initials, Name, Ward/Zone, Total Complaints, Resolved Complaints, Points, Badge
+      const rows = items.map(c => {
+        const isUser = c.isCurrentUser;
+        const youTag = isUser ? `<span class="you-tag">${isHi ? 'आप' : 'YOU'}</span>` : '';
+        const rankClass = c.rank <= 3 ? `rank-${c.rank}` : '';
+
+        return `
+          <tr class="${isUser ? 'highlight-user' : ''}">
+            <td>
+              <div class="lb-rank-cell">
+                <div class="rank-circle ${rankClass}">#${c.rank}</div>
+                ${createRankDeltaHtml(c.rankDiff)}
+              </div>
+            </td>
+            <td>
+              <div class="performer-avatar" style="background: ${c.color || '#22e4ff'};">
+                ${c.displayAvatar}
+              </div>
+            </td>
+            <td>
+              <div style="font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+                ${c.displayName} ${youTag}
+              </div>
+              <div style="font-size: 0.72rem; color: #94a3b8;">ID: ${c.id}</div>
+            </td>
+            <td>
+              <div style="font-size: 0.85rem; color: #cbd5e1;">${c.ward}</div>
+            </td>
+            <td style="text-align: center;">
+              <b style="color: #fff;">${c.totalComplaints}</b>
+              <div style="font-size: 0.72rem; color: #94a3b8;">${isHi ? 'रिपोर्ट्स' : 'Reports'}</div>
+            </td>
+            <td style="text-align: center;">
+              <b style="color: #00e676;">${c.resolvedComplaints}</b>
+              <div style="font-size: 0.72rem; color: #94a3b8;">(${Math.round((c.resolvedComplaints / (c.totalComplaints || 1)) * 100)}%)</div>
+            </td>
+            <td>
+              <div style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--cyan-neon);">
+                ${c.points} <span style="font-size: 0.75rem; color: #94a3b8;">PTS</span>
+              </div>
+            </td>
+            <td>
+              ${createRankBadgeHtml(c.badge)}
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      return `
+        <table class="lb-table">
+          <thead>
+            <tr>
+              <th>${isHi ? 'रैंक' : 'Rank'}</th>
+              <th>${isHi ? 'अवतार' : 'Avatar'}</th>
+              <th>${isHi ? 'नागरिक का नाम' : 'Citizen Name'}</th>
+              <th>${isHi ? 'वार्ड / क्षेत्र' : 'Ward / Zone'}</th>
+              <th style="text-align: center;">${isHi ? 'कुल शिकायतें' : 'Total Complaints'}</th>
+              <th style="text-align: center;">${isHi ? 'हल हुई शिकायतें' : 'Resolved'}</th>
+              <th>${isHi ? 'ग्रीन पॉइंट्स' : 'Points'}</th>
+              <th>${isHi ? 'बैज / उपाधि' : 'Badge Tier'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `;
+    } else {
+      // Safai Karmchari Table Columns: Rank, Worker Name, Zone/Ward, Assigned Tasks, Resolved, Avg Turnaround, SLA %, Rating, Status, Composite Score
+      const rows = items.map(w => {
+        const rankClass = w.rank <= 3 ? `rank-${w.rank}` : '';
+        const isUnresponsive = w.status.includes('Unresponsive') || w.slaPercent < 75;
+        const statusClass = isUnresponsive ? 'status-unresponsive' : (w.status === 'On Duty' ? 'status-duty' : 'status-active');
+        const statusIcon = isUnresponsive ? '⚠️' : (w.status === 'On Duty' ? '🚜' : '⚡');
+
+        // Composite breakdown explanation
+        const b = w.breakdown;
+        const formulaTooltip = `
+          <b>Composite Score Breakdown:</b><br>
+          • SLA Compliance: ${w.slaPercent}% × 0.4 = <b>${b.partSla}</b><br>
+          • Citizen Rating: ${w.rating}★ × 20 × 0.3 = <b>${b.partRating}</b><br>
+          • Resolved Ratio: ${b.resolvedRatio}% × 0.2 = <b>${b.partResolved}</b><br>
+          • Speed Score: ${b.speedScore} × 0.1 = <b>${b.partSpeed}</b><br>
+          ${b.adminDelta ? `• Admin Bonus/Penalty: <b>${b.adminDelta > 0 ? '+' : ''}${b.adminDelta}</b><br>` : ''}
+          <b>Total Score = ${w.compositeScore} / 100</b>
+        `;
+
+        return `
+          <tr class="${isUnresponsive ? 'row-sla-breached' : ''}">
+            <td>
+              <div class="lb-rank-cell">
+                <div class="rank-circle ${rankClass}">#${w.rank}</div>
+                ${createRankDeltaHtml(w.rankDiff)}
+              </div>
+            </td>
+            <td>
+              <div style="font-weight: 700; color: #fff;">${w.name}</div>
+              <div style="font-size: 0.74rem; color: #94a3b8;">${w.vehicle}</div>
+            </td>
+            <td>
+              <div style="font-size: 0.85rem; color: #cbd5e1;">${w.zone}</div>
+            </td>
+            <td style="text-align: center;">
+              <b style="color: #fff;">${w.assigned}</b>
+            </td>
+            <td style="text-align: center;">
+              <b style="color: #00e676;">${w.resolved}</b>
+            </td>
+            <td style="text-align: center;">
+              <span style="font-family: var(--font-heading); color: ${w.avgTurnaroundHours <= 2.5 ? '#00e676' : (w.avgTurnaroundHours <= 4.5 ? '#ffb703' : '#ff3366')}; font-weight: 700;">
+                ${w.avgTurnaroundHours} hrs
+              </span>
+            </td>
+            <td style="text-align: center;">
+              <span style="font-weight: 700; color: ${w.slaPercent >= 95 ? '#00e676' : (w.slaPercent >= 80 ? '#ffb703' : '#ff3366')};">
+                ${w.slaPercent}%
+              </span>
+            </td>
+            <td style="text-align: center;">
+              <span style="color: #ffb703; font-weight: 700;">★ ${w.rating}</span>
+            </td>
+            <td>
+              <span class="status-pill ${statusClass}">
+                <span>${statusIcon}</span>
+                <span>${w.status}</span>
+              </span>
+            </td>
+            <td>
+              <div class="score-pill-wrap">
+                <div class="composite-score-pill">
+                  ⚡ ${w.compositeScore}
+                </div>
+                <div class="score-tooltip">
+                  ${formulaTooltip}
+                </div>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      return `
+        <table class="lb-table">
+          <thead>
+            <tr>
+              <th>${isHi ? 'रैंक' : 'Rank'}</th>
+              <th>${isHi ? 'कर्मचारी का नाम व वाहन' : 'Worker Name & Vehicle'}</th>
+              <th>${isHi ? 'वार्ड / क्षेत्र' : 'Zone / Ward'}</th>
+              <th style="text-align: center;">${isHi ? 'सौंपे गए कार्य' : 'Assigned Tasks'}</th>
+              <th style="text-align: center;">${isHi ? 'निपटारे' : 'Resolved'}</th>
+              <th style="text-align: center;">${isHi ? 'औसत समय' : 'Avg Turnaround'}</th>
+              <th style="text-align: center;">${isHi ? 'समयबद्धता %' : 'SLA Compliance'}</th>
+              <th style="text-align: center;">${isHi ? 'रेटिंग' : 'Rating'}</th>
+              <th>${isHi ? 'स्थिति' : 'Status'}</th>
+              <th>
+                ${isHi ? 'कंपोजिट स्कोर' : 'Composite Score'}
+                <span title="Formula: (SLA% × 0.4) + (Rating × 20 × 0.3) + (Resolved ratio × 0.2) + (Speed score × 0.1)" style="cursor: help; color: var(--cyan-neon);">ℹ️</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `;
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // 5. EMPLOYEE OF THE MONTH SHOWCASE CARD
+  // --------------------------------------------------------------------------
+  function createEmployeeOfMonthCardHtml(worker) {
+    if (!worker) return '';
+    const isHi = isHindi();
+
+    return `
+      <div class="eom-card">
+        <div class="eom-header">
+          <span class="eom-tag">
+            <span>🏆</span> <span>${isHi ? 'माह का सर्वश्रेष्ठ सफाई कर्मी' : 'EMPLOYEE OF THE MONTH'}</span>
+          </span>
+          <span style="font-size: 0.78rem; color: #ffd700; font-weight: 700;">
+            Kanpur Smart City Honor
+          </span>
+        </div>
+        <div class="eom-body">
+          <div class="eom-avatar">
+            👨‍🔧
+          </div>
+          <div class="eom-details">
+            <h3>${worker.name}</h3>
+            <div style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">
+              ${worker.vehicle} • 📍 ${worker.zone}
+            </div>
+            <div style="display: flex; gap: 14px; font-size: 0.8rem; margin-top: 6px;">
+              <span><b>${worker.resolved}</b> ${isHi ? 'निवारण' : 'Resolved'}</span>
+              <span><b>${worker.avgTurnaroundHours}h</b> ${isHi ? 'औसत गति' : 'Avg Speed'}</span>
+              <span style="color: #ffd700;">★ <b>${worker.rating}</b> (${worker.slaPercent}% SLA)</span>
+            </div>
+            <div class="eom-perks">
+              🎁 <b>${isHi ? 'पुरस्कार' : 'Reward'}:</b> ${worker.perk || '₹2,500 Cash Award + Smart Watch + Honor Certificate'}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // --------------------------------------------------------------------------
+  // 6. ZONE-WISE BEST PERFORMER MINI CARDS
+  // --------------------------------------------------------------------------
+  function createZoneBestGridHtml(zoneBestList) {
+    const isHi = isHindi();
+    if (!zoneBestList || zoneBestList.length === 0) return '';
+
+    const cards = zoneBestList.slice(0, 6).map(item => `
+      <div class="zone-mini-card">
+        <div>
+          <div class="zone-mini-name">${item.worker.name}</div>
+          <div class="zone-mini-ward">📍 ${item.zone} (${item.worker.vehicle})</div>
+        </div>
+        <div style="text-align: right;">
+          <div class="zone-mini-score">⚡ ${item.worker.compositeScore}</div>
+          <div style="font-size: 0.7rem; color: #ffb703;">★ ${item.worker.rating} (${item.worker.avgTurnaroundHours}h)</div>
+        </div>
+      </div>
+    `).join('');
+
+    return `
+      <div class="zone-best-section">
+        <h4 class="zone-best-title">
+          <span>📍</span> <span>${isHi ? 'जोन-वार सर्वश्रेष्ठ सफाई नायक' : 'Zone-Wise Best Performers'}</span>
+        </h4>
+        <div class="zone-best-grid">
+          ${cards}
+        </div>
+      </div>
+    `;
+  }
+
+  // --------------------------------------------------------------------------
+  // 7. HOME PAGE TOP PERFORMERS HIGHLIGHT SECTION
+  // --------------------------------------------------------------------------
+  function renderHomeTopPerformers() {
+    const container = document.getElementById('homeTopPerformersTarget');
+    if (!container) return;
+
+    const isHi = isHindi();
+    const citizens = window.LeaderboardService.getCitizens('month', 'all').slice(0, 5);
+    const workers = window.LeaderboardService.getWorkers('all').slice(0, 5);
+
+    // Left card: Top 5 Citizens
+    const citizenRows = citizens.map((c, idx) => {
+      const rank = idx + 1;
+      const rankClass = rank === 1 ? 'gold' : (rank === 2 ? 'silver' : (rank === 3 ? 'bronze' : ''));
+      return `
+        <div class="performer-item rank-${rank} ${c.isCurrentUser ? 'is-current-user' : ''}">
+          <div class="performer-left">
+            <div class="rank-badge-home ${rankClass}">#${rank}</div>
+            <div class="performer-avatar" style="background: ${c.color || '#22e4ff'};">${c.displayAvatar}</div>
+            <div class="performer-info">
+              <div class="performer-name">
+                ${c.displayName}
+                ${c.isCurrentUser ? `<span class="you-tag">${isHi ? 'आप' : 'YOU'}</span>` : ''}
+              </div>
+              <div class="performer-sub">${c.ward} • ${c.badge.icon} ${isHi ? c.badge.nameHi : c.badge.nameEn}</div>
+            </div>
+          </div>
+          <div class="performer-right">
+            <div>
+              <div class="performer-score-main">${c.points} <small>PTS</small></div>
+              <div class="performer-score-sub">${c.resolvedComplaints} ${isHi ? 'हल' : 'resolved'}</div>
+            </div>
+            ${createRankDeltaHtml(c.rankDiff)}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Right card: Top 5 Workers
+    const workerRows = workers.map((w, idx) => {
+      const rank = idx + 1;
+      const rankClass = rank === 1 ? 'gold' : (rank === 2 ? 'silver' : (rank === 3 ? 'bronze' : ''));
+      return `
+        <div class="performer-item rank-${rank}">
+          <div class="performer-left">
+            <div class="rank-badge-home ${rankClass}">#${rank}</div>
+            <div class="performer-avatar" style="background: #0e1233; border-color: rgba(34,228,255,0.4); font-size: 1.1rem;">👨‍🔧</div>
+            <div class="performer-info">
+              <div class="performer-name">${w.name}</div>
+              <div class="performer-sub">${w.zone} • ${w.vehicle}</div>
+            </div>
+          </div>
+          <div class="performer-right">
+            <div>
+              <div class="performer-score-main" style="color: #00e676;">⚡ ${w.compositeScore}</div>
+              <div class="performer-score-sub">★ ${w.rating} • ${w.avgTurnaroundHours}h</div>
+            </div>
+            ${createRankDeltaHtml(w.rankDiff)}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="top-performers-section">
+        <div class="top-performers-header">
+          <div>
+            <span class="section-tag">
+              <span>🏆</span> <span>${isHi ? 'स्वच्छ सर्वेक्षण 2026 रैंकिंग' : 'Swachh Survekshan 2026 Rankings'}</span>
+            </span>
+            <h2>
+              <span>🌟</span>
+              <span>${isHi ? 'शीर्ष प्रदर्शनकर्ता (Top Performers)' : 'City Champions & Top Performers'}</span>
+            </h2>
+          </div>
+          <div class="live-pulse-badge">
+            <span class="pulse-dot"></span>
+            <span>${isHi ? 'लाइव सिंक सक्रिय' : 'Live Real-Time Telemetry'}</span>
+          </div>
+        </div>
+
+        <div class="top-performers-grid">
+          <!-- Left: Citizen Leaderboard (Swachh Warriors) -->
+          <div class="top-performer-card">
+            <div class="performer-card-head">
+              <div class="performer-card-title">
+                <div class="icon-orb citizen-orb">🌱</div>
+                <div>
+                  <h3>${isHi ? 'स्वच्छ योद्धा (नागरिक)' : 'Swachh Warriors (Citizens)'}</h3>
+                  <p>${isHi ? 'कचरा रिपोर्टिंग और सत्यापन में अग्रणी नागरिक' : 'Leading citizens reporting & verifying city waste'}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="performer-list">
+              ${citizenRows}
+            </div>
+
+            <button class="btn-view-leaderboard" onclick="switchPage('leaderboard'); LeaderboardUI.setActiveBoard('citizens');">
+              <span>${isHi ? 'पूरा सिटिजन लीडरबोर्ड देखें' : 'View Full Citizen Leaderboard'}</span>
+              <span>→</span>
+            </button>
+          </div>
+
+          <!-- Right: Safai Karmchari Leaderboard (Safai Heroes) -->
+          <div class="top-performer-card">
+            <div class="performer-card-head">
+              <div class="performer-card-title">
+                <div class="icon-orb worker-orb">🧹</div>
+                <div>
+                  <h3>${isHi ? 'सफाई हीरोज (सफाई कर्मी)' : 'Safai Heroes (Sanitation Staff)'}</h3>
+                  <p>${isHi ? 'त्वरित निवारण और उच्च नागरिक रेटिंग वाले कर्मचारी' : 'Top sanitation crews with fastest SLA cleanup & 5★ ratings'}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="performer-list">
+              ${workerRows}
+            </div>
+
+            <button class="btn-view-leaderboard" onclick="switchPage('leaderboard'); LeaderboardUI.setActiveBoard('workers');">
+              <span>${isHi ? 'पूरा सफाई कर्मी लीडरबोर्ड देखें' : 'View Full Sanitation Staff Leaderboard'}</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // --------------------------------------------------------------------------
+  // 8. FULL LEADERBOARD PAGE CONTROLLER
+  // --------------------------------------------------------------------------
+  function renderFullLeaderboard() {
+    const isHi = isHindi();
+    const type = UI_STATE.activeBoard;
+
+    // Update Tab Buttons UI
+    const tabCitizens = document.getElementById('tabBoardCitizens');
+    const tabWorkers = document.getElementById('tabBoardWorkers');
+    if (tabCitizens && tabWorkers) {
+      if (type === 'citizens') {
+        tabCitizens.classList.add('active');
+        tabWorkers.classList.remove('active');
+      } else {
+        tabCitizens.classList.remove('active');
+        tabWorkers.classList.add('active');
+      }
+    }
+
+    // Controls visibility: anonymous toggle & time filters only apply to citizens
+    const anonToggleWrapper = document.getElementById('lbAnonToggleWrapper');
+    const timeFilterWrapper = document.getElementById('lbTimeFilterWrapper');
+    if (anonToggleWrapper) {
+      anonToggleWrapper.style.display = type === 'citizens' ? 'inline-flex' : 'none';
+    }
+    if (timeFilterWrapper) {
+      timeFilterWrapper.style.display = type === 'citizens' ? 'flex' : 'none';
+    }
+
+    // Fetch and filter data
+    let items = [];
+    if (type === 'citizens') {
+      items = window.LeaderboardService.getCitizens(UI_STATE.timeFilter, UI_STATE.zoneFilter);
+    } else {
+      items = window.LeaderboardService.getWorkers(UI_STATE.zoneFilter);
+    }
+
+    // Apply search filter if query exists
+    if (UI_STATE.searchQuery.trim()) {
+      const q = UI_STATE.searchQuery.toLowerCase();
+      items = items.filter(it => {
+        const name = (it.displayName || it.name || '').toLowerCase();
+        const ward = (it.ward || it.zone || '').toLowerCase();
+        return name.includes(q) || ward.includes(q);
+      });
+    }
+
+    // Render Sticky Current User Row (Always visible for citizens)
+    const stickyContainer = document.getElementById('lbStickyUserContainer');
+    if (stickyContainer) {
+      if (type === 'citizens') {
+        const userEntry = window.LeaderboardService.getCurrentUserRank(UI_STATE.timeFilter, UI_STATE.zoneFilter);
+        if (userEntry) {
+          stickyContainer.style.display = 'flex';
+          stickyContainer.innerHTML = `
+            <div class="sticky-user-left">
+              <div class="your-rank-badge">
+                ${isHi ? 'आपकी रैंक' : 'Your Rank'}: #${userEntry.rank}
+              </div>
+              <div class="performer-avatar" style="background: ${userEntry.color || '#22e4ff'};">
+                ${userEntry.displayAvatar}
+              </div>
+              <div>
+                <div class="sticky-user-name">
+                  ${userEntry.displayName}
+                  <span class="you-tag">${isHi ? 'आप' : 'YOU'}</span>
+                </div>
+                <div class="sticky-user-meta">
+                  📍 ${userEntry.ward} • ${createRankBadgeHtml(userEntry.badge)}
+                </div>
+              </div>
+            </div>
+            <div class="sticky-user-right">
+              <div>
+                <span style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">
+                  ${isHi ? 'सत्यापित शिकायतें' : 'Validated Reports'}
+                </span>
+                <div style="font-weight: 700; color: #fff;">${userEntry.resolvedComplaints} / ${userEntry.totalComplaints}</div>
+              </div>
+              <div class="sticky-user-pts-circle">
+                <span style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">
+                  ${isHi ? 'आपके पॉइंट्स' : 'Your Points'}
+                </span>
+                <span class="sticky-pts-val">${userEntry.points} <small style="font-size: 0.75rem;">PTS</small></span>
+              </div>
+            </div>
+          `;
+        } else {
+          stickyContainer.style.display = 'none';
+        }
+      } else {
+        stickyContainer.style.display = 'none';
+      }
+    }
+
+    // Render Podium for Top 3 (from unfiltered full list)
+    const podiumTarget = document.getElementById('lbPodiumTarget');
+    if (podiumTarget) {
+      const top3 = type === 'citizens'
+        ? window.LeaderboardService.getCitizens(UI_STATE.timeFilter, 'all').slice(0, 3)
+        : window.LeaderboardService.getWorkers('all').slice(0, 3);
+
+      if (top3.length >= 3) {
+        podiumTarget.innerHTML = `
+          <div class="podium-section">
+            <h3 class="podium-title">
+              <span>🏆</span>
+              <span>${isHi ? (type === 'citizens' ? 'सर्वोच्च 3 स्वच्छ योद्धा' : 'सर्वोच्च 3 सफाई कर्मी') : (type === 'citizens' ? 'Top 3 Swachh Warriors' : 'Top 3 Sanitation Champions')}</span>
+            </h3>
+            <div class="podium-container">
+              ${createPodiumCardHtml(top3[1], 2, type)}
+              ${createPodiumCardHtml(top3[0], 1, type)}
+              ${createPodiumCardHtml(top3[2], 3, type)}
+            </div>
+          </div>
+        `;
+      } else {
+        podiumTarget.innerHTML = '';
+      }
+    }
+
+    // Render Main Table
+    const tableTarget = document.getElementById('lbTableTarget');
+    if (tableTarget) {
+      tableTarget.innerHTML = createLeaderboardTableHtml(type, items);
+    }
+
+    // Render Workers Showcase (Employee of the Month & Zone-Wise Best Cards)
+    const showcaseTarget = document.getElementById('lbWorkersShowcaseTarget');
+    if (showcaseTarget) {
+      if (type === 'workers') {
+        showcaseTarget.style.display = 'grid';
+        const topWorker = window.LeaderboardService.getWorkers('all')[0];
+        const zoneBestList = window.LeaderboardService.getZoneBestWorkers();
+
+        showcaseTarget.innerHTML = `
+          ${createEmployeeOfMonthCardHtml(topWorker)}
+          ${createZoneBestGridHtml(zoneBestList)}
+        `;
+      } else {
+        showcaseTarget.style.display = 'none';
+      }
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // 9. PUBLIC CONTROLLER API
+  // --------------------------------------------------------------------------
+  window.LeaderboardUI = {
+    init: function () {
+      renderHomeTopPerformers();
+    },
+
+    setActiveBoard: function (board) {
+      UI_STATE.activeBoard = board;
+      renderFullLeaderboard();
+      if (window.playSound) window.playSound('click');
+    },
+
+    setTimeFilter: function (filter) {
+      UI_STATE.timeFilter = filter;
+      document.querySelectorAll('.time-pill-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-time') === filter);
+      });
+      renderFullLeaderboard();
+      if (window.playSound) window.playSound('click');
+    },
+
+    setZoneFilter: function (zone) {
+      UI_STATE.zoneFilter = zone;
+      renderFullLeaderboard();
+    },
+
+    setSearchQuery: function (query) {
+      UI_STATE.searchQuery = query;
+      renderFullLeaderboard();
+    },
+
+    toggleAnonymousMode: function (checkbox) {
+      const isAnon = window.LeaderboardService.toggleAnonymous(checkbox.checked);
+      renderFullLeaderboard();
+      renderHomeTopPerformers();
+      if (window.showToast) {
+        window.showToast(
+          isAnon ? 'Anonymous Mode Enabled: Your name is masked' : 'Public Profile Enabled: Your name is visible',
+          'success'
+        );
+      }
+      if (window.playSound) window.playSound('click');
+    },
+
+    refreshAll: function () {
+      renderHomeTopPerformers();
+      renderFullLeaderboard();
+    },
+
+    // Live Rank Shift Simulation (Interactive for judges & testing)
+    simulateRankShift: function () {
+      window.LeaderboardService.simulateLiveTick();
+      renderHomeTopPerformers();
+      renderFullLeaderboard();
+      if (window.showToast) {
+        window.showToast('⚡ Live rank update: Telemetry data ingested!', 'success');
+      }
+      if (window.playSound) window.playSound('points');
+    },
+
+    // Admin Control: Open Worker Manual Bonus/Penalty Modal
+    openWorkerBonusModal: function () {
+      const isHi = isHindi();
+      const workers = window.LeaderboardService.getWorkers('all');
+      const workerOptions = workers.map(w => `
+        <option value="${w.id}">${w.name} (${w.zone.split('(')[0].trim()}) - Current: ${w.compositeScore} pts</option>
+      `).join('');
+
+      const content = `
+        <div style="text-align: left;">
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px;">
+            ${isHi ? 'सफाई कर्मचारी को विशेष कार्य पर बोनस अंक या लापरवाही पर जुर्माना लगाएं।' : 'Award municipal merit bonus or impose penalty on sanitation personnel with an official audit reason.'}
+          </p>
+          <div class="admin-form-group">
+            <label>${isHi ? 'सफाई कर्मी चुनें' : 'Select Sanitation Personnel'}</label>
+            <select id="adminBonusWorkerSelect">
+              ${workerOptions}
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label>${isHi ? 'कार्रवाई प्रकार' : 'Adjustment Type'}</label>
+            <select id="adminBonusActionType">
+              <option value="5">➕ Merit Bonus (+5 Points)</option>
+              <option value="10">🌟 Outstanding Service Bonus (+10 Points)</option>
+              <option value="20">🏆 Special Festival Drive Bonus (+20 Points)</option>
+              <option value="-5">⚠️ SLA Warning Penalty (-5 Points)</option>
+              <option value="-10">🚨 Unresponsive Delay Penalty (-10 Points)</option>
+              <option value="-20">🚫 Severe Negligence Penalty (-20 Points)</option>
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label>${isHi ? 'आधिकारिक कारण / विवरण' : 'Official Justification / Reason'}</label>
+            <input type="text" id="adminBonusReason" placeholder="e.g. Cleared choked drain before scheduled SLA" value="Flawless zonal cleanup drive execution" />
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-outline btn-sm" onclick="closeModal()">${isHi ? 'रद्द करें' : 'Cancel'}</button>
+            <button class="btn btn-primary btn-sm" onclick="LeaderboardUI.submitWorkerBonus()">${isHi ? 'स्कोर अपडेट करें' : 'Apply Adjustment'}</button>
+          </div>
+        </div>
+      `;
+
+      if (window.showModal) {
+        window.showModal(isHi ? 'प्रशासनिक बोनस / पेनल्टी डेस्क' : 'Admin Personnel Merit & Penalty Desk', content);
+      }
+    },
+
+    submitWorkerBonus: function () {
+      const workerSelect = document.getElementById('adminBonusWorkerSelect');
+      const actionSelect = document.getElementById('adminBonusActionType');
+      const reasonInput = document.getElementById('adminBonusReason');
+
+      if (!workerSelect || !actionSelect) return;
+
+      const workerId = workerSelect.value;
+      const delta = parseInt(actionSelect.value, 10);
+      const reason = reasonInput ? reasonInput.value.trim() : '';
+
+      const res = window.LeaderboardService.adjustWorkerScore(workerId, delta, reason);
+      if (res) {
+        if (window.closeModal) window.closeModal();
+        LeaderboardUI.refreshAll();
+        if (window.showToast) {
+          window.showToast(`Updated ${res.worker.name}: ${delta >= 0 ? '+' : ''}${delta} pts applied!`, 'success');
+        }
+        if (window.playSound) window.playSound('success');
+      }
+    },
+
+    // Admin Control: Issue Monthly Digital Reward Voucher to Top 3 Citizens
+    issueTopCitizenVouchers: function () {
+      const isHi = isHindi();
+      const top3 = window.LeaderboardService.getCitizens('month', 'all').slice(0, 3);
+      if (top3.length === 0) return;
+
+      const voucherId1 = 'KMC-GOLD-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+      const voucherId2 = 'KMC-SLV-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+      const voucherId3 = 'KMC-BRZ-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+
+      const content = `
+        <div style="text-align: center;">
+          <div style="font-size: 2.8rem; margin-bottom: 8px;">🎖️</div>
+          <h4 style="color: #ffd700; font-size: 1.25rem; margin-bottom: 4px;">
+            ${isHi ? 'मासिक स्वच्छ योद्धा प्रमाण पत्र व वाउचर' : 'Monthly Swachh Warriors Honor Vouchers Issued!'}
+          </h4>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 16px;">
+            ${isHi ? 'शीर्ष 3 नागरिकों को कानपुर नगर निगम संपत्ति कर छूट डिजिटल वाउचर जारी किए गए:' : 'Digital property tax rebate certificates issued for the Top 3 Citizen Champions:'}
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; text-align: left;">
+            <!-- 1st Rank -->
+            <div style="background: rgba(255,215,0,0.1); border: 1px solid #ffd700; border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <b style="color: #ffd700;">🥇 1st Place: ${top3[0].name} (${top3[0].points} pts)</b>
+                <div style="font-size: 0.74rem; color: #cbd5e1;">📍 ${top3[0].ward} • ₹1,000 Municipal Property Tax Rebate</div>
+              </div>
+              <span style="font-family: var(--font-heading); color: var(--cyan-neon); font-size: 0.95rem; font-weight: 700;">${voucherId1}</span>
+            </div>
+
+            <!-- 2nd Rank -->
+            <div style="background: rgba(203,213,225,0.08); border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <b style="color: #cbd5e1;">🥈 2nd Place: ${top3[1].name} (${top3[1].points} pts)</b>
+                <div style="font-size: 0.74rem; color: #cbd5e1;">📍 ${top3[1].ward} • ₹500 Municipal Property Tax Rebate</div>
+              </div>
+              <span style="font-family: var(--font-heading); color: var(--cyan-neon); font-size: 0.95rem; font-weight: 700;">${voucherId2}</span>
+            </div>
+
+            <!-- 3rd Rank -->
+            <div style="background: rgba(217,119,6,0.08); border: 1px solid #d97706; border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <b style="color: #f59e0b;">🥉 3rd Place: ${top3[2].name} (${top3[2].points} pts)</b>
+                <div style="font-size: 0.74rem; color: #cbd5e1;">📍 ${top3[2].ward} • ₹250 Municipal Property Tax Rebate</div>
+              </div>
+              <span style="font-family: var(--font-heading); color: var(--cyan-neon); font-size: 0.95rem; font-weight: 700;">${voucherId3}</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 18px; font-size: 0.75rem; color: #94a3b8;">
+            Vouchers dispatched via SMS & stored in KMC Citizen Tax Portal database.
+          </div>
+        </div>
+      `;
+
+      if (window.showModal) {
+        window.showModal(isHi ? 'मासिक सम्मान वाउचर जारी' : 'Issue Monthly Reward Vouchers', content);
+      }
+      if (window.launchCelebrationConfetti) {
+        window.launchCelebrationConfetti();
+      }
+      if (window.playSound) window.playSound('success');
+    }
+  };
+
+  // Auto-render when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    LeaderboardUI.init();
+  });
+
+})(window);
+
+
     /* ==========================================================================
        1. DATA STATE & CONFIGURATION
        ========================================================================== */
@@ -3847,6 +7334,7 @@
       currentPage: 'home',
       currentLang: 'en',
       soundEnabled: true,
+      currentReportGps: null, // Stores { lat, lng, accuracy, timestamp } from browser geolocation
       user: {
         isLoggedIn: true,
         role: 'citizen', // 'citizen', 'supervisor', 'admin'
@@ -4011,7 +7499,22 @@
         issue_6_desc: "Clogged storm drains and nallahs filled with silt and polythene causing waterlogging.",
         cta_title: "Transform Kanpur Into India's Cleanest City",
         cta_desc: "Join 42,000+ active citizens on SwachhSetu. Spot waste in your colony, earn Green Points, and redeem property tax rebates and saplings.",
-        cta_btn_start: "Get Started Now"
+        cta_btn_start: "Get Started Now",
+        nav_leaderboard: "Leaderboard",
+        lb_main_title: "Kanpur Civic Honors Leaderboard",
+        lb_main_subtitle: "Live municipal rankings recognizing proactive citizens (\"Swachh Warriors\") reporting civic waste and sanitation frontline staff (\"Safai Heroes\") resolving complaints under strict SLAs.",
+        lb_tab_citizens: "Swachh Warriors (Citizens)",
+        lb_tab_workers: "Safai Heroes (Staff)",
+        lb_stat_citizens: "Top Citizens Ranked",
+        lb_stat_crews: "Sanitation Units",
+        lb_stat_turnaround: "City Avg Turnaround",
+        lb_stat_sla_compliance: "SLA Compliance",
+        lb_filter_week: "This Week",
+        lb_filter_month: "This Month",
+        lb_filter_all: "All Time",
+        lb_all_zones: "📍 All Kanpur Zones (10 Wards)",
+        lb_anon_label: "🎭 Show as Anonymous / गुमनाम",
+        lb_btn_sim: "Simulate Live Update"
       },
       hi: {
         top_live_status: "कानपुर स्मार्ट सिटी लाइव",
@@ -4022,6 +7525,7 @@
         nav_tracking: "लाइव ट्रैकिंग",
         nav_login: "पोर्टल और रिपोर्ट",
         nav_rewards: "इनाम और रेटिंग",
+        nav_leaderboard: "लीडरबोर्ड",
         nav_admin: "प्रशासन नियंत्रण",
         nav_awareness: "जागरूकता केंद्र",
         hero_badge: "कानपुर नगर निगम (KMC) अधिकृत पोर्टल",
@@ -4061,7 +7565,21 @@
         issue_6_desc: "पॉलिथीन और गाद से भरी बंद नालियां जिनसे गंदा पानी भर रहा है।",
         cta_title: "कानपुर को भारत का सबसे स्वच्छ शहर बनाएं",
         cta_desc: "स्वच्छ सेतु पर 42,000+ नागरिकों से जुड़ें। कचरा रिपोर्ट करें, ग्रीन पॉइंट्स कमाएं और हाउस टैक्स में छूट पाएं।",
-        cta_btn_start: "अभी शुरू करें"
+        cta_btn_start: "अभी शुरू करें",
+        lb_main_title: "कानपुर नागरिक सम्मान लीडरबोर्ड",
+        lb_main_subtitle: "सक्रिय नागरिकों ('स्वच्छ योद्धा') और त्वरित सफाई करने वाले सफाई कर्मचारियों ('सफाई हीरोज') की लाइव नगर निगम रैंकिंग।",
+        lb_tab_citizens: "स्वच्छ योद्धा (नागरिक)",
+        lb_tab_workers: "सफाई हीरोज (सफाई कर्मी)",
+        lb_stat_citizens: "शीर्ष नागरिक रैंकिंग",
+        lb_stat_crews: "सफाई दल इकाइयां",
+        lb_stat_turnaround: "औसत निपटान समय",
+        lb_stat_sla_compliance: "समयबद्धता दर",
+        lb_filter_week: "इस सप्ताह",
+        lb_filter_month: "इस माह",
+        lb_filter_all: "कुल समय",
+        lb_all_zones: "📍 सभी कानपुर क्षेत्र (10 वार्ड)",
+        lb_anon_label: "🎭 नाम गुमनाम रखें (Anonymous)",
+        lb_btn_sim: "लाइव अपडेट सिमुलेट करें"
       }
     };
 
@@ -4178,7 +7696,7 @@
         targetPage.classList.add('active-page');
       }
 
-      // Theme logic: Home & Awareness are Light; Tracking, Login, Rewards, Admin are Dark
+      // Theme logic: Home & Awareness are Light; Tracking, Login, Rewards, Admin, Leaderboard are Dark
       if (pageId === 'home' || pageId === 'awareness') {
         document.body.classList.remove('dark-view');
       } else {
@@ -4186,11 +7704,15 @@
       }
 
       // Page-specific initialization
-      if (pageId === 'tracking') {
+      if (pageId === 'home') {
+        if (window.LeaderboardUI) window.LeaderboardUI.init();
+      } else if (pageId === 'tracking') {
         renderMapHotspots();
         renderWorkerList();
       } else if (pageId === 'rewards') {
         updateRewardsView();
+      } else if (pageId === 'leaderboard') {
+        if (window.LeaderboardUI) window.LeaderboardUI.refreshAll();
       } else if (pageId === 'admin') {
         updateAdminKPIs();
       }
@@ -4217,6 +7739,11 @@
           el.innerText = dict[key];
         }
       });
+
+      // Synchronize Leaderboard dynamic language state
+      if (window.LeaderboardUI) {
+        window.LeaderboardUI.refreshAll();
+      }
 
       showToast(isHi ? 'भाषा बदलकर हिन्दी कर दी गई' : 'Language switched to English', 'success');
     }
@@ -4288,7 +7815,13 @@
       document.getElementById('inspectTicketId').innerText = spot.id;
       document.getElementById('inspectTitle').innerText = spot.title;
       document.getElementById('inspectWard').innerText = spot.ward;
-      document.getElementById('inspectCoords').innerText = `${spot.lat}° N, ${spot.lng}° E`;
+      if (spot.lat != null && spot.lng != null) {
+        const latVal = typeof spot.lat === 'number' ? spot.lat.toFixed(5) : spot.lat;
+        const lngVal = typeof spot.lng === 'number' ? spot.lng.toFixed(5) : spot.lng;
+        document.getElementById('inspectCoords').innerText = `${latVal}° N, ${lngVal}° E${spot.accuracy ? ` (±${spot.accuracy}m)` : ''}`;
+      } else {
+        document.getElementById('inspectCoords').innerText = 'Location: Landmark / No GPS';
+      }
       document.getElementById('inspectReporter').innerText = spot.reporter;
       document.getElementById('inspectPhoto').src = spot.photo;
       document.getElementById('inspectAiTag').innerText = spot.aiTag;
@@ -4324,8 +7857,13 @@
       // Update external Google Maps links
       const gmapsView = document.getElementById('btnGmapsView');
       const gmapsNav = document.getElementById('btnGmapsNav');
-      gmapsView.href = `https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lng}`;
-      gmapsNav.href = `https://www.google.com/maps/dir/?api=1&destination=${spot.lat},${spot.lng}`;
+      if (spot.lat != null && spot.lng != null) {
+        gmapsView.href = `https://www.google.com/maps/search/?api=1&query=${spot.lat},${spot.lng}`;
+        gmapsNav.href = `https://www.google.com/maps/dir/?api=1&destination=${spot.lat},${spot.lng}`;
+      } else {
+        gmapsView.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.ward || 'Kanpur')}`;
+        gmapsNav.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(spot.ward || 'Kanpur')}`;
+      }
     }
 
     /* Live Dispatch Worker Animation Function */
@@ -4504,11 +8042,99 @@
     function detectUserGps() {
       playSound('click');
       const text = document.getElementById('gpsStatusText');
-      text.innerText = '🛰️ Satellite lock in progress...';
-      setTimeout(() => {
-        text.innerText = '📍 Locked: 26.4382° N, 80.3458° E (Accurate within 3m)';
-        showToast('GPS Satellite Coordinates Locked!', 'success');
-      }, 700);
+      const locInput = document.getElementById('reportLocation');
+      const gpsBtn = document.querySelector('button[onclick="detectUserGps()"]');
+
+      if (!navigator.geolocation) {
+        if (text) {
+          text.style.color = 'var(--crimson)';
+          text.innerText = '❌ Geolocation is not supported by your browser.';
+        }
+        showToast('Geolocation is not supported by this browser', 'error');
+        return;
+      }
+
+      if (text) {
+        text.style.color = 'var(--cyan-neon)';
+        text.innerText = '🛰️ Requesting device location permission & locking satellites...';
+      }
+
+      if (gpsBtn) {
+        gpsBtn.disabled = true;
+        gpsBtn.style.opacity = '0.7';
+      }
+
+      const geoOptions = {
+        enableHighAccuracy: true,
+        timeout: 12000,
+        maximumAge: 0
+      };
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const accuracy = Math.round(position.coords.accuracy);
+
+          // Store real coordinates for report submission
+          APP_STATE.currentReportGps = {
+            lat: lat,
+            lng: lng,
+            accuracy: accuracy,
+            timestamp: position.timestamp || Date.now()
+          };
+
+          const latFormatted = `${Math.abs(lat).toFixed(5)}° ${lat >= 0 ? 'N' : 'S'}`;
+          const lngFormatted = `${Math.abs(lng).toFixed(5)}° ${lng >= 0 ? 'E' : 'W'}`;
+
+          if (text) {
+            text.style.color = '#00e676';
+            text.innerText = `📍 Locked: ${latFormatted}, ${lngFormatted} (Accurate within ${accuracy}m)`;
+          }
+
+          if (locInput) {
+            locInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)} (±${accuracy}m)`;
+          }
+
+          if (gpsBtn) {
+            gpsBtn.disabled = false;
+            gpsBtn.style.opacity = '1';
+          }
+
+          showToast(`GPS Locked: ${lat.toFixed(4)}, ${lng.toFixed(4)} (±${accuracy}m)`, 'success');
+          playSound('success');
+        },
+        (error) => {
+          if (gpsBtn) {
+            gpsBtn.disabled = false;
+            gpsBtn.style.opacity = '1';
+          }
+
+          let errMsg = 'Unable to retrieve location.';
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errMsg = 'Location permission denied. Please allow location access in your browser.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errMsg = 'Location information is unavailable from your device.';
+              break;
+            case error.TIMEOUT:
+              errMsg = 'Location request timed out. Please try again.';
+              break;
+            default:
+              errMsg = error.message || 'An unknown geolocation error occurred.';
+              break;
+          }
+
+          if (text) {
+            text.style.color = 'var(--crimson)';
+            text.innerText = `⚠️ GPS Error: ${errMsg}`;
+          }
+
+          showToast(errMsg, 'error');
+        },
+        geoOptions
+      );
     }
 
     function pickSamplePhoto(url, category, aiLabel) {
@@ -4547,16 +8173,23 @@
 
       const newId = 'TKT-KN-' + Math.floor(1000 + Math.random() * 9000);
 
-      // Create new ticket object
+      // Use real GPS coordinates if locked
+      const gpsData = APP_STATE.currentReportGps;
+      const reportLat = gpsData ? Number(gpsData.lat.toFixed(5)) : null;
+      const reportLng = gpsData ? Number(gpsData.lng.toFixed(5)) : null;
+      const reportAcc = gpsData ? gpsData.accuracy : null;
+
+      // Create new ticket object without hardcoded coordinates
       const newTicket = {
         id: newId,
         title: category + ' Reported by Rohan',
         category: category,
-        ward: 'Kidwai Nagar (Ward 6)',
+        ward: location || (gpsData ? `GPS Spot (${reportLat}, ${reportLng})` : 'Reported Spot'),
         x: 520 + Math.floor(Math.random() * 60),
         y: 380 + Math.floor(Math.random() * 50),
-        lat: 26.4385,
-        lng: 80.3460,
+        lat: reportLat,
+        lng: reportLng,
+        accuracy: reportAcc,
         severity: 'high',
         status: 'open',
         slaRemaining: 86400, // 24 hours
@@ -4569,13 +8202,20 @@
 
       APP_STATE.hotspots.unshift(newTicket);
       awardPoints(10, 'Valid waste report submitted');
+      if (window.LeaderboardService) {
+        window.LeaderboardService.recordCitizenActivity('valid_report');
+        if (photoSrc) {
+          window.LeaderboardService.recordCitizenActivity('photo_bonus');
+        }
+      }
       showConfetti();
 
       showModal('Report Dispatched to Ward Supervisor!', `
         <div style="text-align: center;">
           <div style="font-size: 3rem; margin-bottom: 10px;">🎉</div>
           <h4 style="color: var(--cyan-neon); font-size: 1.15rem; margin-bottom: 6px;">Ticket ID: ${newId}</h4>
-          <p style="color: #cbd5e1; margin-bottom: 14px;">Your report has been auto-routed to Kidwai Nagar Sanitation Supervisor.</p>
+          <p style="color: #cbd5e1; margin-bottom: 8px;">Your report has been auto-routed to Ward Sanitation Supervisor.</p>
+          ${reportLat && reportLng ? `<p style="font-size: 0.8rem; color: #00e676; margin-bottom: 12px;">📍 Verified GPS: ${reportLat}° N, ${reportLng}° E (±${reportAcc}m)</p>` : ''}
           <div style="background: rgba(0,230,118,0.15); border: 1px solid #00e676; padding: 12px; border-radius: 10px; color: #00e676; font-weight: 700; font-size: 1.1rem;">
             +10 Green Points Credited!
           </div>
@@ -4661,6 +8301,9 @@
     function submitTicketRating() {
       playSound('points');
       awardPoints(5, 'Rated resolved ticket 5 stars');
+      if (window.LeaderboardService) {
+        window.LeaderboardService.recordCitizenActivity('resolved_review');
+      }
       showConfetti();
       showToast('Thank you! +5 Bonus Green Points Credited!', 'reward');
 
@@ -4686,6 +8329,12 @@
       if (rewardsBig) rewardsBig.innerText = APP_STATE.user.points;
 
       updateRewardsView();
+
+      // Synchronize with Citizen Leaderboard (Rohan Sharma's points in Leaderboard)
+      if (window.LeaderboardService) {
+        window.LeaderboardService.syncCurrentUserPoints(APP_STATE.user.points);
+        if (window.LeaderboardUI) window.LeaderboardUI.refreshAll();
+      }
     }
 
     function updateRewardsView() {
@@ -4733,6 +8382,10 @@
 
       APP_STATE.user.points -= cost;
       updateRewardsView();
+      if (window.LeaderboardService) {
+        window.LeaderboardService.syncCurrentUserPoints(APP_STATE.user.points);
+        if (window.LeaderboardUI) window.LeaderboardUI.refreshAll();
+      }
       playSound('success');
 
       const couponCode = 'KMC-' + Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -4778,6 +8431,9 @@
       playSound('click');
       if (confirm("Confirm deducting -5 Green Points penalty for fraudulent waste submission?")) {
         awardPoints(-5, 'Penalty for fake complaint');
+        if (window.LeaderboardService) {
+          window.LeaderboardService.recordCitizenActivity('fake_penalty');
+        }
         showToast('Penalty Applied: -5 Green Points deducted and user warned', 'error');
       }
     }
@@ -5066,12 +8722,18 @@
       }
     }
 
+    // Expose celebration confetti helper globally
+    window.launchCelebrationConfetti = showConfetti;
+
     // Window Load Bootstrap
     window.addEventListener('DOMContentLoaded', () => {
       renderMapHotspots();
       renderWorkerList();
       updateRewardsView();
       updateAdminKPIs();
+      if (window.LeaderboardUI) {
+        window.LeaderboardUI.init();
+      }
     });
   </script>
 </body>
